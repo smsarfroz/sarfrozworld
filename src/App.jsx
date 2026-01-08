@@ -7,23 +7,26 @@ import { IoColorFill, IoPersonSharp } from "react-icons/io5";
 import { LuPenLine } from "react-icons/lu";
 import { MdLogout } from "react-icons/md";
 import { Link } from 'react-router-dom';
+import Loading from './Components/Loading/Loading.jsx';
 import './App.css'
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const useFetchData = () => {
   const api1 = `${VITE_BASE_URL}/users/:username`;
+  console.log('api1', api1);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log('outside try');
       try {
         const [res1] = await Promise.all([
           fetch(api1)
         ]);
-
+        console.log('res1 ', res1);
         if (!res1.ok) {
           throw new Error(`HTTP error! Status: ${Response.status}`);
         }
@@ -51,9 +54,10 @@ const useFetchData = () => {
 
 function App() {
   const { loading, error, userData } = useFetchData();
+  console.log('userData ', userData);
 
   if (loading) {
-    return 
+    return <Loading />;
   }
   if (error) {
     return <ErrorPage />;
@@ -75,7 +79,7 @@ function App() {
 
 
       <div className="commonBackground">
-        <sarfrozContext.Provider>
+        <sarfrozContext.Provider value={{ userData }}>
           <Outlet />
         </sarfrozContext.Provider>
       </div>
