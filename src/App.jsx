@@ -13,7 +13,7 @@ import './App.css'
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const useFetchData = () => {
-  const api1 = `${VITE_BASE_URL}/users/:username`;
+  const api1 = `${VITE_BASE_URL}/users/profile`;
   console.log('api1', api1);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -23,9 +23,11 @@ const useFetchData = () => {
     const fetchData = async () => {
       console.log('outside try');
       try {
-        const [res1] = await Promise.all([
-          fetch(api1)
-        ]);
+        // const [res1] = await Promise.all([
+        //   fetch(api1)
+        // ]);
+        console.log('fetching api..');
+        const res1 = await fetch(api1);
         console.log('res1 ', res1);
         if (!res1.ok) {
           throw new Error(`HTTP error! Status: ${Response.status}`);
@@ -34,14 +36,18 @@ const useFetchData = () => {
         const data1 = await res1.json();
 
         setUserData(data1);
-
-        setLoading(false);
+        setError(null);
 
       } catch (error) {
 
-        setError(error);
+        setError(error);  
+        setUserData([]);
+      
+      } finally {
+        
+        setLoading(false);
 
-      };
+      }
 
     };
 
@@ -49,11 +55,13 @@ const useFetchData = () => {
 
   }, [api1]);
 
+
   return { loading, error, userData};
-}
+};
 
 function App() {
   const { loading, error, userData } = useFetchData();
+  console.log('loading', loading);
   console.log('userData ', userData);
 
   if (loading) {
