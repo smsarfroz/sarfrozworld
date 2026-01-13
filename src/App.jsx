@@ -9,6 +9,7 @@ import { MdLogout } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import Loading from './Components/Loading/Loading.jsx';
 import './App.css'
+import ErrorPage from '../ErrorPage.jsx';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
@@ -27,7 +28,9 @@ const useFetchData = () => {
         //   fetch(api1)
         // ]);
         console.log('fetching api..');
-        const res1 = await fetch(api1);
+        const res1 = await fetch(api1, {
+          credentials: 'include'
+        });
         console.log('res1 ', res1);
         if (!res1.ok) {
           throw new Error(`HTTP error! Status: ${Response.status}`);
