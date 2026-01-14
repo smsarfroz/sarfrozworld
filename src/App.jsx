@@ -15,23 +15,18 @@ const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const useFetchData = () => {
   const api1 = `${VITE_BASE_URL}/users/profile`;
-  console.log('api1', api1);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log('outside try');
       try {
-        // const [res1] = await Promise.all([
-        //   fetch(api1)
-        // ]);
-        console.log('fetching api..');
-        const res1 = await fetch(api1, {
-          credentials: 'include'
-        });
-        console.log('res1 ', res1);
+        const [res1] = await Promise.all([
+          fetch(api1, {
+            credentials: 'include'
+          })
+        ]);
         if (!res1.ok) {
           throw new Error(`HTTP error! Status: ${Response.status}`);
         }
@@ -64,8 +59,7 @@ const useFetchData = () => {
 
 function App() {
   const { loading, error, userData } = useFetchData();
-  console.log('loading', loading);
-  console.log('userData ', userData);
+  // console.log('userData ', userData);
 
   if (loading) {
     return <Loading />;
@@ -80,7 +74,7 @@ function App() {
         <p className='siteName'>sarfrozworld</p>
         <div className="iconList">
           
-          <p><FiHome size={22} style={{ color: "DodgerBlue" }}/><Link to='/home'>home</Link></p>
+          <p><FiHome size={22}/><Link to='/home'>home</Link></p>
           <p><LuSearch size={22}/><Link to='/search'>Search</Link></p>
           <p><LuPenLine size={22}/><Link to='/post'>Post</Link></p>
           <p><IoPersonSharp size={22}/><Link to='/profile'>Profile</Link></p>

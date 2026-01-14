@@ -1,0 +1,17 @@
+.profilePhoto {
+    border-radius: 50%;
+}
+
+.editButton {
+}
+
+.editContainer {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.saveButton {
+    cursor: pointer;
+    background-color: blue;
+}
