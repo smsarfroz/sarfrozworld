@@ -1,15 +1,15 @@
 textarea {
-    /* width: 650px;
-    height: 300px; */
+    /* width: 650px; */
+    min-height: 300px;
     /* height: 100%; */
     width: 100%;
-    height: 250px;
+    field-sizing: content;    
     resize: none;
     background-color: rgb(17, 16, 16);
     outline: none;
     border: none;
-    padding: 1vw 1vw;
-    
+    padding: 3vw 2vw;
+    overflow: hidden;
 }
 
 .postButton {
@@ -27,7 +27,7 @@ textarea {
 }
 
 .textareaContainer {
-    border: 2px solid greenyellow;
+    /* border: 2px solid greenyellow; */
     position: relative;
 }
 
@@ -36,7 +36,7 @@ textarea {
 }
 
 .iconsContainer {
-    /* background-color: rgb(17, 16, 16); */
+    background-color: rgb(17, 16, 16);
     display: flex;
     gap: 1vw;
 }

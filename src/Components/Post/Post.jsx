@@ -2,21 +2,41 @@ import { Link } from 'react-router-dom';
 import styles from './Post.module.css'
 import { AiOutlinePicture } from "react-icons/ai";
 import { TbMovie } from "react-icons/tb";
+import { useRef, useState } from 'react';
 
 const Post = () => {
+    const [count, setCount] = useState(0);
+    const fileInputRef = useRef(null);
+
+    const handlePictureClick = () => {
+        fileInputRef.current.click();
+    };
+
+    const handleFileChange = (e) => {
+        const files = e.target.files;
+        if (files && files.length > 0) {
+            console.log('Selected file:', files[0].name);
+        }
+    };
 
     return (
         <div className={styles.postPage}>
             <div className={styles.textareaContainer}>
-                <textarea name="" id="" placeholder='Share something...' maxLength="2000" rows="5" cols="10">
+                <textarea name="" id="" placeholder='Share something...' maxLength="2000" rows="5" cols="10" onChange={e => setCount(e.target.value.length)}>
                 </textarea>
                 <div className={styles.featuresContainer}>
                     <div className={styles.iconsContainer}>
-                        <AiOutlinePicture size={50} className={styles.icon}/>
+                        <input 
+                            type="file" 
+                            ref={fileInputRef}
+                            onChange={handleFileChange}
+                            style={{ display: 'none' }}
+                        />
+                        <AiOutlinePicture size={50} className={styles.icon} onClick={handlePictureClick}/>
                         <TbMovie size={50} className={styles.icon}/>
                     </div>
                     <div className={styles.postContainer}>
-                        <p className={styles.characterCounter}>0/2000</p>
+                        <p className={styles.characterCounter}>{count}/2000</p>
                         <button className={styles.postButton}>Post</button>
                     </div>
                 </div>
