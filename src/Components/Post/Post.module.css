@@ -1,21 +1,23 @@
 textarea {
-    width: 600px;
-    height: 300px;
+    /* width: 650px;
+    height: 300px; */
     /* height: 100%; */
+    width: 100%;
+    height: 250px;
     resize: none;
     background-color: rgb(17, 16, 16);
     outline: none;
     border: none;
     padding: 1vw 1vw;
-    position: relative;
+    
 }
 
 .postButton {
     outline: none;
     text-decoration: none;
     border: none;
-    width: 5vw;
-    height: 2vw;
+    width: 6vw;
+    height: 3.6vw;
     border-radius: 5px;
     background-color: #0000ff;
     cursor: pointer;
@@ -25,7 +27,8 @@ textarea {
 }
 
 .textareaContainer {
-    /* border: 2px solid greenyellow; */
+    border: 2px solid greenyellow;
+    position: relative;
 }
 
 .postPage {
@@ -33,20 +36,34 @@ textarea {
 }
 
 .iconsContainer {
+    /* background-color: rgb(17, 16, 16); */
     display: flex;
     gap: 1vw;
 }
 
 .postContainer {
+    background-color: rgb(17, 16, 16);
     display: flex;
-    gap: 1vw;
+    gap: 2vw;
     align-items: center;
+    /* border: 2px solid yellow; */
+    /* margin-right: 2vw; */
+}
+
+.characterCounter {
+    background-color: rgb(17, 16, 16);
 }
 
 .featuresContainer {
+    background-color: rgb(17, 16, 16);
+    margin: 0 0;
+    width: 100%;
     display: flex;
+    /* gap: 145%; */
     justify-content: space-between;
-    align-items: center;
+    position: absolute;
+    bottom: 15px;
+    padding: 0 1vw;
 }
 
 .icon {

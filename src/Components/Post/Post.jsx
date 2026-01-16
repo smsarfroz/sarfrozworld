@@ -16,7 +16,7 @@ const Post = () => {
                         <TbMovie size={50} className={styles.icon}/>
                     </div>
                     <div className={styles.postContainer}>
-                        <p>0/2000</p>
+                        <p className={styles.characterCounter}>0/2000</p>
                         <button className={styles.postButton}>Post</button>
                     </div>
                 </div>
