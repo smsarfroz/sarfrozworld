@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import Loading from './Components/Loading/Loading.jsx';
 import './App.css'
 import ErrorPage from '../ErrorPage.jsx';
-import { sarfrozContext } from './sarfrozContext.js';
+import { SarfrozContext } from './sarfrozContext.js';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
@@ -60,7 +60,6 @@ const useFetchData = () => {
 
 function App() {
   const { loading, error, userData, setUserData } = useFetchData();
-  // console.log('userData ', userData);
 
   const contextValue = { userData, setUserData };
 
@@ -87,9 +86,9 @@ function App() {
 
 
       <div className="commonBackground">
-        <sarfrozContext.Provider value={contextValue}>
+        <SarfrozContext.Provider value={contextValue}>
           <Outlet />
-        </sarfrozContext.Provider>
+        </SarfrozContext.Provider>
       </div>
 
     </div>

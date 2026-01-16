@@ -51,6 +51,8 @@ a {
   /* border: 2px solid green; */
   margin-top: 7vw;
   margin-left: 5vw;
+  margin-right: 20vw;
+  width: 70%;
 }
 
 .sectionsContainer {

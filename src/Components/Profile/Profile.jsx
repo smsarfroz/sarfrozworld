@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styles from './Profile.module.css';
 import { useContext, useState } from 'react';
-import { sarfrozContext } from '../../sarfrozContext';
+import { SarfrozContext } from '../../sarfrozContext';
 import { MdOutlineModeEdit } from "react-icons/md";
 import { CiGlobe } from "react-icons/ci";
 import { RiGithubLine } from "react-icons/ri";
@@ -10,7 +10,7 @@ import { LuBiohazard } from 'react-icons/lu';
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const Profile = () => {
-    const { userData, setUserData } = useContext(sarfrozContext);
+    const { userData, setUserData } = useContext(SarfrozContext);
     const { bio, followers, following, github, googleId, id, photo, username, website } = userData[0];
     const [Bio, setBio] = useState("e");
     const [Website, setWebsite] = useState("e");

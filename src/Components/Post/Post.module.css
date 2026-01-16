@@ -1,0 +1,57 @@
+textarea {
+    width: 600px;
+    height: 300px;
+    /* height: 100%; */
+    resize: none;
+    background-color: rgb(17, 16, 16);
+    outline: none;
+    border: none;
+    padding: 1vw 1vw;
+    position: relative;
+}
+
+.postButton {
+    outline: none;
+    text-decoration: none;
+    border: none;
+    width: 5vw;
+    height: 2vw;
+    border-radius: 5px;
+    background-color: #0000ff;
+    cursor: pointer;
+    position: relative;
+    top: 0%;
+    right: 11%;
+}
+
+.textareaContainer {
+    /* border: 2px solid greenyellow; */
+}
+
+.postPage {
+    /* border: 2px solid blueviolet */
+}
+
+.iconsContainer {
+    display: flex;
+    gap: 1vw;
+}
+
+.postContainer {
+    display: flex;
+    gap: 1vw;
+    align-items: center;
+}
+
+.featuresContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icon {
+    background-color: #0000ff;
+    border-radius: 4px;
+    padding: 9px;
+    cursor: pointer;
+}
