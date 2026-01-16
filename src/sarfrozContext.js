@@ -1,6 +1,6 @@
-import { createContext } from "react";
-const sarfrozContext = createContext({
-    userData: null
-});
+import React, { createContext, useState } from "react";
 
-export { sarfrozContext };
+export const sarfrozContext = createContext({
+    userData: null, 
+    setUserData: () => {}
+});

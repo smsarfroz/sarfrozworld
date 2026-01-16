@@ -3,15 +3,71 @@
 }
 
 .editButton {
+    cursor: pointer;
+}
+
+.editText {
+    cursor: pointer;
 }
 
 .editContainer {
-    cursor: pointer;
+    /* cursor: pointer; */
     display: flex;
     align-items: center;
+    gap: 0.5vw;
 }
 
 .saveButton {
     cursor: pointer;
     background-color: blue;
+}
+
+.inputContainers {
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.profilePage {
+    /* border: 2px solid blue; */
+    /* position: relative;
+    left: 25%;
+    top: 0%; */
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 2vw;
+}
+
+.counterContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.counters {
+    display: flex;
+    flex-direction: row;
+    gap: 2vw;
+    margin-top: 2vw;
+    margin-left: 2vw;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vw;
+    margin: 1vw 0vw;
+}
+
+.userPostText {
+    margin: 2vw 0;
+}
+
+.infoLine {
+    display: flex;
+    align-items: center;
+    gap: 1vw;
 }

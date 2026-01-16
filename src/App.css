@@ -38,9 +38,22 @@
   gap: 1.5vw;
   margin-top: 2vw;
   margin-left: 4vw;
+  /* border: 2px solid red; */
+  width: 20%;
+  height: 100%;
 }
 
 a {
   text-decoration: none;
 }
 
+.commonBackground {
+  /* border: 2px solid green; */
+  margin-top: 7vw;
+  margin-left: 5vw;
+}
+
+.sectionsContainer {
+  display: flex;
+  gap: 2vw;
+}
