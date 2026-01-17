@@ -34,7 +34,7 @@ const useFetchData = () => {
 
         const data1 = await res1.json();
 
-        setUserData(data1);
+        setUserData(data1[0]);
         setError(null);
 
       } catch (error) {
@@ -55,13 +55,19 @@ const useFetchData = () => {
   }, [api1]);
 
 
-  return { loading, error, userData};
+  return { loading, error, userData, setUserData};
 };
 
 function App() {
   const { loading, error, userData, setUserData } = useFetchData();
 
-  const contextValue = { userData, setUserData };
+  console.log("userData in App.js", userData);
+  function updateData (data) {
+    setUserData(prevData => ({
+      ...prevData,
+      ...data
+    }))
+  };
 
   if (loading) {
     return <Loading />;
@@ -86,7 +92,7 @@ function App() {
 
 
       <div className="commonBackground">
-        <SarfrozContext.Provider value={contextValue}>
+        <SarfrozContext.Provider value={{ userData, updateData }}>
           <Outlet />
         </SarfrozContext.Provider>
       </div>

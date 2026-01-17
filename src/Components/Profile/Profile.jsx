@@ -10,11 +10,13 @@ import { LuBiohazard } from 'react-icons/lu';
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const Profile = () => {
-    const { userData, setUserData } = useContext(SarfrozContext);
-    const { bio, followers, following, github, googleId, id, photo, username, website } = userData[0];
-    const [Bio, setBio] = useState("e");
-    const [Website, setWebsite] = useState("e");
-    const [Github, setGithub] = useState("e");
+    const { userData, updateData } = useContext(SarfrozContext);
+    console.log('updateData', updateData);
+    const { bio, followers, following, github, googleId, id, photo, username, website } = userData;
+    console.log("from context",userData[0]);
+    const [Bio, setBio] = useState(bio);
+    const [Website, setWebsite] = useState(website);
+    const [Github, setGithub] = useState(github);
     const [isEditing, setIsEditing] = useState(false);
     console.log('userData ', userData);
 
@@ -23,14 +25,21 @@ const Profile = () => {
     }
     function handleSaveClick() {
         setIsEditing(!isEditing);
-        setUserData({
-            ...userData,
+        updateData({
             followers: followers,
             following: following,
-            bio: bio,
-            website: website,
-            github: github
+            bio: Bio,
+            website: Website,
+            github: Github
         });
+        // setUserData({
+        //     ...userData,
+        //     followers: followers,
+        //     following: following,
+        //     bio: Bio,
+        //     website: Website,
+        //     github: Github
+        // });
     }
     return (
         <div className={styles.profilePage}>
