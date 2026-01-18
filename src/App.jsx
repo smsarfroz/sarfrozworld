@@ -25,13 +25,19 @@ const useFetchData = () => {
       try {
         const [res1] = await Promise.all([
           fetch(api1, {
-            credentials: 'include'
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+              'Accept': 'application/json',
+            }
           })
         ]);
+        console.log("res1", res1);
         if (!res1.ok) {
           throw new Error(`HTTP error! Status: ${Response.status}`);
         }
-
+        console.log("res1", res1);
+        console.log("res1 headers:", res1.headers.get('Set-Cookie'));
         const data1 = await res1.json();
 
         setUserData(data1[0]);
@@ -62,12 +68,12 @@ function App() {
   const { loading, error, userData, setUserData } = useFetchData();
 
   console.log("userData in App.js", userData);
-  function updateData (data) {
-    setUserData(prevData => ({
-      ...prevData,
-      ...data
-    }))
-  };
+  // function updateData (data) {
+  //   setUserData(prevData => ({
+  //     ...prevData,
+  //     ...data
+  //   }))
+  // };
 
   if (loading) {
     return <Loading />;
@@ -92,7 +98,7 @@ function App() {
 
 
       <div className="commonBackground">
-        <SarfrozContext.Provider value={{ userData, updateData }}>
+        <SarfrozContext.Provider value={{ userData, setUserData }}>
           <Outlet />
         </SarfrozContext.Provider>
       </div>

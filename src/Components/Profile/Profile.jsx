@@ -9,38 +9,59 @@ import { LuBiohazard } from 'react-icons/lu';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
+const useUser = () => {
+  const api1 = `${VITE_BASE_URL}/users/profile`;
+  const { userData, setUserData } = useContext(SarfrozContext);
+
+  const updateUser = async (data) => {
+      try {
+        const [res1] = await Promise.all([
+          fetch(api1, {
+            mode: 'cors',
+            credentials: 'include',
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+          })
+        ]);
+        if (!res1.ok) {
+          throw new Error(`HTTP error! Status: ${Response.status}`);
+        }
+
+        const data1 = await res1.json();
+
+        setUserData(data1);
+        return data1;
+        
+      } catch (error) {
+        console.error(`There was a problem with the fetch operation:`, error);
+        throw error;
+      }
+  };
+
+
+  return { userData, updateUser };
+};
+
 const Profile = () => {
-    const { userData, updateData } = useContext(SarfrozContext);
-    console.log('updateData', updateData);
-    const { bio, followers, following, github, googleId, id, photo, username, website } = userData;
-    console.log("from context",userData[0]);
+    const { userData: initialUser, updateUser } = useUser();
+    const [user, setUserData] = useState(initialUser);
+    const { bio, followers, following, github, googleId, id, photo, username, website } = user;
     const [Bio, setBio] = useState(bio);
     const [Website, setWebsite] = useState(website);
     const [Github, setGithub] = useState(github);
     const [isEditing, setIsEditing] = useState(false);
-    console.log('userData ', userData);
 
     function handleEditClick() {
         setIsEditing(!isEditing);
     }
-    function handleSaveClick() {
+    const handleSaveClick = async (data) => {
         setIsEditing(!isEditing);
-        updateData({
-            followers: followers,
-            following: following,
-            bio: Bio,
-            website: Website,
-            github: Github
-        });
-        // setUserData({
-        //     ...userData,
-        //     followers: followers,
-        //     following: following,
-        //     bio: Bio,
-        //     website: Website,
-        //     github: Github
-        // });
-    }
+        const updatedData = await updateUser(data);
+        setUserData(updatedData);
+    };
     return (
         <div className={styles.profilePage}>
 
@@ -65,9 +86,9 @@ const Profile = () => {
             
             { isEditing ? 
                 <div className={styles.inputContainers}>
-                    <input type="text" name='Bio' placeholder='edit bio...' value={Bio} onChange={(e) => setBio(e.target.value)}/>
-                    <input type="text" name='Website' placeholder='edit website...' value={Website} onChange={(e) => setWebsite(e.target.value)}/>
-                    <input type="text" name='Github' placeholder='edit Github username or URL...' value={Github} onChange={(e) => setGithub(e.target.value)}/>
+                    <input type="text" name='Bio' placeholder='edit bio...' value={Bio ? Bio : ""} onChange={(e) => setBio(e.target.value)}/>
+                    <input type="text" name='Website' placeholder='edit website...' value={Website ? Website: ""} onChange={(e) => setWebsite(e.target.value)}/>
+                    <input type="text" name='Github' placeholder='edit Github username or URL...' value={Github ? Github : ""} onChange={(e) => setGithub(e.target.value)}/>
                 </div>
                 :
                 <div className={styles.details}>
@@ -90,7 +111,7 @@ const Profile = () => {
             }
             
             { isEditing ? 
-                <button onClick={handleSaveClick} className={styles.saveButton}>Save</button>
+                <button onClick={handleSaveClick({ bio, followers, following, github, googleId, id, photo, username, website })} className={styles.saveButton}>Save</button>
                 :
                 <div className={styles.editContainer} onClick={handleEditClick}>
                     <MdOutlineModeEdit fill="blue" size={30}  className={styles.editButton}/> <p className={styles.editText}>Edit</p>
