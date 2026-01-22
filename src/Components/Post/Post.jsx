@@ -7,6 +7,7 @@ import { useRef, useState } from 'react';
 const Post = () => {
     const [count, setCount] = useState(0);
     const fileInputRef = useRef(null);
+    const [imageLink, setImageLink] = useState(null);
 
     const handlePictureClick = () => {
         fileInputRef.current.click();
@@ -16,6 +17,8 @@ const Post = () => {
         const files = e.target.files;
         if (files && files.length > 0) {
             console.log('Selected file:', files[0].name);
+            setImageLink(URL.createObjectURL(files[0]));
+            
         }
     };
 
@@ -24,6 +27,7 @@ const Post = () => {
             <div className={styles.textareaContainer}>
                 <textarea name="" id="" placeholder='Share something...' maxLength="2000" rows="5" cols="10" onChange={e => setCount(e.target.value.length)}>
                 </textarea>
+                <img src={imageLink} alt="" className={styles.previewImage}/>
                 <div className={styles.featuresContainer}>
                     <div className={styles.iconsContainer}>
                         <input 
@@ -32,6 +36,7 @@ const Post = () => {
                             onChange={handleFileChange}
                             style={{ display: 'none' }}
                         />
+                        
                         <AiOutlinePicture size={50} className={styles.icon} onClick={handlePictureClick}/>
                         <TbMovie size={50} className={styles.icon}/>
                     </div>

@@ -5,7 +5,6 @@ textarea {
     width: 100%;
     field-sizing: content;    
     resize: none;
-    background-color: rgb(17, 16, 16);
     outline: none;
     border: none;
     padding: 3vw 2vw;
@@ -27,8 +26,13 @@ textarea {
 }
 
 .textareaContainer {
-    /* border: 2px solid greenyellow; */
+    border: 2px solid greenyellow;
     position: relative;
+    background-color: rgb(17, 16, 16);
+}
+
+.textareaContainer > * {
+    background-color: transparent;
 }
 
 .postPage {
@@ -46,8 +50,6 @@ textarea {
     display: flex;
     gap: 2vw;
     align-items: center;
-    /* border: 2px solid yellow; */
-    /* margin-right: 2vw; */
 }
 
 .characterCounter {
@@ -55,11 +57,9 @@ textarea {
 }
 
 .featuresContainer {
-    background-color: rgb(17, 16, 16);
     margin: 0 0;
     width: 100%;
     display: flex;
-    /* gap: 145%; */
     justify-content: space-between;
     position: absolute;
     bottom: 15px;
@@ -71,4 +71,13 @@ textarea {
     border-radius: 4px;
     padding: 9px;
     cursor: pointer;
+}
+
+.previewImage {
+    width: 300px;
+    height: 300px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
