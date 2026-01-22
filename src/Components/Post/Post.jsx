@@ -3,11 +3,13 @@ import styles from './Post.module.css'
 import { AiOutlinePicture } from "react-icons/ai";
 import { TbMovie } from "react-icons/tb";
 import { useRef, useState } from 'react';
+import { GiCancel } from "react-icons/gi";
 
 const Post = () => {
     const [count, setCount] = useState(0);
     const fileInputRef = useRef(null);
     const [imageLink, setImageLink] = useState(null);
+    const [showImage, setShowImage] = useState(false);
 
     const handlePictureClick = () => {
         fileInputRef.current.click();
@@ -18,8 +20,11 @@ const Post = () => {
         if (files && files.length > 0) {
             console.log('Selected file:', files[0].name);
             setImageLink(URL.createObjectURL(files[0]));
-            
+            setShowImage(true);
         }
+    };
+    const handleCancel = () => {
+        setShowImage(false);
     };
 
     return (
@@ -27,7 +32,13 @@ const Post = () => {
             <div className={styles.textareaContainer}>
                 <textarea name="" id="" placeholder='Share something...' maxLength="2000" rows="5" cols="10" onChange={e => setCount(e.target.value.length)}>
                 </textarea>
-                <img src={imageLink} alt="" className={styles.previewImage}/>
+                {showImage ? 
+                    <>
+                        <img src={imageLink} alt="" className={styles.previewImage}/>
+                        <GiCancel size={25} className={styles.cancelButton} onClick={handleCancel}/>
+                    </> : 
+                    null
+                }
                 <div className={styles.featuresContainer}>
                     <div className={styles.iconsContainer}>
                         <input 

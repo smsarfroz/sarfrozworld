@@ -81,3 +81,11 @@ textarea {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.cancelButton {
+    position: absolute;
+    top: calc(50% - 150px);
+    left: calc(50% + 300px);
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
