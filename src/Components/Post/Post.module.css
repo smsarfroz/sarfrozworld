@@ -3,12 +3,14 @@ textarea {
     min-height: 300px;
     /* height: 100%; */
     width: 100%;
-    field-sizing: content;    
+    field-sizing: content;
     resize: none;
     outline: none;
     border: none;
-    padding: 3vw 2vw;
+    padding: 1.5vw 2vw;
     overflow: hidden;
+    flex-grow: 1;
+    margin-bottom: 4vw;
 }
 
 .postButton {
@@ -26,9 +28,12 @@ textarea {
 }
 
 .textareaContainer {
-    border: 2px solid greenyellow;
+    /* border: 2px solid greenyellow; */
     position: relative;
     background-color: rgb(17, 16, 16);
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
 }
 
 .textareaContainer > * {
@@ -37,6 +42,7 @@ textarea {
 
 .postPage {
     /* border: 2px solid blueviolet */
+    position: relative;
 }
 
 .iconsContainer {
@@ -77,15 +83,20 @@ textarea {
     width: 300px;
     height: 300px;
     position: relative;
-    top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 0);
 }
 
 .cancelButton {
     position: absolute;
-    top: calc(50% - 150px);
+    bottom: calc(50% + 150px);
     left: calc(50% + 300px);
     transform: translate(-50%, -50%);
     cursor: pointer;
+}
+
+.previewImageContainer {
+    position: relative;
+    bottom: 5vw;
+    margin-bottom: 1.5vw;
 }
