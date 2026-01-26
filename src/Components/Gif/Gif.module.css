@@ -40,3 +40,8 @@
     gap: 1vw;  
     /* border: 2px solid violet; */
 }
+
+.gifImg {
+    width: 100px;
+    height: 100px;
+}

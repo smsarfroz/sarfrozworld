@@ -1,7 +1,5 @@
 textarea {
-    /* width: 650px; */
     min-height: 300px;
-    /* height: 100%; */
     width: 100%;
     field-sizing: content;
     resize: none;
@@ -11,6 +9,7 @@ textarea {
     overflow: hidden;
     flex-grow: 1;
     margin-bottom: 4vw;
+    color: white;
 }
 
 .postButton {

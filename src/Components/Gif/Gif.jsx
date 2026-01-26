@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import styles from './Gif.module.css';
 
-const useGif = (searchText) => {
-  const api1 = import.meta.env.VITE_API_KEY;
-  const gifUrl = `https://api.giphy.com/v1/gifs/translate?api_key=${api1}&s=${searchText}&weirdness=4`;
+const useGif = () => {
 
-  const getGifs = async () => {
+  const getGifs = async (searchText) => {
+      const api1 = import.meta.env.VITE_API_KEY;
+      const gifUrl = `https://api.giphy.com/v1/gifs/search?api_key=${api1}&q=${searchText}&limit=5&offset=0&rating=g&lang=en&bundle=messaging_non_clips`;
+  
       try {
         const [res1] = await Promise.all([
           fetch(gifUrl, {
@@ -17,9 +18,9 @@ const useGif = (searchText) => {
         }
 
         const data1 = await res1.json();
-        console.log("data1", data1);
-        return data1;
-        
+        console.log("images", data1.data);
+        return data1.data;
+    
       } catch (error) {
         console.error(`There was a problem with the fetch operation:`, error);
         throw error;
@@ -33,10 +34,9 @@ const Gif = () => {
     const [searchText, setSearchText] = useState("");
     const [gifList, setGifList] = useState([]);
     const { getGifs } = useGif();
-    console.log(searchText);
-    console.log("gifList", gifList);
-    const handleSubmit = () => {
-        setGifList(getGifs(searchText));
+    const handleSubmit = async () => {
+        const list = await getGifs(searchText);
+        setGifList(list);
     };
 
     return (
@@ -45,6 +45,17 @@ const Gif = () => {
                 <input type="text" className={styles.searchBar} placeholder='Search GIFs' value={searchText} onChange={(e) => setSearchText(e.target.value)}/>
                 <button className={styles.submitButton} onClick={handleSubmit}>Submit</button>
             </div>
+  
+            <div className={styles.gif}>
+              {
+                gifList.map((gif, i) => {
+                  return (
+                    <img src={gif.images.fixed_height.url} alt="" key={i}/>
+                  )
+                })
+              }
+            </div> 
+            
         </div>
     )
 };
