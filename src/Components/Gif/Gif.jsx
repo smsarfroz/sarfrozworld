@@ -1,15 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Gif.module.css';
 
 const useGif = () => {
 
-  const getGifs = async (searchText) => {
-      const api1 = import.meta.env.VITE_API_KEY;
-      const gifUrl = `https://api.giphy.com/v1/gifs/search?api_key=${api1}&q=${searchText}&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`;
+  const getGifs = async (url) => {
   
       try {
         const [res1] = await Promise.all([
-          fetch(gifUrl, {
+          fetch(url, {
             mode: 'cors',
           })
         ]);
@@ -32,13 +30,28 @@ const useGif = () => {
 
 const Gif = ({ handleGifLinkChange }) => {
     const [searchText, setSearchText] = useState("");
-    const [gifList, setGifList] = useState([]);
+    const [gifList, setGifList] = useState(null);
+    const [trendingGifList, setTrendingGifList] = useState([]);
     const [loading, setLoading] = useState(false);
     const { getGifs } = useGif();
+  
+    const api1 = import.meta.env.VITE_API_KEY;
+    const gifUrl1 = `https://api.giphy.com/v1/gifs/search?api_key=${api1}&q=${searchText}&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`;
+    const gifUrl2 = `https://api.giphy.com/v1/gifs/trending?api_key=${api1}&limit=25&offset=0&rating=g&bundle=messaging_non_clips`;
+
+    useEffect(() => {
+      const fetchData = async () => {
+        const list = await getGifs(gifUrl2);
+        setTrendingGifList(list);
+      }
+      fetchData();
+    }, []);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const list = await getGifs(searchText);
+        const url = searchText == "" ? gifUrl2 : gifUrl1;
+        const list = await getGifs(url);
         setGifList(list);
         setLoading(false);
     };
@@ -55,16 +68,34 @@ const Gif = ({ handleGifLinkChange }) => {
             {
               loading ? 
               <p className={styles.loadingLine}>Loading...</p> :
-
-              <div className={styles.gif}>
+              
+              <>
+              
                 {
-                  gifList.map((gif, i) => {
-                    return (
-                      <img src={gif.images.fixed_height.url} alt="" key={i} className={styles.gifImg} onClick={() => handleGifLinkChange(gif.images.fixed_height.url)}/>
-                    )
-                  })
+                  gifList != null ?
+                  <div className={styles.gif}>
+                    {
+                      gifList.map((gif, i) => {
+                        return (
+                          <img src={gif.images.fixed_height.url} alt="" key={i} className={styles.gifImg} onClick={() => handleGifLinkChange(gif.images.fixed_height.url)}/>
+                        )
+                      })
+
+                    }
+                  </div>  :
+
+                  <div className={styles.gif}>
+                    {
+
+                      trendingGifList.map((gif, i) => {
+                        return (
+                          <img src={gif.images.fixed_height.url} alt="" key={i} className={styles.gifImg} onClick={() => handleGifLinkChange(gif.images.fixed_height.url)}/>
+                        )
+                      })
+                    }
+                  </div> 
                 }
-              </div> 
+              </>
             }
             
         </div>

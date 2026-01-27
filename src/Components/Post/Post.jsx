@@ -35,6 +35,7 @@ const Post = () => {
     const handleGifLinkChange = (link) => {
         setImageLink(link);
         setShowImage(true);
+        setShowGif(false);
     }
 
     return (
@@ -69,7 +70,7 @@ const Post = () => {
             </div>
             {showGif ?
                 <>
-                    <Gif handleGifLinkChange={handleGifLinkChange}/>
+                    <Gif handleGifLinkChange={handleGifLinkChange} />
                 </> :
                 null
             }
