@@ -30,7 +30,7 @@ const useGif = () => {
   return { getGifs };
 };
 
-const Gif = () => {
+const Gif = ({ handleGifLinkChange }) => {
     const [searchText, setSearchText] = useState("");
     const [gifList, setGifList] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -60,7 +60,7 @@ const Gif = () => {
                 {
                   gifList.map((gif, i) => {
                     return (
-                      <img src={gif.images.fixed_height.url} alt="" key={i} className={styles.gifImg}/>
+                      <img src={gif.images.fixed_height.url} alt="" key={i} className={styles.gifImg} onClick={() => handleGifLinkChange(gif.images.fixed_height.url)}/>
                     )
                   })
                 }

@@ -32,6 +32,10 @@ const Post = () => {
         setShowGif(true);
         console.log("Gif", showGif);
     }
+    const handleGifLinkChange = (link) => {
+        setImageLink(link);
+        setShowImage(true);
+    }
 
     return (
         <div className={styles.postPage}>
@@ -65,7 +69,7 @@ const Post = () => {
             </div>
             {showGif ?
                 <>
-                    <Gif />
+                    <Gif handleGifLinkChange={handleGifLinkChange}/>
                 </> :
                 null
             }
