@@ -5,7 +5,7 @@ const useGif = () => {
 
   const getGifs = async (searchText) => {
       const api1 = import.meta.env.VITE_API_KEY;
-      const gifUrl = `https://api.giphy.com/v1/gifs/search?api_key=${api1}&q=${searchText}&limit=5&offset=0&rating=g&lang=en&bundle=messaging_non_clips`;
+      const gifUrl = `https://api.giphy.com/v1/gifs/search?api_key=${api1}&q=${searchText}&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`;
   
       try {
         const [res1] = await Promise.all([
@@ -33,28 +33,39 @@ const useGif = () => {
 const Gif = () => {
     const [searchText, setSearchText] = useState("");
     const [gifList, setGifList] = useState([]);
+    const [loading, setLoading] = useState(false);
     const { getGifs } = useGif();
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
         const list = await getGifs(searchText);
         setGifList(list);
+        setLoading(false);
     };
 
     return (
         <div className={styles.GifContainer}>
-            <div className={styles.topContainer}>
-                <input type="text" className={styles.searchBar} placeholder='Search GIFs' value={searchText} onChange={(e) => setSearchText(e.target.value)}/>
-                <button className={styles.submitButton} onClick={handleSubmit}>Submit</button>
-            </div>
-  
-            <div className={styles.gif}>
-              {
-                gifList.map((gif, i) => {
-                  return (
-                    <img src={gif.images.fixed_height.url} alt="" key={i}/>
-                  )
-                })
-              }
-            </div> 
+            <form action="" method='post' onSubmit={handleSubmit}>
+              <div className={styles.topContainer}>
+                    <input type="text" className={styles.searchBar} placeholder='Search GIFs' value={searchText} onChange={(e) => setSearchText(e.target.value)}/>
+                    <button type='submit' className={styles.submitButton} onClick={handleSubmit}>Submit</button>
+              </div>
+            </form>
+
+            {
+              loading ? 
+              <p className={styles.loadingLine}>Loading...</p> :
+
+              <div className={styles.gif}>
+                {
+                  gifList.map((gif, i) => {
+                    return (
+                      <img src={gif.images.fixed_height.url} alt="" key={i} className={styles.gifImg}/>
+                    )
+                  })
+                }
+              </div> 
+            }
             
         </div>
     )
