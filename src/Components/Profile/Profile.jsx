@@ -45,26 +45,26 @@ const useUser = () => {
 };
 
 const Profile = () => {
-    // const { userData: initialUser, updateUser } = useUser();
-    // const [user, setUserData] = useState(initialUser);
-    // const { bio, followers, following, github, googleId, id, photo, username, website } = user;
-    // const [Bio, setBio] = useState(bio);
-    // const [Website, setWebsite] = useState(website);
-    // const [Github, setGithub] = useState(github);
-    // const [isEditing, setIsEditing] = useState(false);
+    const { userData: initialUser, updateUser } = useUser();
+    const [user, setUserData] = useState(initialUser);
+    const { bio, followers, following, github, googleId, id, photo, username, website } = user;
+    const [Bio, setBio] = useState(bio);
+    const [Website, setWebsite] = useState(website);
+    const [Github, setGithub] = useState(github);
+    const [isEditing, setIsEditing] = useState(false);
 
-    // function handleEditClick() {
-    //     setIsEditing(!isEditing);
-    // }
-    // const handleSaveClick = async (data) => {
-    //     setIsEditing(!isEditing);
-    //     const updatedData = await updateUser(data);
-    //     setUserData(updatedData);
-    // };
+    function handleEditClick() {
+        setIsEditing(!isEditing);
+    }
+    const handleSaveClick = async (data) => {
+        setIsEditing(!isEditing);
+        const updatedData = await updateUser(data);
+        setUserData(updatedData);
+    };
     return (
         <div className={styles.profilePage}>
 
-            {/* <div className={styles.user}>
+            <div className={styles.user}>
                 <img src={photo} alt="" className={styles.profilePhoto}/>
                 <p>{username}</p>
             </div>
@@ -118,7 +118,7 @@ const Profile = () => {
             }
 
             <p className={styles.userPostText}>{username}'s Posts</p>
-            <hr /> */}
+            <hr />
         </div>
     )
 };

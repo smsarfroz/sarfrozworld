@@ -4,6 +4,7 @@ import Post from "./Components/Post/Post.jsx";
 import Profile from "./Components/Profile/Profile.jsx";
 import Search from "./Components/Search/Search.jsx";
 import ErrorPage from "../ErrorPage.jsx";
+import Login from "./Components/Login/Login.jsx";
 
 const routes = [
     {
@@ -25,6 +26,10 @@ const routes = [
             {
                 path: "/search",
                 element: <Search />,
+            },
+            {
+                path: "/login",
+                element: <Login />
             }
         ],
         errorElement: <ErrorPage />

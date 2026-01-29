@@ -68,16 +68,16 @@ const useFetchData = () => {
 };
 
 function App() {
-  // const { loading, error, userData, setUserData } = useFetchData();
+  const { loading, error, userData, setUserData } = useFetchData();
 
-  // console.log("userData in App.js", userData);
+  console.log("userData in App.js", userData);
 
-  // if (loading) {
-  //   return <Loading />;
-  // }
-  // if (error) {
-  //   return <ErrorPage />;
-  // }
+  if (loading) {
+    return <Loading />;
+  }
+  if (error) {
+    return <ErrorPage />;
+  }
 
   return (
     <div className='sectionsContainer'>
@@ -95,9 +95,9 @@ function App() {
 
 
       <div className="commonBackground">
-        {/* <SarfrozContext.Provider value={{ userData, setUserData }}> */}
+        <SarfrozContext.Provider value={{ userData, setUserData }}>
           <Outlet />
-        {/* </SarfrozContext.Provider> */}
+        </SarfrozContext.Provider>
       </div>
 
     </div>
