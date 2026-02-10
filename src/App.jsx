@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Outlet } from 'react-router';
 // import { sarfrozContext } from './sarfrozContext';
 import { FiHome } from "react-icons/fi";
@@ -13,9 +13,9 @@ import ErrorPage from '../ErrorPage.jsx';
 import { SarfrozContext } from './sarfrozContext.js';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
+const api1 = `${VITE_BASE_URL}/users/profile`;
 
-const useFetchData = () => {
-  const api1 = `${VITE_BASE_URL}/users/profile`;
+const useFetchData = (userId) => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,15 +24,18 @@ const useFetchData = () => {
     const fetchData = async () => {
       try {
         console.log("before get fetch in App.js");
+        let data = {};
+        data['userId'] = userId;
         const [res1] = await Promise.all([
           fetch(api1, {
-            method: 'GET',
+            method: 'POST',
             credentials: 'include',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
             },
-            mode: 'cors'
+            mode: 'cors',
+            body: JSON.stringify(data)
           })
         ]);
         console.log("res1", res1);
@@ -61,14 +64,15 @@ const useFetchData = () => {
 
     fetchData();
 
-  }, [api1]);
+  }, []);
 
 
   return { loading, error, userData, setUserData};
 };
 
 function App() {
-  const { loading, error, userData, setUserData } = useFetchData();
+  const { userId } = useContext(SarfrozContext);
+  const { loading, error, userData, setUserData } = useFetchData(userId);
 
   console.log("userData in App.js", userData);
 
@@ -90,6 +94,7 @@ function App() {
           <p><LuPenLine size={22}/><Link to='/post'>Post</Link></p>
           <p><IoPersonSharp size={22}/><Link to='/profile'>Profile</Link></p>
           <p><MdLogout size={22}/><Link to='/logout'>Logout</Link></p>
+          {/* <a href={api1} target='_blank' rel='noopener noreferrer'>Authenticate with Google</a> */}
         </div>
       </div>
 

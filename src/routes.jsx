@@ -5,6 +5,7 @@ import Profile from "./Components/Profile/Profile.jsx";
 import Search from "./Components/Search/Search.jsx";
 import ErrorPage from "../ErrorPage.jsx";
 import Login from "./Components/Login/Login.jsx";
+import Signup from "./Components/Signup/Signup.jsx";
 
 const routes = [
     {
@@ -30,6 +31,10 @@ const routes = [
             {
                 path: "/login",
                 element: <Login />
+            },
+            {
+                path: '/',
+                element: <Signup />
             }
         ],
         errorElement: <ErrorPage />
