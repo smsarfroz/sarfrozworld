@@ -71,10 +71,18 @@ const useFetchData = (userId) => {
 };
 
 function App() {
-  const { userId } = useContext(SarfrozContext);
+  // const { userId } = useContext(SarfrozContext);
+  const [ userId, setUserId ] = useState(() => {
+    const savedUserId = localStorage.getItem('userId');
+    // console.log('savedUserId', savedUserId);
+    // console.log(typeof savedUserId === 'undefined');
+    // if (savedUserId === undefined) return 0;
+    return savedUserId ? JSON.parse(savedUserId) : 0;
+  })
   const { loading, error, userData, setUserData } = useFetchData(userId);
 
   console.log("userData in App.js", userData);
+
 
   if (loading) {
     return <Loading />;
@@ -100,7 +108,7 @@ function App() {
 
 
       <div className="commonBackground">
-        <SarfrozContext.Provider value={{ userData, setUserData }}>
+        <SarfrozContext.Provider value={{ userData, setUserData, userId, setUserId }}>
           <Outlet />
         </SarfrozContext.Provider>
       </div>

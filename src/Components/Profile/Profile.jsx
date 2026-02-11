@@ -53,11 +53,14 @@ const Profile = () => {
     const [Github, setGithub] = useState(github);
     const [isEditing, setIsEditing] = useState(false);
 
+    console.log('isEditing, user', isEditing, user, Bio, initialUser);
+
     function handleEditClick() {
-        setIsEditing(!isEditing);
+        setIsEditing(true);
+        // console.log('inside edit click fn', isEditing);
     }
     const handleSaveClick = async (data) => {
-        setIsEditing(!isEditing);
+        setIsEditing(false);
         const updatedData = await updateUser(data);
         setUserData(updatedData);
     };
