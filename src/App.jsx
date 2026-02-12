@@ -23,7 +23,7 @@ const useFetchData = (userId) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("before get fetch in App.js");
+        // console.log("before get fetch in App.js");
         let data = {};
         data['userId'] = userId;
         const [res1] = await Promise.all([
@@ -38,12 +38,12 @@ const useFetchData = (userId) => {
             body: JSON.stringify(data)
           })
         ]);
-        console.log("res1", res1);
+        // console.log("res1", res1);
         if (!res1.ok) {
           throw new Error(`HTTP error! Status: ${Response.status}`);
         }
-        console.log("res1", res1);
-        console.log("res1 headers:", res1.headers.get('Set-Cookie'));
+        // console.log("res1", res1);
+        // console.log("res1 headers:", res1.headers.get('Set-Cookie'));
         const data1 = await res1.json();
 
         setUserData(data1[0]);
@@ -81,7 +81,7 @@ function App() {
   })
   const { loading, error, userData, setUserData } = useFetchData(userId);
 
-  console.log("userData in App.js", userData);
+  // console.log("userData in App.js", userData);
 
 
   if (loading) {
