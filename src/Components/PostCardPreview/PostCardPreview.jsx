@@ -2,6 +2,7 @@ import styles from './PostCardPreview.module.css';
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaRegHeart } from "react-icons/fa";
 import { FaRegComment } from "react-icons/fa";
+import { Link } from 'react-router';
 
 function PostCardPreview({ post, user }) {
     return (
@@ -9,7 +10,9 @@ function PostCardPreview({ post, user }) {
             <div className={styles.userDetails}>
                 <div className={styles.leftPart}>
                     <img src={user.photo} alt="" className={styles.profilePhoto}/>
-                    <p>{user.username}</p>
+                    <Link to={`/u/${user.username}`}>
+                        <p>{user.username}</p>
+                    </Link>
                     <p>• {post.createdAt}</p>
                 </div>
                 {/* <RiDeleteBin6Line /> */}

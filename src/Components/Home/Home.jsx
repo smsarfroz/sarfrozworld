@@ -12,25 +12,26 @@ const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const api1 = `${VITE_BASE_URL}/home`;
 
-const useFetchData = () => {
+const useFetchData = (currentCat) => {
   const [postData, setPostData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
-        // let data = {};
-        // data['userId'] = userId;
+        let data = {};
+        data['currentCat'] = currentCat;
         // console.log('data in fetch post', data);
         try {
             const [res1] = await Promise.all([
                 fetch(api1, {
                     mode: 'cors',
                     credentials: 'include',
-                    method: "get",
+                    method: "post",
                     headers: {
                         "Content-Type": "application/json",
                     },
+                    body: JSON.stringify(data)
                 })
             ]);
             console.log(res1);
@@ -40,12 +41,9 @@ const useFetchData = () => {
 
             const data1 = await res1.json();
             setPostData(data1);
-            // return data1;
         
         } catch (error) {
             setError(error);
-            // console.error(`There was a problem with the fetch operation:`, error);
-            // throw error;
         } finally {
             setLoading(false);
         }
@@ -59,8 +57,8 @@ const useFetchData = () => {
 };
 
 const Home = () => {
-    const { loading, error, postData, setPostData } = useFetchData();
-    
+    const [currentCat, setCurrentCat] = useState(0);
+    const { loading, error, postData, setPostData } = useFetchData(currentCat);
     console.log("postData in Home", postData);
 
     if (loading) {
@@ -70,9 +68,20 @@ const Home = () => {
         return <ErrorPage />;
     }    
 
+    const catStyle = {
+        color: 'blue'
+    }
+    const clickHandler = () => {
+        setCurrentCat(!currentCat);
+    }
+
     return (
         <div className={styles.homePage}>
             
+            <div className={styles.categories}>
+                <p style={currentCat == 0 ? catStyle : null} onClick={clickHandler} className={styles.cat}>Recent</p>
+                <p style={currentCat == 1 ? catStyle : null} onClick={clickHandler} className={styles.cat}>Most Liked</p>
+            </div>
             <div className={styles.posts}>
                 {
                     postData.map((post) => {
