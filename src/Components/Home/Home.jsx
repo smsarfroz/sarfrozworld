@@ -81,6 +81,7 @@ const Home = () => {
                                 <PostCardPreview 
                                     key={post.id}
                                     post={post}
+                                    user={post.user}
                                 />
                             </Link>
                         )

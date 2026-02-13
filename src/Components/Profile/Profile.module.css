@@ -71,3 +71,10 @@
     align-items: center;
     gap: 1vw;
 }
+
+.posts {
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+    margin-top: 2vw;
+}

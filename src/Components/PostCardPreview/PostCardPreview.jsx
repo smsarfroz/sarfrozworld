@@ -3,13 +3,13 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaRegHeart } from "react-icons/fa";
 import { FaRegComment } from "react-icons/fa";
 
-function PostCardPreview({ post }) {
+function PostCardPreview({ post, user }) {
     return (
         <div className={styles.post}>
             <div className={styles.userDetails}>
                 <div className={styles.leftPart}>
-                    <img src={post.user.photo} alt="" className={styles.profilePhoto}/>
-                    <p>{post.user.username}</p>
+                    <img src={user.photo} alt="" className={styles.profilePhoto}/>
+                    <p>{user.username}</p>
                     <p>• {post.createdAt}</p>
                 </div>
                 {/* <RiDeleteBin6Line /> */}

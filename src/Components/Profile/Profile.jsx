@@ -6,6 +6,7 @@ import { MdOutlineModeEdit } from "react-icons/md";
 import { CiGlobe } from "react-icons/ci";
 import { RiGithubLine } from "react-icons/ri";
 import { LuBiohazard } from 'react-icons/lu';
+import PostCardPreview from '../PostCardPreview/PostCardPreview.jsx';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
@@ -53,7 +54,9 @@ const Profile = () => {
     const { bio, followers, following, github, id, photo, username, website } = editValue;
     const [isEditing, setIsEditing] = useState(false);
     const { userId } = useContext(SarfrozContext);
+    const posts = initialUser['posts'];
 
+    console.log('userData', initialUser);
     // console.log('isEditing, user', isEditing, editValue);
 
     function handleEditClick() {
@@ -125,6 +128,22 @@ const Profile = () => {
 
             <p className={styles.userPostText}>{editValue['username']}'s Posts</p>
             <hr />
+
+            <div className={styles.posts}>
+                {
+                    posts.map((post) => {
+                        return (
+                            <Link to={`/posts/${post.id}`} key={post.id}>
+                                <PostCardPreview 
+                                    key={post.id}
+                                    post={post}
+                                    user={editValue}
+                                />
+                            </Link>
+                        )
+                    })
+                }
+            </div>
         </div>
     )
 };
