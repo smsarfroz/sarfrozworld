@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { Outlet } from 'react-router';
-// import { sarfrozContext } from './sarfrozContext';
+// import { sarfrozContext } from './sarfrozContext'; 
 import { FiHome } from "react-icons/fi";
 import { LuSearch } from "react-icons/lu";
 import { IoColorFill, IoPersonSharp } from "react-icons/io5";
@@ -65,7 +65,6 @@ const useFetchData = (userId) => {
     fetchData();
 
   }, []);
-
 
   return { loading, error, userData, setUserData};
 };
