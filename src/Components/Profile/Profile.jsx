@@ -52,7 +52,7 @@ const Profile = () => {
     const [editValue, setEditValue] = useState(user);
     const { bio, followers, following, github, id, photo, username, website } = editValue;
     const [isEditing, setIsEditing] = useState(false);
-    const { userId, setUserId } = useContext(SarfrozContext);
+    const { userId } = useContext(SarfrozContext);
 
     // console.log('isEditing, user', isEditing, editValue);
 

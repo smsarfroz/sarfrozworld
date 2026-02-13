@@ -5,6 +5,8 @@ import { TbMovie } from "react-icons/tb";
 import { useRef, useState } from 'react';
 import { GiCancel } from "react-icons/gi";
 import Gif from '../Gif/Gif.jsx';
+import { SarfrozContext } from '../../sarfrozContext.js';
+import { useContext } from 'react';
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const Post = () => {
@@ -14,6 +16,7 @@ const Post = () => {
     const [showImage, setShowImage] = useState(false);
     const [showGif, setShowGif] = useState(false);
     const [text, setText] = useState(null);
+    const { userId } = useContext(SarfrozContext);
 
     const handlePictureClick = () => {
         fileInputRef.current.click();
@@ -45,6 +48,7 @@ const Post = () => {
             let data = {};
             data['text'] = text;
             data['imageLink'] = imageLink;
+            data['userId'] = userId;
             console.log('data', data);
             try {
                 const [res1] = await Promise.all([
