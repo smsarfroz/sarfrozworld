@@ -54,9 +54,12 @@ const Profile = () => {
     const { bio, followers, following, github, id, photo, username, website } = editValue;
     const [isEditing, setIsEditing] = useState(false);
     const { userId } = useContext(SarfrozContext);
-    const posts = initialUser['posts'];
+    const postsUnsorted = initialUser['posts'];
+    const posts = [...postsUnsorted].sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+    });
 
-    console.log('userData', initialUser);
+    // console.log('userData', initialUser);
     // console.log('isEditing, user', isEditing, editValue);
 
     function handleEditClick() {
@@ -133,13 +136,13 @@ const Profile = () => {
                 {
                     posts.map((post) => {
                         return (
-                            <Link to={`/posts/${post.id}`} key={post.id}>
+                            // <Link to={`/posts/${post.id}`} key={post.id}>
                                 <PostCardPreview 
                                     key={post.id}
                                     post={post}
                                     user={editValue}
                                 />
-                            </Link>
+                            // </Link>
                         )
                     })
                 }

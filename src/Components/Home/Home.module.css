@@ -15,3 +15,7 @@
 .cat {
     cursor: pointer;
 }
+
+a {
+    cursor: default;
+}

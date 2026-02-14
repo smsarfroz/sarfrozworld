@@ -38,3 +38,11 @@
     gap: 1vw;
     margin-top: 0.5vw;
 }
+
+.username {
+    cursor: pointer;
+}
+
+.icon {
+    cursor: pointer;
+}

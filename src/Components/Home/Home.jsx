@@ -51,15 +51,16 @@ const useFetchData = (currentCat) => {
 
     fetchPosts();
 
-  }, []);
+  }, [currentCat]);
 
-  return { loading, error, postData, setPostData};
+  return { loading, error, postData };
 };
 
 const Home = () => {
     const [currentCat, setCurrentCat] = useState(0);
-    const { loading, error, postData, setPostData } = useFetchData(currentCat);
-    console.log("postData in Home", postData);
+    const { loading, error, postData } = useFetchData(currentCat);
+    // console.log("postData in Home", postData);
+    console.log('curretCat', currentCat);
 
     if (loading) {
         return <Loading />;
@@ -73,6 +74,7 @@ const Home = () => {
     }
     const clickHandler = () => {
         setCurrentCat(!currentCat);
+        // window.location.reload();
     }
 
     return (
@@ -86,13 +88,13 @@ const Home = () => {
                 {
                     postData.map((post) => {
                         return (
-                            <Link to={`/posts/${post.id}`} key={post.id}>
+                            // <Link to={`/posts/${post.id}`} key={post.id}>
                                 <PostCardPreview 
                                     key={post.id}
                                     post={post}
                                     user={post.user}
                                 />
-                            </Link>
+                            // </Link>
                         )
                     })
                 }
