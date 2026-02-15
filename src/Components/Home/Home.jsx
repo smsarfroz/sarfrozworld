@@ -21,7 +21,6 @@ const useFetchData = (currentCat) => {
     const fetchPosts = async () => {
         let data = {};
         data['currentCat'] = currentCat;
-        // console.log('data in fetch post', data);
         try {
             const [res1] = await Promise.all([
                 fetch(api1, {
@@ -59,8 +58,6 @@ const useFetchData = (currentCat) => {
 const Home = () => {
     const [currentCat, setCurrentCat] = useState(0);
     const { loading, error, postData } = useFetchData(currentCat);
-    // console.log("postData in Home", postData);
-    console.log('curretCat', currentCat);
 
     if (loading) {
         return <Loading />;
@@ -74,7 +71,6 @@ const Home = () => {
     }
     const clickHandler = () => {
         setCurrentCat(!currentCat);
-        // window.location.reload();
     }
 
     return (
@@ -88,13 +84,11 @@ const Home = () => {
                 {
                     postData.map((post) => {
                         return (
-                            // <Link to={`/posts/${post.id}`} key={post.id}>
-                                <PostCardPreview 
-                                    key={post.id}
-                                    post={post}
-                                    user={post.user}
-                                />
-                            // </Link>
+                            <PostCardPreview 
+                                key={post.id}
+                                post={post}
+                                user={post.user}
+                            />
                         )
                     })
                 }

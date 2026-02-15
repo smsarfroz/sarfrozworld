@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import styles from './Profile.module.css';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { SarfrozContext } from '../../sarfrozContext';
 import { MdOutlineModeEdit } from "react-icons/md";
 import { CiGlobe } from "react-icons/ci";
@@ -11,44 +11,42 @@ import PostCardPreview from '../PostCardPreview/PostCardPreview.jsx';
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const useUser = () => {
-  const api1 = `${VITE_BASE_URL}/users/profile/update`;
-  const { userData, setUserData } = useContext(SarfrozContext);
+    const api1 = `${VITE_BASE_URL}/users/profile/update`;
+    const { userData, setUserData } = useContext(SarfrozContext);
 
-  const updateUser = async (data) => {
-      console.log('data in updateUser', data);
-      try {
-        const [res1] = await Promise.all([
-          fetch(api1, {
-            mode: 'cors',
-            credentials: 'include',
-            method: "post",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data)
-          })
-        ]);
-        console.log('res1', res1);
-        if (!res1.ok) {
-          throw new Error(`HTTP error! Status: ${Response.status}`);
+    const updateUser = async (data) => {
+        try {
+            const [res1] = await Promise.all([
+            fetch(api1, {
+                mode: 'cors',
+                credentials: 'include',
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data)
+            })
+            ]);
+            if (!res1.ok) {
+            throw new Error(`HTTP error! Status: ${Response.status}`);
+            }
+
+            const data1 = await res1.json();
+            setUserData(data1);
+            return data1;
+            
+        } catch (error) {
+            console.error(`There was a problem with the fetch operation:`, error);
+            throw error;
         }
+    };
 
-        const data1 = await res1.json();
-        console.log('data1', data1);
-        setUserData(data1);
-        return data1;
-        
-      } catch (error) {
-        console.error(`There was a problem with the fetch operation:`, error);
-        throw error;
-      }
-  };
-
-  return { userData, updateUser };
+    return { userData, updateUser };
 };
 
 const Profile = () => {
     const { userData: initialUser, updateUser } = useUser();
+    console.log('initialUser', initialUser);
     const [user, setUserData] = useState(initialUser);
     const [editValue, setEditValue] = useState(user);
     const { bio, followers, following, github, id, photo, username, website } = editValue;
@@ -59,8 +57,6 @@ const Profile = () => {
         return new Date(b.createdAt) - new Date(a.createdAt);
     });
 
-    // console.log('userData', initialUser);
-    // console.log('isEditing, user', isEditing, editValue);
 
     function handleEditClick() {
         setIsEditing(true);
@@ -68,11 +64,13 @@ const Profile = () => {
     }
     const handleSaveClick = async (data) => {
         setIsEditing(false);
-        console.log('data in save fn', data);
         const updatedData = await updateUser(data);
-        console.log('updatedData', updatedData);
         setUserData(updatedData);
     };
+    // useEffect(() => {
+    //     // window.location.reload();
+    // }, []);
+
     return (
         <div className={styles.profilePage}>
 
@@ -136,13 +134,11 @@ const Profile = () => {
                 {
                     posts.map((post) => {
                         return (
-                            // <Link to={`/posts/${post.id}`} key={post.id}>
-                                <PostCardPreview 
-                                    key={post.id}
-                                    post={post}
-                                    user={editValue}
-                                />
-                            // </Link>
+                            <PostCardPreview 
+                                key={post.id}
+                                post={post}
+                                user={editValue}
+                            />
                         )
                     })
                 }
