@@ -4,14 +4,18 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaRegComment } from "react-icons/fa";
 import { Link } from 'react-router';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 function PostCardPreview({ post, user }) {
-    const [tempLike, setTempLke] = useState(post.likes);
-
+    const [tempLike, setTempLike] = useState(null);
+    useEffect(() => {
+        setTempLike(post.likes);
+    }, [post.likes]);
+    console.log('post from PostCardPreview', post, post.likes, tempLike);
     const handleLikes = async () => {
-        setTempLke((prevLike) => prevLike + 1);
+        setTempLike((prevLike) => prevLike + 1);
         const api1 = `${VITE_BASE_URL}/post/update`;
         const likePost = async () => {
             let data = {};
@@ -70,3 +74,4 @@ function PostCardPreview({ post, user }) {
 }
 
 export default PostCardPreview;
+

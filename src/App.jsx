@@ -11,9 +11,12 @@ import Loading from './Components/Loading/Loading.jsx';
 import './App.css'
 import ErrorPage from '../ErrorPage.jsx';
 import { SarfrozContext } from './sarfrozContext.js';
+import { QueryClientProvider, QueryClient, Query } from "@tanstack/react-query"
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 const api1 = `${VITE_BASE_URL}/users/profile`;
+
+const pizza = new QueryClient();
 
 const useFetchData = (userId) => {
   const [userData, setUserData] = useState(null);
@@ -107,9 +110,11 @@ function App() {
 
 
       <div className="commonBackground">
-        <SarfrozContext.Provider value={{ userData, setUserData, userId, setUserId }}>
-          <Outlet />
-        </SarfrozContext.Provider>
+        <QueryClientProvider client={pizza}>
+          <SarfrozContext.Provider value={{ userData, setUserData, userId, setUserId }}>
+            <Outlet />
+          </SarfrozContext.Provider>
+        </QueryClientProvider>
       </div>
 
     </div>
