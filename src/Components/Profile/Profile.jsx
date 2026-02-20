@@ -77,7 +77,7 @@ const Profile = () => {
                 }
                 
                 const jsonData = await response.json();
-                console.log('Response data:', jsonData);
+                // console.log('Response data:', jsonData);
                 return jsonData;
                 
             } catch (error) {
@@ -102,7 +102,7 @@ const Profile = () => {
     useEffect(() => {
         refetch();
         if (data) {
-            console.log('data', data);
+            // console.log('data', data);
             setEditValue(data[0]);
         }
     
@@ -118,12 +118,12 @@ const Profile = () => {
     // setEditValue(data[0]);
     const { bio, followers, following, github, id, photo, username, website } = editValue;
     // console.log('posts', data[0]['posts']);
-    console.log('editValue', editValue['posts']);
+    // console.log('editValue', editValue['posts']);
     const postsUnsorted = editValue['posts'] || [];
     const posts = [...postsUnsorted].sort((a, b) => {
         return new Date(b.createdAt) - new Date(a.createdAt);
     });
-    console.log('posts', posts);
+    // console.log('posts', posts);
 
     function handleEditClick() {
         setIsEditing(true);

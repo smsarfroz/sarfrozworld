@@ -58,6 +58,7 @@ const useFetchData = (currentCat) => {
 const Home = () => {
     const [currentCat, setCurrentCat] = useState(0);
     const { loading, error, postData } = useFetchData(currentCat);
+    
 
     if (loading) {
         return <Loading />;

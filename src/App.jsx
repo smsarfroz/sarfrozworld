@@ -84,7 +84,14 @@ function App() {
   const { loading, error, userData, setUserData } = useFetchData(userId);
 
   // console.log("userData in App.js", userData);
+  const [likesState, setLikesState] = useState({});
 
+  const updateLikeState = (postId, liked, likesCount) => {
+    setLikesState(prev => ({
+      ...prev,
+      [postId]: { liked, likesCount }
+    }));
+  };
 
   if (loading) {
     return <Loading />;
@@ -111,7 +118,7 @@ function App() {
 
       <div className="commonBackground">
         <QueryClientProvider client={pizza}>
-          <SarfrozContext.Provider value={{ userData, setUserData, userId, setUserId }}>
+          <SarfrozContext.Provider value={{ userData, setUserData, userId, setUserId, likesState, updateLikeState }}>
             <Outlet />
           </SarfrozContext.Provider>
         </QueryClientProvider>
