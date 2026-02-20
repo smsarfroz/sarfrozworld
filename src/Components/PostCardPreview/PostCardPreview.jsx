@@ -11,7 +11,7 @@ import { FaHeart } from "react-icons/fa";
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 function PostCardPreview({ post, user }) {
-    const { likesState, updateLikeState } = useContext(SarfrozContext);
+    const { likesState, updateLikeState, userId } = useContext(SarfrozContext);
     // console.log('likesState', likesState, likesState[post.id], post.id, likesState[post.id]['likesCount']);
     const [tempLike, setTempLike] = useState(null);
     const [liked, setLiked] = useState(null);
@@ -46,6 +46,7 @@ function PostCardPreview({ post, user }) {
         let data = {};
         data['postId'] = post.id;
         data['delta'] = delta;
+        data['userId'] = userId;
         // console.log('data', data);
         try {
             const [res1] = await Promise.all([
