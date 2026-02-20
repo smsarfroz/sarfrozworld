@@ -39,6 +39,7 @@ const useFetchData = (currentCat) => {
             }
 
             const data1 = await res1.json();
+            console.log('data1', data1);
             setPostData(data1);
         
         } catch (error) {

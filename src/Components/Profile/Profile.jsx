@@ -112,18 +112,38 @@ const Profile = () => {
 
     if (error) return "An error has occurred: " + error.message
 
-    if (!editValue) {
-        return <div>Loading user data...</div>;
-    }
+    console.log('bool', !editValue , (data.length !== 0), data.length );
+
+    // if (!editValue) {
+    //     return <div>Loading user data...</div>;
+    // }
     // setEditValue(data[0]);
-    const { bio, followers, following, github, id, photo, username, website } = editValue;
-    // console.log('posts', data[0]['posts']);
-    // console.log('editValue', editValue['posts']);
-    const postsUnsorted = editValue['posts'] || [];
+    let bio = null, followers = null, following = null, github = null, 
+    id = null, photo = null, username = null, website = null;
+    let postsUnsorted = [];
+
+    console.log('editValue', editValue, editValue?.length);
+
+    // if (editValue?.length !== undefined) {
+    //     ({ bio, followers, following, github, id, photo, username, website } = editValue);
+    //     postsUnsorted = editValue['posts'] || [];
+    // }
+
+    // const posts = [...postsUnsorted].sort((a, b) => {
+    //     return new Date(b.createdAt) - new Date(a.createdAt);
+    // });
+
+    if (editValue && typeof editValue === 'object') {
+        ({ bio, followers, following, github, id, photo, username, website } = editValue);
+        
+        postsUnsorted = editValue.posts || [];
+    }
+
     const posts = [...postsUnsorted].sort((a, b) => {
-        return new Date(b.createdAt) - new Date(a.createdAt);
+        const dateA = a?.createdAt ? new Date(a.createdAt) : new Date(0);
+        const dateB = b?.createdAt ? new Date(b.createdAt) : new Date(0);
+        return dateB - dateA;
     });
-    // console.log('posts', posts);
 
     function handleEditClick() {
         setIsEditing(true);
@@ -134,9 +154,6 @@ const Profile = () => {
         const updatedData = await updateUser(data);
         setUserData(updatedData);
     };
-    // useEffect(() => {
-    //     // window.location.reload();
-    // }, []);
 
     return (
         <div className={styles.profilePage}>
