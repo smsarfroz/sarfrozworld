@@ -46,3 +46,7 @@
 .icon {
     cursor: pointer;
 }
+
+.deleteIcon {
+    cursor: pointer;
+}
