@@ -15,7 +15,7 @@ const api1 = `${VITE_BASE_URL}/home`;
 
 const Home = () => {
     const [currentCat, setCurrentCat] = useState(0);
-    const [postData, setPostData] = useState(null);
+    const [deleted, setDeleted] = useState(false);
     const { isPending, error, data, refetch } = useQuery({
         queryKey: ["postData", currentCat],
         staleTime: 1000 * 60 * 30,
@@ -33,7 +33,6 @@ const Home = () => {
                     },
                     body: JSON.stringify(dataToSend)
                 });
-                console.log('response', response);    
                 if (!response.ok) {
                     const errorText = await response.text();
                     console.error('Error response:', errorText);
@@ -41,9 +40,6 @@ const Home = () => {
                 }
                 
                 const jsonData = await response.json();
-                console.log('jsonData', jsonData);
-                console.log('postData', postData);
-                // setPostData(jsonData);
                 return jsonData;
                 
             } catch (error) {
@@ -56,11 +52,12 @@ const Home = () => {
         refetchOnReconnect: true,
     })
 
+    console.log("deleted", deleted);
     useEffect(() => {
 
         refetch();
-        
-    }, [ refetch ]);
+        setDeleted(false);
+    }, [ refetch, data, deleted ]);
 
     const catStyle = {
         color: 'blue'
@@ -101,6 +98,7 @@ const Home = () => {
                                 key={post.id}
                                 post={post}
                                 user={post.user}
+                                setDeleted={setDeleted}
                             />
                         )
                     })

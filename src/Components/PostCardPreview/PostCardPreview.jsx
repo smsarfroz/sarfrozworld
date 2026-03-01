@@ -11,10 +11,11 @@ import { RiDeleteBinLine } from "react-icons/ri";
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
-function PostCardPreview({ post, user }) {
+function PostCardPreview({ post, user, setDeleted }) {
     const { likesState, updateLikeState, userId } = useContext(SarfrozContext);
     const [tempLike, setTempLike] = useState(null);
     const [liked, setLiked] = useState(null);
+    // console.log("postcard preview");
 
     useEffect(() => {
         
@@ -69,8 +70,9 @@ function PostCardPreview({ post, user }) {
         const api1 = `${VITE_BASE_URL}/post/delete`;
         let data = {};
         data['postId'] = post.id;
+        console.log("inside delete function");
         try {
-            const [res1] = await Promise.all([
+            const res1 = await (
                 fetch(api1, {
                     mode: 'cors',
                     credentials: 'include',
@@ -80,17 +82,17 @@ function PostCardPreview({ post, user }) {
                     },
                     body: JSON.stringify(data)
                 })
-            ]);
-            console.log('res1 from delete post', res1); 
+            );
             if (!res1.ok) {
                 throw new Error(`HTTP error! Status: ${Response.status}`);
             }
-            window.location.reload();
             
         } catch (error) {
             console.error(`There was a problem with the fetch operation:`, error);
             throw error;
         }
+        console.log("postCard Preview about to delete");
+        setDeleted(true);
         
     };
 
