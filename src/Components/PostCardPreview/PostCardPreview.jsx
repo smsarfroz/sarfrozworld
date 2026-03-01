@@ -63,7 +63,9 @@ function PostCardPreview({ post, user }) {
         }
     };
 
-    const handleDelete = async () => {
+    const handleDelete = async (e) => {
+        e.stopPropagation();
+        e.preventDefault();
         const api1 = `${VITE_BASE_URL}/post/delete`;
         let data = {};
         data['postId'] = post.id;
@@ -79,14 +81,17 @@ function PostCardPreview({ post, user }) {
                     body: JSON.stringify(data)
                 })
             ]);
+            console.log('res1 from delete post', res1); 
             if (!res1.ok) {
                 throw new Error(`HTTP error! Status: ${Response.status}`);
             }
-
+            window.location.reload();
+            
         } catch (error) {
             console.error(`There was a problem with the fetch operation:`, error);
             throw error;
         }
+        
     };
 
     return (

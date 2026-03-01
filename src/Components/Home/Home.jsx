@@ -7,84 +7,95 @@ import ErrorPage from '../../../ErrorPage.jsx';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import PostCardPreview from '../PostCardPreview/PostCardPreview.jsx';
+import { useQuery } from '@tanstack/react-query';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const api1 = `${VITE_BASE_URL}/home`;
 
-const useFetchData = (currentCat) => {
-  const [postData, setPostData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-        let data = {};
-        data['currentCat'] = currentCat;
-        try {
-            const [res1] = await Promise.all([
-                fetch(api1, {
+const Home = () => {
+    const [currentCat, setCurrentCat] = useState(0);
+    const [postData, setPostData] = useState(null);
+    const { isPending, error, data, refetch } = useQuery({
+        queryKey: ["postData", currentCat],
+        staleTime: 1000 * 60 * 30,
+        queryFn: async () => {
+            try {
+                let dataToSend = {};
+                dataToSend['currentCat'] = currentCat;
+                
+                const response = await fetch(api1, {
                     mode: 'cors',
                     credentials: 'include',
                     method: "post",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(data)
-                })
-            ]);
-            console.log(res1);
-            if (!res1.ok) {
-                throw new Error(`HTTP error! Status: ${Response.status}`);
+                    body: JSON.stringify(dataToSend)
+                });
+                console.log('response', response);    
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Error response:', errorText);
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                
+                const jsonData = await response.json();
+                console.log('jsonData', jsonData);
+                console.log('postData', postData);
+                // setPostData(jsonData);
+                return jsonData;
+                
+            } catch (error) {
+                console.error('Fetch error:', error);
+                throw error;
             }
+        },
+        refetchOnWindowFocus: true, 
+        refetchOnMount: true, 
+        refetchOnReconnect: true,
+    })
 
-            const data1 = await res1.json();
-            console.log('data1', data1);
-            setPostData(data1);
+    useEffect(() => {
+
+        refetch();
         
-        } catch (error) {
-            setError(error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    fetchPosts();
-
-  }, [currentCat]);
-
-  return { loading, error, postData };
-};
-
-const Home = () => {
-    const [currentCat, setCurrentCat] = useState(0);
-    const { loading, error, postData } = useFetchData(currentCat);
-    
-
-    if (loading) {
-        return <Loading />;
-    }
-    if (error) {
-        return <ErrorPage />;
-    }    
+    }, [ refetch ]);
 
     const catStyle = {
         color: 'blue'
     }
-    const clickHandler = () => {
-        setCurrentCat(!currentCat);
+    const clickHandler = (cur) => {
+        if (cur == 0) {
+            setCurrentCat(0);
+        } else {
+            setCurrentCat(1);
+        }
     }
 
+    if (isPending) {
+        console.log('isPending', isPending);
+        // return <Loading />;
+        return "Loading...";
+    }  
+    if (error) { 
+        return "An error has occured: " + error.message;
+    }
+
+    if (!data || !Array.isArray(data)) {
+        return "No posts available";
+    }
+ 
     return (
         <div className={styles.homePage}>
             
             <div className={styles.categories}>
-                <p style={currentCat == 0 ? catStyle : null} onClick={clickHandler} className={styles.cat}>Recent</p>
-                <p style={currentCat == 1 ? catStyle : null} onClick={clickHandler} className={styles.cat}>Most Liked</p>
+                <p style={currentCat == 0 ? catStyle : null} onClick={() => clickHandler(0)} className={styles.cat}>Recent</p>
+                <p style={currentCat == 1 ? catStyle : null} onClick={() => clickHandler(1)} className={styles.cat}>Most Liked</p>
             </div>
             <div className={styles.posts}>
                 {
-                    postData.map((post) => {
+                    data.map((post) => {
                         return (
                             <PostCardPreview 
                                 key={post.id}

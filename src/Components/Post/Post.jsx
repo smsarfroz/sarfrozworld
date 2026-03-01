@@ -7,9 +7,11 @@ import { GiCancel } from "react-icons/gi";
 import Gif from '../Gif/Gif.jsx';
 import { SarfrozContext } from '../../sarfrozContext.js';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const Post = () => {
+    const navigate = useNavigate();
     const [count, setCount] = useState(0);
     const fileInputRef = useRef(null);
     const [imageLink, setImageLink] = useState(null);
@@ -77,6 +79,7 @@ const Post = () => {
             }
         };
         sendPost();
+        navigate('/home');
     }
 
     return (
