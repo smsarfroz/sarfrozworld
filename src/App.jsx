@@ -15,11 +15,13 @@ import { QueryClientProvider, QueryClient, Query } from "@tanstack/react-query"
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 const api1 = `${VITE_BASE_URL}/users/profile`;
+const api2 = `${VITE_BASE_URL}/users/likesState`;
 
 const pizza = new QueryClient();
 
 const useFetchData = (userId) => {
   const [userData, setUserData] = useState(null);
+  const [likesState, setLikesState] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -29,8 +31,18 @@ const useFetchData = (userId) => {
         // console.log("before get fetch in App.js");
         let data = {};
         data['userId'] = userId;
-        const [res1] = await Promise.all([
+        const [res1, res2] = await Promise.all([
           fetch(api1, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            mode: 'cors',
+            body: JSON.stringify(data)
+          }),
+          fetch(api2, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -41,15 +53,17 @@ const useFetchData = (userId) => {
             body: JSON.stringify(data)
           })
         ]);
-        // console.log("res1", res1);
         if (!res1.ok) {
-          throw new Error(`HTTP error! Status: ${Response.status}`);
+          throw new Error(`HTTP error! Status: ${res1.status}`);
         }
-        // console.log("res1", res1);
-        // console.log("res1 headers:", res1.headers.get('Set-Cookie'));
+        if (!res2.ok) {
+          throw new Error(`HTTP error! Status: ${res2.status}`);
+        }
         const data1 = await res1.json();
+        const data2 = await res2.json();
 
         setUserData(data1[0]);
+        setLikesState(data2);
         setError(null);
 
       } catch (error) {
@@ -69,22 +83,17 @@ const useFetchData = (userId) => {
 
   }, []);
 
-  return { loading, error, userData, setUserData};
+  return { loading, error, userData, setUserData, likesState, setLikesState};
 };
 
 function App() {
-  // const { userId } = useContext(SarfrozContext);
   const [ userId, setUserId ] = useState(() => {
     const savedUserId = localStorage.getItem('userId');
-    // console.log('savedUserId', savedUserId);
-    // console.log(typeof savedUserId === 'undefined');
-    // if (savedUserId === undefined) return 0;
     return savedUserId ? JSON.parse(savedUserId) : 0;
   })
-  const { loading, error, userData, setUserData } = useFetchData(userId);
+  const { loading, error, userData, setUserData, likesState, setLikesState } = useFetchData(userId);
 
-  // console.log("userData in App.js", userData);
-  const [likesState, setLikesState] = useState({});
+  // const [likesState, setLikesState] = useState({});
 
   const updateLikeState = (postId, liked, likesCount) => {
     setLikesState(prev => ({

@@ -15,7 +15,6 @@ function PostCardPreview({ post, user, setDeleted }) {
     const { likesState, updateLikeState, userId } = useContext(SarfrozContext);
     const [tempLike, setTempLike] = useState(null);
     const [liked, setLiked] = useState(null);
-    // console.log("postcard preview");
 
     useEffect(() => {
         

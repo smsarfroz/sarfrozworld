@@ -52,11 +52,12 @@ const Home = () => {
         refetchOnReconnect: true,
     })
 
-    console.log("deleted", deleted);
+    // console.log("deleted", deleted);
     useEffect(() => {
 
         refetch();
         setDeleted(false);
+
     }, [ refetch, data, deleted ]);
 
     const catStyle = {
