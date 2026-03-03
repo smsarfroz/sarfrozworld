@@ -18,7 +18,7 @@ const Home = () => {
     const [deleted, setDeleted] = useState(false);
     const { isPending, error, data, refetch } = useQuery({
         queryKey: ["postData", currentCat],
-        staleTime: 1000 * 60 * 30,
+        staleTime: 0,   
         queryFn: async () => {
             try {
                 let dataToSend = {};
@@ -52,9 +52,8 @@ const Home = () => {
         refetchOnReconnect: true,
     })
 
-    // console.log("deleted", deleted);
     useEffect(() => {
-
+        
         refetch();
         setDeleted(false);
 
@@ -72,7 +71,6 @@ const Home = () => {
     }
 
     if (isPending) {
-        console.log('isPending', isPending);
         // return <Loading />;
         return "Loading...";
     }  
@@ -80,7 +78,7 @@ const Home = () => {
         return "An error has occured: " + error.message;
     }
 
-    if (!data || !Array.isArray(data)) {
+    if (!(Array.isArray(data) && data.length > 0)) {
         return "No posts available";
     }
  
@@ -110,3 +108,6 @@ const Home = () => {
 };
 
 export default Home;
+
+
+

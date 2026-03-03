@@ -26,7 +26,7 @@ function PostCardPreview({ post, user, setDeleted }) {
             setLiked(false);
         }
 
-    }, [post.likes, post.id, likesState]);
+    }, [post.likes, post.id, likesState, post.imageLink]);
 
     const handleLikes = async () => {
         let delta = 0;
@@ -69,7 +69,6 @@ function PostCardPreview({ post, user, setDeleted }) {
         const api1 = `${VITE_BASE_URL}/post/delete`;
         let data = {};
         data['postId'] = post.id;
-        console.log("inside delete function");
         try {
             const res1 = await (
                 fetch(api1, {
@@ -90,7 +89,6 @@ function PostCardPreview({ post, user, setDeleted }) {
             console.error(`There was a problem with the fetch operation:`, error);
             throw error;
         }
-        console.log("postCard Preview about to delete");
         setDeleted(true);
         
     };

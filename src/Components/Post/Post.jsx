@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styles from './Post.module.css'
 import { AiOutlinePicture } from "react-icons/ai";
 import { TbMovie } from "react-icons/tb";
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { GiCancel } from "react-icons/gi";
 import Gif from '../Gif/Gif.jsx';
 import { SarfrozContext } from '../../sarfrozContext.js';
@@ -16,10 +16,15 @@ const Post = () => {
     const fileInputRef = useRef(null);
     const [imageLink, setImageLink] = useState(null);
     const [showImage, setShowImage] = useState(false);
+    const [imageFile, setImageFile] = useState(null);
+    const [publicURL, setPublicURL] = useState(false);
     const [showGif, setShowGif] = useState(false);
     const [text, setText] = useState(null);
     const { userId } = useContext(SarfrozContext);
 
+    useEffect(() => {
+        // handlePost();
+    }, [publicURL]);
     const handlePictureClick = () => {
         fileInputRef.current.click();
     };
@@ -27,7 +32,9 @@ const Post = () => {
     const handleFileChange = (e) => {
         const files = e.target.files;
         if (files && files.length > 0) {
-            console.log('Selected file:', files[0].name);
+            console.log('Selected file:', files[0].name, files[0]);
+            // console.log(URL.createObjectURL(files[0]));
+            setImageFile(files[0]);
             setImageLink(URL.createObjectURL(files[0]));
             setShowImage(true);
         }
@@ -37,7 +44,6 @@ const Post = () => {
     };
     const handleGifClick = () => {
         setShowGif(true);
-        console.log("Gif", showGif);
     }
     const handleGifLinkChange = (link) => {
         setImageLink(link);
@@ -51,7 +57,6 @@ const Post = () => {
             data['text'] = text;
             data['imageLink'] = imageLink;
             data['userId'] = userId;
-            console.log('data', data);
             try {
                 const [res1] = await Promise.all([
                     fetch(api1, {
@@ -64,7 +69,6 @@ const Post = () => {
                         body: JSON.stringify(data)
                     })
                 ]);
-                console.log("res1", res1, res1.ok);
                 if (!res1.ok) {
                     throw new Error(`HTTP error! Status: ${Response.status}`);
                 }
@@ -80,6 +84,39 @@ const Post = () => {
         };
         sendPost();
         navigate('/home');
+    }
+    const sendFile = () => {
+        const api1 = `${VITE_BASE_URL}/uploadfile`\;
+        const sendImage = async () => {
+            let data = {};
+            data['file'] = imageFile;
+            try {
+                const [res1] = await Promise.all([
+                    fetch(api1, {
+                        mode: 'cors',
+                        credentials: 'include',
+                        method: "post",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(data)
+                    })
+                ]);
+                if (!res1.ok) {
+                    throw new Error(`HTTP error! Status: ${Response.status}`);
+                }
+
+                const data1 = await res1.json();
+                setPublicURL(data1);
+
+                return data1;
+                
+            } catch (error) {
+                console.error(`There was a problem with the fetch operation:`, error);
+                throw error;
+            }
+        };
+        sendImage();
     }
 
     return (
@@ -108,7 +145,7 @@ const Post = () => {
                     </div>
                     <div className={styles.postContainer}>
                         <p className={styles.characterCounter}>{count}/2000</p>
-                        <button className={styles.postButton} onClick={handlePost}>Post</button>
+                        <button className={styles.postButton} onClick={sendFile}>Post</button>
                     </div>
                 </div>
             </div>
