@@ -90,7 +90,6 @@ function PostCardPreview({ post, user, setDeleted }) {
             throw error;
         }
         setDeleted(true);
-        
     };
 
     return (
