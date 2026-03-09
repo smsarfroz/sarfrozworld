@@ -17,7 +17,7 @@ const Post = () => {
     const [imageLink, setImageLink] = useState(null);
     const [showImage, setShowImage] = useState(false);
     const [imageFile, setImageFile] = useState(null);
-    const [publicURL, setPublicURL] = useState(false);
+    const [publicURL, setPublicURL] = useState(null);
     const [showGif, setShowGif] = useState(false);
     const [text, setText] = useState(null);
     const [clicked, setClicked] = useState(false);
@@ -25,10 +25,11 @@ const Post = () => {
 
     const handlePost = useCallback(() => {
         const api1 = `${VITE_BASE_URL}/post`;
+        // console.log('imageLink, publicUrl', imageLink, publicURL);
         const sendPost = async () => {
             let data = {};
             data['text'] = text;
-            data['imageLink'] = publicURL;
+            data['imageLink'] = (imageLink ? imageLink : publicURL);
             data['userId'] = userId;
             try {
                 const [res1] = await Promise.all([
@@ -56,7 +57,7 @@ const Post = () => {
             }
         };
         sendPost();    
-    }, [text, userId, navigate, publicURL]);
+    }, [text, userId, navigate, publicURL, imageLink]);
 
     // useEffect(() => {
     //     if (publicURL) {
@@ -70,7 +71,7 @@ const Post = () => {
     const handleFileChange = (e) => {
         const files = e.target.files;
         if (files && files.length > 0) {
-            console.log('Selected file:', files[0].name, files[0]);
+            // console.log('Selected file:', files[0].name, files[0]);
             // console.log(URL.createObjectURL(files[0]));
             setImageFile(files[0]);
             setImageLink(URL.createObjectURL(files[0]));

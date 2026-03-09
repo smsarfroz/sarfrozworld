@@ -16,6 +16,8 @@ function PostCardPreview({ post, user, setDeleted }) {
     const [tempLike, setTempLike] = useState(null);
     const [liked, setLiked] = useState(null);
 
+    // console.log('post.imageLink', post.imageLink);
+
     useEffect(() => {
         
         if (likesState[post.id]) {

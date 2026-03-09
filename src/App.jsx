@@ -16,12 +16,14 @@ import { QueryClientProvider, QueryClient, Query } from "@tanstack/react-query"
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 const api1 = `${VITE_BASE_URL}/users/profile`;
 const api2 = `${VITE_BASE_URL}/users/likesState`;
+const api3 = `${VITE_BASE_URL}/users/`;
 
 const pizza = new QueryClient();
 
 const useFetchData = (userId) => {
   const [userData, setUserData] = useState(null);
   const [likesState, setLikesState] = useState({});
+  const [usersData, setUsersData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -31,7 +33,7 @@ const useFetchData = (userId) => {
         // console.log("before get fetch in App.js");
         let data = {};
         data['userId'] = userId;
-        const [res1, res2] = await Promise.all([
+        const [res1, res2, res3] = await Promise.all([
           fetch(api1, {
             method: 'POST',
             credentials: 'include',
@@ -51,7 +53,16 @@ const useFetchData = (userId) => {
             },
             mode: 'cors',
             body: JSON.stringify(data)
-          })
+          }),
+          fetch(api3, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            mode: 'cors',
+          }),
         ]);
         if (!res1.ok) {
           throw new Error(`HTTP error! Status: ${res1.status}`);
@@ -59,17 +70,24 @@ const useFetchData = (userId) => {
         if (!res2.ok) {
           throw new Error(`HTTP error! Status: ${res2.status}`);
         }
+        if (!res3.ok) {
+          throw new Error(`HTTP error! Status: ${res3.status}`);
+        }
+
         const data1 = await res1.json();
         const data2 = await res2.json();
+        const data3 = await res3.json();
 
         setUserData(data1[0]);
         setLikesState(data2);
+        setUsersData(data3);
         setError(null);
 
       } catch (error) {
 
         setError(error);  
         setUserData([]);
+        setUsersData(null);
       
       } finally {
         
@@ -83,7 +101,7 @@ const useFetchData = (userId) => {
 
   }, []);
 
-  return { loading, error, userData, setUserData, likesState, setLikesState};
+  return { loading, error, userData, setUserData, likesState, setLikesState, usersData, setUsersData };
 };
 
 function App() {
@@ -91,7 +109,9 @@ function App() {
     const savedUserId = localStorage.getItem('userId');
     return savedUserId ? JSON.parse(savedUserId) : 0;
   })
-  const { loading, error, userData, setUserData, likesState, setLikesState } = useFetchData(userId);
+  const { loading, error, userData, setUserData, likesState, setLikesState, usersData, setUsersData } = useFetchData(userId);
+
+  console.log('usersData', usersData);
 
   // const [likesState, setLikesState] = useState({});
 
@@ -127,7 +147,7 @@ function App() {
 
       <div className="commonBackground">
         <QueryClientProvider client={pizza}>
-          <SarfrozContext.Provider value={{ userData, setUserData, userId, setUserId, likesState, updateLikeState }}>
+          <SarfrozContext.Provider value={{ userData, setUserData, userId, setUserId, likesState, updateLikeState, usersData, setUsersData }}>
             <Outlet />
           </SarfrozContext.Provider>
         </QueryClientProvider>
