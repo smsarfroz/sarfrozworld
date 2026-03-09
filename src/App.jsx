@@ -111,7 +111,7 @@ function App() {
   })
   const { loading, error, userData, setUserData, likesState, setLikesState, usersData, setUsersData } = useFetchData(userId);
 
-  console.log('usersData', usersData);
+  // console.log('usersData', usersData);
 
   // const [likesState, setLikesState] = useState({});
 
