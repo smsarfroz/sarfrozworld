@@ -70,7 +70,7 @@ const Gif = ({ handleGifLinkChange }) => {
           const url = searchText == "" ? gifUrl2 : gifUrl1;
           const list = await getGifs(url);
           setGifList(list);
-          navigate('/home');
+          // navigate('/home');
         } catch (error) {
           console.error("Submission Error:", error);
         } finally {

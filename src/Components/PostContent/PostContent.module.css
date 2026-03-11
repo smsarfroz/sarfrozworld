@@ -1,0 +1,57 @@
+.post {
+    width: 600px;
+    height: auto;
+    background-color: rgb(27, 26, 26);
+    border-radius: 10px;
+    padding: 1vw 1vw;
+    transition: background-color 0.3s ease;
+}
+
+.post:hover {
+    background-color: rgb(33, 32, 32);
+}
+
+.userDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.leftPart {
+    display: flex;
+    gap: 0.8vw;    
+    align-items: center;
+}
+
+.profilePhoto {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+}
+
+.text {
+    margin: 0.9vw 0;
+}
+
+.postImage {
+    display: flex;
+    justify-content: center;
+}
+
+.icons {    
+    display: flex;
+    gap: 1vw;
+    margin-top: 0.5vw;
+}
+
+.username {
+    cursor: pointer;
+}
+
+.icon {
+    cursor: pointer;
+}
+
+.deleteIcon {
+    cursor: pointer;
+}

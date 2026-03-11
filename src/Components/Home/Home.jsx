@@ -15,7 +15,7 @@ const api1 = `${VITE_BASE_URL}/home`;
 
 const Home = () => {
     const [currentCat, setCurrentCat] = useState(0);
-    const [deleted, setDeleted] = useState(false);
+    const { deleted, setDeleted } = useContext(SarfrozContext);
     const { isPending, error, data, refetch } = useQuery({
         queryKey: ["postData", currentCat],
         staleTime: 0,   
@@ -57,7 +57,7 @@ const Home = () => {
         refetch();
         setDeleted(false);
 
-    }, [ refetch, data, deleted ]);
+    }, [ refetch, data, deleted, setDeleted ]);
 
     const catStyle = {
         color: 'blue'

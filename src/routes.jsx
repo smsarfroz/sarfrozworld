@@ -6,6 +6,7 @@ import Search from "./Components/Search/Search.jsx";
 import ErrorPage from "../ErrorPage.jsx";
 import Login from "./Components/Login/Login.jsx";
 import Signup from "./Components/Signup/Signup.jsx";
+import PostCard from "./Components/PostCard/PostCard.jsx";
 
 const routes = [
     {
@@ -35,6 +36,10 @@ const routes = [
             {
                 path: '/',
                 element: <Signup />
+            }, 
+            {
+                path: '/posts/:postId', 
+                element: <PostCard />
             }
         ],
         errorElement: <ErrorPage />

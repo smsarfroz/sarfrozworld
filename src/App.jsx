@@ -105,6 +105,7 @@ const useFetchData = (userId) => {
 };
 
 function App() {
+  const [deleted, setDeleted] = useState(false);
   const [ userId, setUserId ] = useState(() => {
     const savedUserId = localStorage.getItem('userId');
     return savedUserId ? JSON.parse(savedUserId) : 0;
@@ -147,7 +148,7 @@ function App() {
 
       <div className="commonBackground">
         <QueryClientProvider client={pizza}>
-          <SarfrozContext.Provider value={{ userData, setUserData, userId, setUserId, likesState, updateLikeState, usersData, setUsersData }}>
+          <SarfrozContext.Provider value={{ userData, setUserData, userId, setUserId, likesState, updateLikeState, usersData, setUsersData, deleted, setDeleted }}>
             <Outlet />
           </SarfrozContext.Provider>
         </QueryClientProvider>

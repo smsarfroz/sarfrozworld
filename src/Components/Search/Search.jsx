@@ -8,10 +8,7 @@ const Search = () => {
     const { usersData } = useContext(SarfrozContext);
     const [query, setQuery] = useState("");
 
-    // console.log('query', query);
-    
     const handleFilter = (user) => {
-        // console.log('user, query', user, query, user.username.toLowerCase());
         let myQuery = query.toLowerCase();
         if (myQuery === '' || user.username.toLowerCase().includes(query)) {
             return true;
