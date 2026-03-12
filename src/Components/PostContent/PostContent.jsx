@@ -9,6 +9,7 @@ import { SarfrozContext } from '../../sarfrozContext.js';
 import { FaHeart } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
+import TimeAgo from 'react-timeago';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
@@ -120,7 +121,7 @@ function PostContent({ post, user, setDeleted, showFullContent = false }) {
                         <Link to={`/u/${user.username}`} className={styles.username}>
                             <p>{user.username}</p>
                         </Link>
-                        <p>• {post.createdAt}</p>
+                        <p>• <TimeAgo date={post.createdAt}/></p>
                     </div>
                     { userId === user.id && hover ? 
                     

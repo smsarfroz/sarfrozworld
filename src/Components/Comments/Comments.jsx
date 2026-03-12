@@ -4,6 +4,8 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { useParams } from 'react-router';
 import { SarfrozContext } from '../../sarfrozContext';
 import { useQuery } from '@tanstack/react-query';
+import { RiDeleteBinLine } from "react-icons/ri";
+import TimeAgo from 'react-timeago';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
@@ -12,13 +14,15 @@ const Comments = () => {
     const { userId } = useContext(SarfrozContext);
     const { postId } = useParams();
     const [content, setContent] = useState("");
-    const [comments, setComments] = useState(null);
+    // const [comments, setComments] = useState(null);
+    const [hoveredCommentId, setHoveredCommentId] = useState(null);
+    const [deletingCommentId, setDeletingCommentId] = useState(null);
     const id = parseInt(postId);
 
     const api1 = `${VITE_BASE_URL}/posts/${id}/comments`;
     const { isPending, error, data, refetch } = useQuery({
-        queryKey: ["commentData"],
-        staleTime: 0,   
+        queryKey: ["commentData", id],
+        staleTime: 30000,   
         queryFn: async () => {
             try {                
                 const response = await fetch(api1, {
@@ -36,7 +40,7 @@ const Comments = () => {
                 }
                 
                 const jsonData = await response.json();
-                setComments(jsonData);
+                // setComments(jsonData);
                 return jsonData;
                 
             } catch (error) {
@@ -49,13 +53,17 @@ const Comments = () => {
         refetchOnReconnect: true,
     })
 
-    useEffect(() => {
+    // useEffect(() => {
         
-        refetch();
+    //      refetch();
 
-    }, [ refetch, data ]);
+    // }, [ id, refetch ]);
+
+    const comments = data;
 
     const postComment = async () => {
+        if (!content.trim()) return;
+
         const api = `${VITE_BASE_URL}/posts/${id}/comments`;
         try {
             const [res1] = await Promise.all([
@@ -76,10 +84,11 @@ const Comments = () => {
             if (!res1.ok) {
                 throw new Error(`HTTP error! Status: ${Response.status}`);
             }
-            const data = res1.json();
+            const data = await res1.json();
             console.log('added comment', data);
             setContent("");
             setCharCount(0); 
+            refetch();
 
         } catch (error) {
             console.error(`There was a problem with the fetch operation:`, error);
@@ -87,6 +96,48 @@ const Comments = () => {
         }
     };
 
+    const handleDelete = async (commentId, e) => {
+        e.stopPropagation();
+
+        if (deletingCommentId === commentId) return;
+
+        if (!window.confirm('Are you sure you want to delete this comment?')) {
+            return;
+        }
+
+        setDeletingCommentId(commentId);
+
+        const api = `${VITE_BASE_URL}/posts/${id}/comments/${commentId}`;
+        try {
+            const res1 = await (
+                fetch(api, {
+                    mode: 'cors',
+                    credentials: 'include',
+                    method: "delete",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+            );
+            if (!res1.ok) {
+                throw new Error(`HTTP error! Status: ${Response.status}`);
+            }
+            const data = await res1.json();
+            console.log('deleted comment', data);
+
+            // setComments(prevComments => 
+            //     prevComments.filter(comment => comment.id !== commentId)
+            // );
+            refetch();
+            
+        } catch (error) {
+            console.error(`There was a problem with the fetch operation:`, error);
+            refetch();
+            throw error;
+        } finally {
+            setDeletingCommentId(null);
+        }
+    };
 
     const handleCommentChange = (e) => {
         setCharCount(e.target.value.length);
@@ -94,22 +145,59 @@ const Comments = () => {
     };
 
     const styleObject = {
-        filter: "brightness(100%)"
+        filter: "brightness(100%)",
+        cursor: "pointer"
     }
 
     return (
 
-        <div styleName={styles.biggerContainer}>
+        <div className={styles.biggerContainer}>
             <div className={styles.commentContainer}>
-                <TextareaAutosize name="addComment" id="" placeholder='Add a comment...' className={styles.comments} onChange={handleCommentChange} maxLength={500} rows="5" cols="30">
+                <TextareaAutosize name="addComment" id="" placeholder='Add a comment...' className={styles.comments} value={content} onChange={handleCommentChange} maxLength={500} rows="5" cols="30">
             
                 </TextareaAutosize>
                 <div className={styles.container}>
                     <p className={styles.charCount}>{charCount}/500</p>
-                    <button onClick={postComment} style={charCount > 0 ? styleObject : null}>Reply</button>
+                    <button onClick={postComment} style={charCount > 0 ? styleObject : null} disabled={!content.trim()}>Reply</button>
                 </div>
             </div>
+            {
+                isPending ? (
+                    <p>Loading...</p>
+                ): error ? (
+                    <p>{error}</p>
+                ): (
+                    <>
+                        {
+                            comments && comments.length > 0 ? (comments.map((comment) => {
+                                return (
+                                    <div className={styles.comment} key={comment.id} onMouseEnter={() => setHoveredCommentId(comment.id)} onMouseLeave={() => setHoveredCommentId(null)}>
+                                        <div className={styles.leftPart}>
+                                            <div className={styles.photo}><img src={comment.user.photo} alt="" className={styles.userPhoto}/></div>
+                                            <div className={styles.text}>
+                                                <div className={styles.details}>
+                                                    <p className={styles.username}>{comment.user.username} </p>
+                                                    <p className={styles.createdAt}>{' '} • <TimeAgo date={comment.createdAt} /></p>
+                                                </div>
+                                                <p className={styles.content}>{comment.content}</p>
+                                            </div>
+                                        </div>
 
+                                        { userId === comment.user.id && hoveredCommentId === comment.id ? 
+                                                            
+                                            <RiDeleteBinLine className={`${styles.deleteIcon} ${deletingCommentId === comment.id ? styles.deleting : ''}`} onClick={(e) => handleDelete(comment.id, e)}/>
+                                            :
+                                            null
+                                        }
+                                    </div>
+                                )
+                            })) : (
+                                <p className={styles.noComments}>No comments yet. Be the first to comment!</p>
+                            )
+                        }
+                    </>
+                )
+            }
         </div>
     )
 };

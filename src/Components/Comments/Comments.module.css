@@ -25,6 +25,7 @@ textarea {
     display: flex;
     flex-direction: column;
     width: 600px;
+    margin-bottom: 3.5vw;
 }
 
 button {
@@ -37,4 +38,86 @@ button {
 
 .charCount {
     color: rgb(116, 116, 116);
+}
+
+.userPhoto {
+    border-radius: 50%;
+    width: 40px;
+}
+
+.comment {
+    background-color: rgb(27, 26, 26);
+    border-radius: 10px;
+    padding: 12px;
+    margin: 2vw 0;
+    width: 600px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment:hover {
+    background-color: rgb(33, 32, 32);
+}
+
+.leftPart {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1.5vw;
+    align-items: center;
+}
+
+.username {
+    font-size: 15px;
+}
+
+.createdAt {
+    font-size: 12px;
+    color: rgb(96, 93, 93);
+}
+
+.content {
+    font-size: 15px;
+}
+
+.details {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3vw;
+}
+
+.deleteIcon {
+    cursor: pointer;
+}
+
+.deleteIcon {
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.deleteIcon:hover {
+    opacity: 0.8;
+}
+
+.deleting {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.noComments {
+    color: rgb(116, 116, 116);
+    text-align: center;
+    margin-top: 2vw;
 }
