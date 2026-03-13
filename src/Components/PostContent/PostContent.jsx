@@ -122,9 +122,9 @@ function PostContent({ post, user, setDeleted, showFullContent = false, comments
                     <div className={styles.leftPart}>
                         <img src={user.photo} alt="" className={styles.profilePhoto}/>
                         <Link to={`/u/${user.username}`} className={styles.username}>
-                            <p>{user.username}</p>
+                            <p className={styles.username}>{user.username}</p>
                         </Link>
-                        <p>• <TimeAgo date={post.createdAt}/></p>
+                        <p className={styles.createdAt}>• <TimeAgo date={post.createdAt}/></p>
                     </div>
                     { userId === user.id && hover ? 
                     

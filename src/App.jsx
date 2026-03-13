@@ -122,6 +122,20 @@ function App() {
       [postId]: { liked, likesCount }
     }));
   };
+  
+  const handleLogout = async () => {
+    const api = `${VITE_BASE_URL}/logout`;
+    try {
+      const res = await fetch(api);
+      console.log('res', res);
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+    } catch (error) {
+      console.error(`There was an error with fetch operation: `, error);
+      throw error;
+    }
+  };
 
   if (loading) {
     return <Loading />;
@@ -140,7 +154,7 @@ function App() {
           <p><LuSearch size={22}/><Link to='/search'>Search</Link></p>
           <p><LuPenLine size={22}/><Link to='/post'>Post</Link></p>
           <p><IoPersonSharp size={22}/><Link to='/profile'>Profile</Link></p>
-          <p><MdLogout size={22}/><Link to='/logout'>Logout</Link></p>
+          <p onClick={() => handleLogout}><MdLogout size={22}/> <a href="">Logout</a> </p>
           {/* <a href={api1} target='_blank' rel='noopener noreferrer'>Authenticate with Google</a> */}
         </div>
       </div>

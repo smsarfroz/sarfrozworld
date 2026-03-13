@@ -112,7 +112,7 @@ const Profile = () => {
 
     if (error) return "An error has occurred: " + error.message
 
-    console.log('bool', !editValue , (data.length !== 0), data.length );
+    // console.log('bool', !editValue , (data.length !== 0), data.length );
 
     // if (!editValue) {
     //     return <div>Loading user data...</div>;
@@ -122,7 +122,7 @@ const Profile = () => {
     id = null, photo = null, username = null, website = null;
     let postsUnsorted = [];
 
-    console.log('editValue', editValue, editValue?.length);
+    // console.log('editValue', editValue, editValue?.length);
 
     // if (editValue?.length !== undefined) {
     //     ({ bio, followers, following, github, id, photo, username, website } = editValue);
@@ -160,19 +160,19 @@ const Profile = () => {
 
             <div className={styles.user}>
                 <img src={photo} alt="" className={styles.profilePhoto}/>
-                <p>{username}</p>
+                <p className={styles.username}>{username}</p>
             </div>
             <div className={styles.counters}>
                 <div className={styles.counterContainer}>
-                    <p>{followers == null ? 0 : followers}</p>
-                    <p>Followers</p>
+                    <p className={styles.num}>{followers == null ? 0 : followers}</p>
+                    <p >Followers</p>
                 </div>
                 <div className={styles.counterContainer}>
-                    <p>{following == null ? 0 : following}</p>
+                    <p className={styles.num}>{following == null ? 0 : following}</p>
                     <p>Following</p>
                 </div>
                 <div className={styles.counterContainer}>
-                    <p>{followers == null ? 0 : followers}</p>
+                    <p className={styles.num}>{followers == null ? 0 : followers}</p>
                     <p>Posts</p>
                 </div>
             </div>
@@ -195,7 +195,7 @@ const Profile = () => {
                 <button onClick={() => handleSaveClick({ userId, bio, github, website })} className={styles.saveButton}>Save</button>
                 :
                 <div className={styles.editContainer} onClick={handleEditClick}>
-                    <MdOutlineModeEdit fill="blue" size={30}  className={styles.editButton}/> <p className={styles.editText}>Edit</p>
+                    <MdOutlineModeEdit fill="blue" size={23}  className={styles.editButton}/> <p className={styles.editText}>Edit</p>
                 </div>
             }
 

@@ -1,5 +1,11 @@
 .profilePhoto {
     border-radius: 50%;
+    width: 6vw;
+}
+
+.username {
+    font-size: 30px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .editButton {
@@ -15,6 +21,8 @@
     display: flex;
     align-items: center;
     gap: 0.5vw;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(103, 103, 237);
 }
 
 .saveButton {
@@ -53,6 +61,14 @@
     gap: 2vw;
     margin-top: 2vw;
     margin-left: 2vw;
+    color: rgb(195, 195, 195);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.num {
+    font-size: 2.1vw;
+    color: white;
+    font-weight: bold;
 }
 
 .details {
@@ -63,13 +79,17 @@
 }
 
 .userPostText {
-    margin: 2vw 0;
+    margin-top: 3vw;
+    margin-bottom: 1vw;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 20px;
 }
 
 .infoLine {
     display: flex;
     align-items: center;
     gap: 1vw;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .posts {
@@ -78,3 +98,4 @@
     gap: 2vw;
     margin: 2vw 0;
 }
+

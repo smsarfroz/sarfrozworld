@@ -31,7 +31,6 @@ function PostCard() {
                 }
                 
                 const jsonData = await response.json();
-                console.log('jsonData', jsonData);
                 setCommentsCount(jsonData.comments.length);
                 return jsonData;
                 
