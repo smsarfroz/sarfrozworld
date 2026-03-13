@@ -3,53 +3,55 @@ import PostContent from "../PostContent/PostContent.jsx";
 import { SarfrozContext } from "../../sarfrozContext.js";
 import { useParams } from "react-router-dom";
 import Comments from "../Comments/Comments.jsx";
+import { useQuery } from '@tanstack/react-query';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
-const usePost = (postId) => {
-    const [post, setPost] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+function PostCard() {
+    const { postId } = useParams();
+    const [commentsCount, setCommentsCount] = useState(0);
     const api = `${VITE_BASE_URL}/post/${postId}`;
-
-    useEffect(() => {
-        const fn = async () => {
-            try {
-                const res = await fetch(api, {
+    const { isPending, error, data } = useQuery({
+        queryKey: ["postData", api],
+        staleTime: 0,   
+        queryFn: async () => {
+            try {                
+                const response = await fetch(api, {
                     mode: 'cors',
                     credentials: 'include',
                     method: "get",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                })
-
-                if (!res.ok) {
-                    throw new Error(`HTTP error! Status: ${Response.status}`);
+                });
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Error response:', errorText);
+                    throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 
-                const data = await res.json();
-                setPost(data);
-                setLoading(false);
+                const jsonData = await response.json();
+                console.log('jsonData', jsonData);
+                setCommentsCount(jsonData.comments.length);
+                return jsonData;
+                
             } catch (error) {
-                console.error(`There was a problem with fetch error:`, error);
-                setError(error);
+                console.error('Fetch error:', error);
                 throw error;
-            } 
-        };
-        fn();
-    }, [api]);
+            }
+        },
+        refetchOnWindowFocus: true, 
+        refetchOnMount: true, 
+        refetchOnReconnect: true,
+    })
 
-    return { post, loading, error };
-};
-
-function PostCard() {
-    const { postId } = useParams();
-    const { post, loading, error } = usePost(parseInt(postId));
     const { setDeleted } = useContext(SarfrozContext);
 
-    if (loading) return <p>loading...</p>;
+    if (isPending) return <p>loading...</p>;
     if (error) return <p>{error}</p>
+    const post = data;
+    // console.log('post', post);
+    
 
     // const handleDelete = async () => {
     //     const api = `${VITE_BASE_URL}/post/delete`;
@@ -80,8 +82,11 @@ function PostCard() {
                 user={post.user}
                 setDeleted={setDeleted}
                 showFullContent={true}
+                commentsCount={commentsCount}
             />
-            <Comments />
+            <Comments 
+                setCommentsCount={setCommentsCount}
+            />
         </>
     )
 }

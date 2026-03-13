@@ -9,7 +9,7 @@ import TimeAgo from 'react-timeago';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
-const Comments = () => {
+const Comments = ({ setCommentsCount=false }) => {
     const [charCount, setCharCount] = useState(0);
     const { userId } = useContext(SarfrozContext);
     const { postId } = useParams();
@@ -86,6 +86,7 @@ const Comments = () => {
             }
             const data = await res1.json();
             console.log('added comment', data);
+            setCommentsCount(prevCt => prevCt + 1);
             setContent("");
             setCharCount(0); 
             refetch();
@@ -128,6 +129,7 @@ const Comments = () => {
             // setComments(prevComments => 
             //     prevComments.filter(comment => comment.id !== commentId)
             // );
+            setCommentsCount(prevCt => prevCt - 1);
             refetch();
             
         } catch (error) {

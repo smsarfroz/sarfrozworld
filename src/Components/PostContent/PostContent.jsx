@@ -13,12 +13,15 @@ import TimeAgo from 'react-timeago';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
-function PostContent({ post, user, setDeleted, showFullContent = false }) {
+function PostContent({ post, user, setDeleted, showFullContent = false, commentsCount}) {
     const navigate = useNavigate();
     const { likesState, updateLikeState, userId } = useContext(SarfrozContext);
     const [tempLike, setTempLike] = useState(null);
     const [liked, setLiked] = useState(null);
     const [hover, setHover] = useState(false);
+    // console.log('commentsCount', commentsCount);
+
+    // console.log('post', post);
 
     useEffect(() => {
         
@@ -79,6 +82,7 @@ function PostContent({ post, user, setDeleted, showFullContent = false }) {
         e.stopPropagation();
         e.preventDefault();
         const api1 = `${VITE_BASE_URL}/post/delete`;
+        console.log('inside handleDelete a post');
         let data = {};
         data['postId'] = post.id;
         try {
@@ -96,7 +100,6 @@ function PostContent({ post, user, setDeleted, showFullContent = false }) {
             if (!res1.ok) {
                 throw new Error(`HTTP error! Status: ${Response.status}`);
             }
-            
         } catch (error) {
             console.error(`There was a problem with the fetch operation:`, error);
             throw error;
@@ -143,7 +146,7 @@ function PostContent({ post, user, setDeleted, showFullContent = false }) {
                         :
                     <FaRegHeart onClick={handleLikes} className={styles.icon}/>
                 }{tempLike}
-                <FaRegComment className={styles.icon}/> 
+                <FaRegComment className={styles.icon}/> {commentsCount}
             </div>
         </div>
     )

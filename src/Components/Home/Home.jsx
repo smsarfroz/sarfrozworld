@@ -92,12 +92,14 @@ const Home = () => {
             <div className={styles.posts}>
                 {
                     data.map((post) => {
+                        // console.log('length', post.comments.length);
                         return (
                             <PostCardPreview 
                                 key={post.id}
                                 post={post}
                                 user={post.user}
                                 setDeleted={setDeleted}
+                                commentsCount={post.comments.length}
                             />
                         )
                     })
