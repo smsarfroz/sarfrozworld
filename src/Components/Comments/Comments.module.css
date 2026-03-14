@@ -42,7 +42,7 @@ button {
 
 .userPhoto {
     border-radius: 50%;
-    width: 40px;
+    width: 2.2vw;
 }
 
 .comment {
@@ -63,12 +63,13 @@ button {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    gap: 1.5vw;
+    gap: 1.1vw;
     align-items: center;
 }
 
 .username {
-    font-size: 15px;
+    font-size: 1vw;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .createdAt {
@@ -77,7 +78,8 @@ button {
 }
 
 .content {
-    font-size: 15px;
+    font-size: 0.8vw;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .details {
@@ -94,6 +96,7 @@ button {
 
 .deleteIcon {
     cursor: pointer;
+    color: rgb(103, 103, 237);
 }
 
 .deleteIcon {
@@ -120,4 +123,5 @@ button:disabled {
     color: rgb(116, 116, 116);
     text-align: center;
     margin-top: 2vw;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }

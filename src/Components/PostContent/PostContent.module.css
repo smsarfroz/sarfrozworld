@@ -61,12 +61,13 @@
 
 .deleteIcon {
     cursor: pointer;
+    color: rgb(103, 103, 237);
 }
 
 .createdAt {
     color: rgb(176, 176, 176);
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 1vw;
+    font-size: 0.8vw;
 }
 
 .likeSection {

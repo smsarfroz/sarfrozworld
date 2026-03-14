@@ -137,6 +137,10 @@ const Post = () => {
     const customStyle = {
         color: "red"
     };
+    const styleObject = {
+        brightness: '100%',
+        cursor: "pointer"
+    }
 
     return (
         <div className={styles.postPage}>
@@ -168,7 +172,7 @@ const Post = () => {
                         
                             <button className={styles.postButton} style={customStyle} onClick={sendFile}>Posting...</button>
                             :
-                            <button className={styles.postButton} onClick={sendFile}>Post</button>
+                            <button className={styles.postButton} onClick={sendFile} disabled={!count} style={count > 0 ? styleObject : null}>Post</button>
                         }
                     </div>
                 </div>

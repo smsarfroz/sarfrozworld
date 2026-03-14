@@ -106,6 +106,7 @@ const useFetchData = (userId) => {
 
 function App() {
   const [deleted, setDeleted] = useState(false);
+  const [activeTab, setActiveTab] = useState(0);
   const [ userId, setUserId ] = useState(() => {
     const savedUserId = localStorage.getItem('userId');
     return savedUserId ? JSON.parse(savedUserId) : 0;
@@ -137,6 +138,12 @@ function App() {
     }
   };
 
+  const styleObject = {
+    backgroundColor:"rgb(65, 65, 65)",
+    opacity: "0.8", 
+    transition: "background-color 2s ease-in"
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -150,11 +157,11 @@ function App() {
         <p className='siteName'>sarfrozworld</p>
         <div className="iconList">
           
-          <p className='tab'><FiHome size={25}/><Link to='/home'>Home</Link></p>
-          <p className='tab'><LuSearch size={25}/><Link to='/search'>Search</Link></p>
-          <p className='tab'><LuPenLine size={25}/><Link to='/post'>Post</Link></p>
-          <p className='tab'><IoPersonSharp size={25}/><Link to='/profile'>Profile</Link></p>
-          <p onClick={() => handleLogout} className='tab'><MdLogout size={25}/> <a href="">Logout</a> </p>
+          <div className='tab' onClick={() => setActiveTab(0)} style={activeTab === 0 ? styleObject : null}><FiHome size={25}/><Link to='/home'>Home</Link></div>
+          <div className='tab' onClick={() => setActiveTab(1)} style={activeTab === 1 ? styleObject : null}><LuSearch size={25}/><Link to='/search'>Search</Link></div>
+          <div className='tab' onClick={() => setActiveTab(2)} style={activeTab === 2 ? styleObject : null}><LuPenLine size={25}/><Link to='/post'>Post</Link></div>
+          <div className='tab' onClick={() => setActiveTab(3)} style={activeTab === 3 ? styleObject : null}><IoPersonSharp size={25}/><Link to='/profile'>Profile</Link></div>
+          <div onClick={() => handleLogout} className='tab'><MdLogout size={25}/> <a href="">Logout</a> </div>
           {/* <a href={api1} target='_blank' rel='noopener noreferrer'>Authenticate with Google</a> */}
 
         </div>

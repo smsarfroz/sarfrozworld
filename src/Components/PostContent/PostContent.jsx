@@ -81,33 +81,38 @@ function PostContent({ post, user, setDeleted, showFullContent = false, comments
     const handleDelete = async (e) => {
         e.stopPropagation();
         e.preventDefault();
-        const api1 = `${VITE_BASE_URL}/post/delete`;
-        console.log('inside handleDelete a post');
-        let data = {};
-        data['postId'] = post.id;
-        try {
-            const res1 = await (
-                fetch(api1, {
-                    mode: 'cors',
-                    credentials: 'include',
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data)
-                })
-            );
-            if (!res1.ok) {
-                throw new Error(`HTTP error! Status: ${Response.status}`);
+        const isConfirmed = window.confirm("Are you sure you want to delete this post?");
+
+        if (isConfirmed) {
+
+            const api1 = `${VITE_BASE_URL}/post/delete`;
+            console.log('inside handleDelete a post');
+            let data = {};
+            data['postId'] = post.id;
+            try {
+                const res1 = await (
+                    fetch(api1, {
+                        mode: 'cors',
+                        credentials: 'include',
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(data)
+                    })
+                );
+                if (!res1.ok) {
+                    throw new Error(`HTTP error! Status: ${Response.status}`);
+                }
+            } catch (error) {
+                console.error(`There was a problem with the fetch operation:`, error);
+                throw error;
             }
-        } catch (error) {
-            console.error(`There was a problem with the fetch operation:`, error);
-            throw error;
-        }
-        setDeleted(true);
-        if (showFullContent) {
-            navigate('/home');
-        }
+            setDeleted(true);
+            if (showFullContent) {
+                navigate('/home');
+            }
+        } 
     };
 
     const ContentWrapper = showFullContent ? 'div' : Link;
