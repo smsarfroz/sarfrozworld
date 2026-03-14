@@ -150,12 +150,13 @@ function App() {
         <p className='siteName'>sarfrozworld</p>
         <div className="iconList">
           
-          <p><FiHome size={22}/><Link to='/home'>home</Link></p>
-          <p><LuSearch size={22}/><Link to='/search'>Search</Link></p>
-          <p><LuPenLine size={22}/><Link to='/post'>Post</Link></p>
-          <p><IoPersonSharp size={22}/><Link to='/profile'>Profile</Link></p>
-          <p onClick={() => handleLogout}><MdLogout size={22}/> <a href="">Logout</a> </p>
+          <p className='tab'><FiHome size={25}/><Link to='/home'>Home</Link></p>
+          <p className='tab'><LuSearch size={25}/><Link to='/search'>Search</Link></p>
+          <p className='tab'><LuPenLine size={25}/><Link to='/post'>Post</Link></p>
+          <p className='tab'><IoPersonSharp size={25}/><Link to='/profile'>Profile</Link></p>
+          <p onClick={() => handleLogout} className='tab'><MdLogout size={25}/> <a href="">Logout</a> </p>
           {/* <a href={api1} target='_blank' rel='noopener noreferrer'>Authenticate with Google</a> */}
+
         </div>
       </div>
 

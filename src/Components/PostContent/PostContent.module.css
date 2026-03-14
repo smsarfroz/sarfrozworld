@@ -66,5 +66,23 @@
 .createdAt {
     color: rgb(176, 176, 176);
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 1.3vw;
+    font-size: 1vw;
+}
+
+.likeSection {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5vw;
+    justify-content: center;
+    align-items: center;
+    color: rgb(103, 103, 237);
+}
+
+.commentsSection {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5vw;
+    justify-content: center;
+    align-items: center;
+    color: rgb(103, 103, 237);
 }

@@ -60,7 +60,7 @@ const Home = () => {
     }, [ refetch, data, deleted, setDeleted ]);
 
     const catStyle = {
-        color: 'blue'
+        color: 'rgb(103, 103, 237)'
     }
     const clickHandler = (cur) => {
         if (cur == 0) {

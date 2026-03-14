@@ -140,13 +140,19 @@ function PostContent({ post, user, setDeleted, showFullContent = false, comments
             </ContentWrapper>
 
             <div className={styles.icons}>
-                { 
-                    liked ?
-                    <FaHeart onClick={handleLikes} className={styles.icon}/>
-                        :
-                    <FaRegHeart onClick={handleLikes} className={styles.icon}/>
-                }{tempLike}
-                <FaRegComment className={styles.icon}/> {commentsCount}
+                <div className={styles.likeSection}>
+                    {
+                        liked ?
+                        <FaHeart onClick={handleLikes} className={styles.icon}/>
+                            :
+                        <FaRegHeart onClick={handleLikes} className={styles.icon}/>
+                    }
+                    <p>{tempLike}</p>
+                </div>
+                <div className={styles.commentsSection}>
+                    <FaRegComment className={styles.icon}/> 
+                    <p>{commentsCount}</p>
+                </div>
             </div>
         </div>
     )

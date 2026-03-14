@@ -10,6 +10,8 @@
     justify-content: center;
     margin: 1.4vw 0;
     width: 600px;
+    font-size: 1.3vw;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .cat {

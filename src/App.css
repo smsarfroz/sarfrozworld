@@ -16,12 +16,17 @@ body {
 .siteName {
   font-size: 25px;
   font-weight: bold;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  margin-top: 2vw;
+  margin-bottom: 2vw;
+  color: rgb(94, 94, 243);
 }
 
 .iconList {
   display: flex;
   flex-direction: column;
-  gap: 1.3vw;
+  gap: 2.3vw;
+  color: rgb(110, 110, 236);
 }
 
 .iconList p {
@@ -29,7 +34,20 @@ body {
   flex-direction: row;
   align-items: center;
   gap: 1vw;
-  font-size: 20px;
+  font-size: 1.5vw;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.tab a {
+  color: inherit;
+}
+
+.tab:hover {
+  border: 5px;
+  width: 3vw;
+  height: 2vw;
+  background-color: rgb(151, 151, 151);
+  cursor: pointer;
 }
 
 .navigationRoutes {
@@ -59,3 +77,4 @@ a {
   display: flex;
   gap: 2vw;
 }
+
