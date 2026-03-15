@@ -1,11 +1,12 @@
-
 textarea {
+    margin-top: 0.5vw !important; 
+    line-height: 1.2; 
     box-sizing: border-box;
     min-height: 300px;
+    height: unset;
     max-width: 100%;
     min-width: 0;
     border: 2px solid red;
-    field-sizing: content;
     resize: none;
     outline: none;
     border: none;
@@ -13,9 +14,8 @@ textarea {
     overflow: hidden;
     flex-grow: 1;
     color: white;
-    vertical-align: top;
-    margin: 0;
-    padding: 0;
+    display: block;
+    overflow-y: auto;
 }
 
 .postButton {

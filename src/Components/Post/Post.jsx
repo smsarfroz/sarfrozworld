@@ -23,7 +23,12 @@ const Post = () => {
     const [clicked, setClicked] = useState(false);
     const { userId } = useContext(SarfrozContext);
 
+    const textArea = document.querySelector('textarea');
+    const textRowCount = textArea ? textArea.value.split("\n").length : 0;
+    const rows = textRowCount + 1;
+
     const handlePost = useCallback(() => {
+        if (!text.trim()) return;
         const api1 = `${VITE_BASE_URL}/post`;
         // console.log('imageLink, publicUrl', imageLink, publicURL);
         const sendPost = async () => {
@@ -145,7 +150,7 @@ const Post = () => {
     return (
         <div className={styles.postPage}>
             <div className={styles.textareaContainer}>
-                <textarea name="" id="" placeholder='Share something...' disabled={clicked} maxLength="2000" rows="5" cols="10" onChange={e => {setCount(e.target.value.length); setText(e.target.value)}}>
+                <textarea rows="10" name="" id="" placeholder='Share something...' disabled={clicked} maxLength="2000" cols="10" onChange={e => {setCount(e.target.value.length); setText(e.target.value)}}>
                 </textarea>
                 {showImage ? 
                     <div className={styles.previewImageContainer}>
