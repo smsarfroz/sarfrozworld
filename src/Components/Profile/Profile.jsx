@@ -200,7 +200,7 @@ const Profile = () => {
             }
 
             <p className={styles.userPostText}>{username}'s Posts</p>
-            <hr />
+            <hr className={styles.horizontalLine}/>
 
             <div className={styles.posts}>
                 {
@@ -210,6 +210,7 @@ const Profile = () => {
                                 key={post.id}
                                 post={post}
                                 user={editValue}
+                                commentsCount={post.comments.length}
                             />
                         )
                     })
