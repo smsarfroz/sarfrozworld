@@ -172,7 +172,7 @@ const Profile = () => {
                     <p>Following</p>
                 </div>
                 <div className={styles.counterContainer}>
-                    <p className={styles.num}>{followers == null ? 0 : followers}</p>
+                    <p className={styles.num}>{posts.length}</p>
                     <p>Posts</p>
                 </div>
             </div>

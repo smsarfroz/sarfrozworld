@@ -21,6 +21,10 @@ input {
     margin-bottom: 1vw;
 }
 
+.user:hover {
+    background-color: rgb(42, 42, 42);
+}
+
 .userPhoto {
     width: 2.5vw;
     border-radius: 50%;
@@ -32,12 +36,30 @@ input {
     gap: 1vw;
 }
 
-button {
+.followButton {
     cursor: pointer;
-    height: 1.6vw;
-    width: 5vw;
-    background-color: #128DDA;
+    height: 1.7vw;
+    width: 4.5vw;
+    background-color: #253af5;
     outline: none;
     border: none;
     border-radius: 4px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+}
+
+.username {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.followingButton {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: black;
+    border: 2px solid white;
+    cursor: pointer;
+    height: 1.5vw;
+    border-radius: 4px;
+}
+
+.followingButton:hover {
+    background-color: rgb(49, 49, 49);
 }

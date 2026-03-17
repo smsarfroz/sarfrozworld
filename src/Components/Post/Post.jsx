@@ -8,6 +8,7 @@ import Gif from '../Gif/Gif.jsx';
 import { SarfrozContext } from '../../sarfrozContext.js';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import TextareaAutosize from 'react-textarea-autosize';
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const Post = () => {
@@ -22,10 +23,28 @@ const Post = () => {
     const [text, setText] = useState(null);
     const [clicked, setClicked] = useState(false);
     const { userId } = useContext(SarfrozContext);
+    const gifRef = useRef(null);
 
     const textArea = document.querySelector('textarea');
     const textRowCount = textArea ? textArea.value.split("\n").length : 0;
     const rows = textRowCount + 1;
+
+    useEffect(() => {
+
+        const handleClickOutside = (event) => {
+            if (gifRef.current && !gifRef.current.contains(event.target)) {
+                setShowGif(false);
+            }
+        };  
+        if (showGif) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+
+    }, [showGif]);
 
     const handlePost = useCallback(() => {
         if (!text.trim()) return;
@@ -150,8 +169,8 @@ const Post = () => {
     return (
         <div className={styles.postPage}>
             <div className={styles.textareaContainer}>
-                <textarea rows="10" name="" id="" placeholder='Share something...' disabled={clicked} maxLength="2000" cols="10" onChange={e => {setCount(e.target.value.length); setText(e.target.value)}}>
-                </textarea>
+                <TextareaAutosize className={styles.textareaAutosize} rows="10" name="" id="" placeholder='Share something...' disabled={clicked} maxLength="2000" cols="10" onChange={e => {setCount(e.target.value.length); setText(e.target.value)}}>
+                </TextareaAutosize>
                 {showImage ? 
                     <div className={styles.previewImageContainer}>
                         <img src={imageLink} alt="" className={styles.previewImage} onLoad={() => URL.revokeObjectURL(imageLink)}/>
@@ -184,7 +203,9 @@ const Post = () => {
             </div>
             {showGif && !clicked ?
                 <>
-                    <Gif handleGifLinkChange={handleGifLinkChange} />
+                    <div styleName={styles.gifWrapper} ref={gifRef}>
+                        <Gif handleGifLinkChange={handleGifLinkChange} />
+                    </div>
                 </> :
                 null
             }

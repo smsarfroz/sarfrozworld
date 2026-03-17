@@ -25,10 +25,12 @@ textarea {
     display: flex;
     flex-direction: column;
     width: 600px;
+    margin-top: 1.5vw;
     margin-bottom: 3.5vw;
 }
 
 button {
+    border-radius: 5px;
     height: 2.5vw;
     width: 6vw;
     color: white;

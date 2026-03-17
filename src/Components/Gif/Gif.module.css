@@ -3,9 +3,11 @@
     height: 500px;
     background-color: rgb(33, 33, 33);
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    left: 20%;
+    top: 90%;
+    /* transform: translate(-50%, -50%); */
+    margin-left: -20%;
+    margin-top: -250px;
     padding: 1vw 1vw;
     overflow: auto;
     scrollbar-color: rgb(94, 39, 39);
@@ -40,6 +42,9 @@
 .topContainer {
     display: flex;
     gap: 1vw;  
+    height: 2vw;
+    top: 0;
+    position: sticky;
     /* border: 2px solid violet; */
 }
 
@@ -51,9 +56,10 @@
 }
 
 .gif {
-    padding: 0.7vw;
+    padding: 0vw;
 }
 
 .loadingLine {
     text-align: center;
+    margin-top: 4vw ;
 }

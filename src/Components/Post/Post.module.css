@@ -1,8 +1,8 @@
-textarea {
+.textareaAutosize {
     margin-top: 0.5vw !important; 
     line-height: 1.2; 
     box-sizing: border-box;
-    min-height: 300px;
+    min-height: 200px;
     height: unset;
     max-width: 100%;
     min-width: 0;
@@ -99,7 +99,7 @@ textarea {
 .cancelButton {
     position: absolute;
     bottom: calc(50% + 150px);
-    left: calc(50% + 300px);
+    left: calc(50% + 200px);
     transform: translate(-50%, -50%);
     cursor: pointer;
 }
@@ -108,4 +108,9 @@ textarea {
     position: relative;
     bottom: 5vw;
     margin-bottom: 1.5vw;
+}
+
+.gifWrapper {
+    position: relative;
+    z-index: 1000;
 }
