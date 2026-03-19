@@ -27,13 +27,18 @@
 
 .saveButton {
     cursor: pointer;
-    background-color: blue;
+    background-color: rgb(46, 46, 245);
+    outline: none;
+    border: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    filter: brightness(90%);
 }
 
 .inputContainers {
     display: flex;
     flex-direction: column;
-    gap: 1vw;
+    gap: 0vw;
+    margin-top: 2vw;
 }
 
 .profilePage {
@@ -102,4 +107,9 @@
 .horizontalLine {
     border-color: rgb(103, 103, 237);
     width: 600px;
+}
+
+.input:focus-visible {
+    outline: 2px solid white;
+    border-radius: 3px;
 }

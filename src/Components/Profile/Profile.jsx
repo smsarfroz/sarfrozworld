@@ -106,7 +106,7 @@ const Profile = () => {
             setEditValue(data[0]);
         }
     
-    }, [data, editValue, refetch]);
+    }, [data, refetch]);
 
     if (isPending) return "Loading..."
 
@@ -135,8 +135,8 @@ const Profile = () => {
 
     if (editValue && typeof editValue === 'object') {
         ({ bio, followers, following, github, id, photo, username, website } = editValue);
-        
         postsUnsorted = editValue.posts || [];
+        console.log('bio inside if condition, editValue', bio, editValue);
     }
 
     const posts = [...postsUnsorted].sort((a, b) => {
@@ -164,11 +164,11 @@ const Profile = () => {
             </div>
             <div className={styles.counters}>
                 <div className={styles.counterContainer}>
-                    <p className={styles.num}>{followers == null ? 0 : followers}</p>
-                    <p >Followers</p>
+                    <p className={styles.num}>{followers == null ? 0 : followers.length}</p>
+                    <p>Followers</p>
                 </div>
                 <div className={styles.counterContainer}>
-                    <p className={styles.num}>{following == null ? 0 : following}</p>
+                    <p className={styles.num}>{following == null ? 0 : following.length}</p>
                     <p>Following</p>
                 </div>
                 <div className={styles.counterContainer}>

@@ -41,6 +41,7 @@
 .postImage {
     display: flex;
     justify-content: center;
+    height: 20vw;
 }
 
 .icons {    

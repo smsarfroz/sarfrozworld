@@ -54,9 +54,7 @@ const Comments = ({ setCommentsCount=false }) => {
     })
 
     // useEffect(() => {
-        
     //      refetch();
-
     // }, [ id, refetch ]);
 
     const comments = data;
@@ -156,7 +154,6 @@ const Comments = ({ setCommentsCount=false }) => {
         <div className={styles.biggerContainer}>
             <div className={styles.commentContainer}>
                 <TextareaAutosize name="addComment" id="" placeholder='Add a comment...' className={styles.comments} value={content} onChange={handleCommentChange} maxLength={500} rows="5" cols="30">
-            
                 </TextareaAutosize>
                 <div className={styles.container}>
                     <p className={styles.charCount}>{charCount}/500</p>
@@ -194,7 +191,7 @@ const Comments = ({ setCommentsCount=false }) => {
                                     </div>
                                 )
                             })) : (
-                                <p className={styles.noComments}>No comments yet. Be the first to comment!</p>
+                                null
                             )
                         }
                     </>
