@@ -95,3 +95,26 @@ a {
   gap: 2vw;
 }
 
+.vertical-line {
+  border-left: 2px solid white;
+  height: 50px;
+}
+
+.error-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1vw;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.move-to-home {
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}

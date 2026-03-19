@@ -63,9 +63,9 @@
 .counters {
     display: flex;
     flex-direction: row;
-    gap: 2vw;
+    gap: 4vw;
     margin-top: 2vw;
-    margin-left: 2vw;
+    margin-left: 1vw;
     color: rgb(195, 195, 195);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -79,8 +79,9 @@
 .details {
     display: flex;
     flex-direction: column;
-    gap: 1.5vw;
+    gap: 1vw;
     margin: 1vw 0vw;
+    margin-top: 3vw;
 }
 
 .userPostText {
