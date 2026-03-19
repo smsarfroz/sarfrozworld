@@ -1,6 +1,7 @@
 import styles from './Signup.module.css';
 import { useContext, useEffect } from 'react';
 import { SarfrozContext } from '../../sarfrozContext';
+import { Link } from 'react-router-dom';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
@@ -54,21 +55,32 @@ const Signup = () => {
     } 
     return (
         <div>
-            <h1>signup page</h1>
-
-            <form action="/signup" method="post" onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="username">Username:</label>
-                    <input type="text" name="username" id="username" required/>
+            <div className={styles.guestPage}>
+            
+                <h2 className={styles.askHeading}>Continue as Guest</h2>
+                <div className={styles.guestText}>
+                    <p>You can browse without creating an account.</p>
+                    <p>You'll have a chance to create account later.</p>
                 </div>
 
-                <div>
-                    <label htmlFor="password">Password:</label>
-                    <input type="password" name="password" id="password" required/>
-                </div>
+                <button type='submit' className={styles.guestButton}>Continue As Guest</button>
+            </div>
 
-                <button type="submit" className={styles.signup}>Sign Up</button>
-            </form>
+            <div className={styles.verticalLine}></div>
+            <div className={styles.signupPage}>
+                <h2 className={styles.askHeading}>HAVE AN ACCOUNT? <Link to='/login'>LOGIN</Link></h2>
+                <form action="/signup" method="post" onSubmit={handleSubmit}>
+                    <div>
+                        {/* <label htmlFor="username">Username:</label> */}
+                        <input type="text" name="username" id="username" placeholder='Username*' required/>
+                    </div>
+                    <div>
+                        {/* <label htmlFor="password">Password:</label> */}
+                        <input type="password" name="password" id="password" placeholder='Password*' required/>
+                    </div>
+                    <button type="submit" className={styles.signupButton}>Sign Up</button>
+                </form>
+            </div>
         </div>
     );
 };
