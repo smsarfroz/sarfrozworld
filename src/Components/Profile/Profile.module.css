@@ -109,7 +109,27 @@
     width: 600px;
 }
 
-.input:focus-visible {
+input:focus-visible {
     outline: 2px solid white;
+    border-radius: 3px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px rgb(61, 60, 60) inset !important;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow:0 0 0 50px white inset; 
+    -webkit-text-fill-color: white;
+}
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 50px white inset;
+    -webkit-text-fill-color: white;
+}
+
+input {
     border-radius: 3px;
 }
