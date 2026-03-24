@@ -8,17 +8,17 @@ const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const Login = () => {
     const navigate = useNavigate();
-    const { loggedIn, setLoggedIn, setUsername } = useContext(SarfrozContext);
+    const { userId, setUserId, loggedIn, setLoggedIn, setUsername } = useContext(SarfrozContext);
 
     useEffect(() => {
         localStorage.setItem('loggedIn', JSON.stringify(loggedIn));
+        localStorage.setItem('userId', JSON.stringify(userId));
 
         if (loggedIn === false) {
             localStorage.removeItem('token');
         }
 
-    }, [loggedIn]);
-
+    }, [loggedIn, userId]);
 
     function handleLogin(token) {
         setLoggedIn(true);
@@ -56,6 +56,7 @@ const Login = () => {
             console.log('response: ', response);
             console.log('user logged in successfully:');
             handleLogin(response.token);
+            setUserId(response.User.id);
             // console.log('loggedIn: ', loggedIn);
             navigate('/');
         })

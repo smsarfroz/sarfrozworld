@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { Navigate, Outlet, useNavigate } from 'react-router';
+import { Navigate, Outlet, useLocation, useNavigate } from 'react-router';
 // import { sarfrozContext } from './sarfrozContext'; 
 import { FiHome } from "react-icons/fi";
 import { LuSearch } from "react-icons/lu";
@@ -108,6 +108,7 @@ const useFetchData = (userId) => {
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [deleted, setDeleted] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
 
@@ -126,6 +127,8 @@ function App() {
     return savedUsername ? JSON.parse(savedUsername) : 0;
   });
 
+  const isAuthRoute = location.pathname === '/login' || location.pathname === '/signup';
+  
   const { loading, error, userData, setUserData, likesState, setLikesState, usersData, setUsersData } = useFetchData(userId);
 
   // console.log('usersData', usersData);
@@ -166,29 +169,36 @@ function App() {
     transition: "background-color 2s ease-in"
   };
 
-  if (loading) {
+
+  if (!loggedIn && !isAuthRoute) {
+    return <Navigate to='/login' replace />;
+  }
+  if (loading && !isAuthRoute) {
     return <Loading />;
   }
-  if (error) {
+  if (error && !isAuthRoute) {
     return <ErrorPage />;
   }
 
+
   return (
     <div className='sectionsContainer'>
-      <div className="navigationRoutes">
-        <p className='siteName'>sarfrozworld</p>
-        <div className="iconList">
-          
-          <div className='tab' onClick={() => setActiveTab(0)} style={activeTab === 0 ? styleObject : null}><FiHome size={25}/><Link to='/home'>Home</Link></div>
-          <div className='tab' onClick={() => setActiveTab(1)} style={activeTab === 1 ? styleObject : null}><LuSearch size={25}/><Link to='/search'>Search</Link></div>
-          <div className='tab' onClick={() => setActiveTab(2)} style={activeTab === 2 ? styleObject : null}><LuPenLine size={25}/><Link to='/post'>Post</Link></div>
-          <div className='tab' onClick={() => setActiveTab(3)} style={activeTab === 3 ? styleObject : null}><IoPersonSharp size={25}/><Link to='/profile'>Profile</Link></div>
-          <div onClick={() => handleLogout()} className='tab'><MdLogout size={25}/> <a href="">Logout</a> </div>
-          {/* <a href={api1} target='_blank' rel='noopener noreferrer'>Authenticate with Google</a> */}
+      {loggedIn && !isAuthRoute && (
 
+        <div className="navigationRoutes">
+          <p className='siteName'>sarfrozworld</p>
+          <div className="iconList">
+            
+            <div className='tab' onClick={() => setActiveTab(0)} style={activeTab === 0 ? styleObject : null}><FiHome size={25}/><Link to='/home'>Home</Link></div>
+            <div className='tab' onClick={() => setActiveTab(1)} style={activeTab === 1 ? styleObject : null}><LuSearch size={25}/><Link to='/search'>Search</Link></div>
+            <div className='tab' onClick={() => setActiveTab(2)} style={activeTab === 2 ? styleObject : null}><LuPenLine size={25}/><Link to='/post'>Post</Link></div>
+            <div className='tab' onClick={() => setActiveTab(3)} style={activeTab === 3 ? styleObject : null}><IoPersonSharp size={25}/><Link to='/profile'>Profile</Link></div>
+            <div onClick={() => handleLogout()} className='tab'><MdLogout size={25}/> <a href="">Logout</a> </div>
+            {/* <a href={api1} target='_blank' rel='noopener noreferrer'>Authenticate with Google</a> */}
+
+          </div>
         </div>
-      </div>
-
+      )}
 
       <div className="commonBackground">
         <QueryClientProvider client={pizza}>
