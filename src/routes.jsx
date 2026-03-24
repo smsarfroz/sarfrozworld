@@ -11,19 +11,22 @@ import PostCard from "./Components/PostCard/PostCard.jsx";
 const routes = [
     {
         path: '/signup',
-        element: <Signup />
+        element: <Signup />,
+        errorElement: <ErrorPage />
     },
     {
         path: "/login",
-        element: <Login />
+        element: <Login />,
+        errorElement: <ErrorPage />
     },
     {
         path: "/",
         element: <App />,   
         children: [
             {
-                path: "/home",
-                element: <Home />,
+                path: "/",
+                element: <Home />
+                // index: true,
             },
             {
                 path: "/post",
@@ -40,6 +43,14 @@ const routes = [
             {
                 path: '/posts/:postId', 
                 element: <PostCard />
+            },
+            {
+                path: '/',
+                element: <Signup />
+            },
+            {
+                path: '/login',
+                element: <Login />
             }
         ],
         errorElement: <ErrorPage />

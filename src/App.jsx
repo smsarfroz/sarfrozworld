@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { Outlet } from 'react-router';
+import { Navigate, Outlet, useNavigate } from 'react-router';
 // import { sarfrozContext } from './sarfrozContext'; 
 import { FiHome } from "react-icons/fi";
 import { LuSearch } from "react-icons/lu";
@@ -12,6 +12,8 @@ import './App.css'
 import ErrorPage from '../ErrorPage.jsx';
 import { SarfrozContext } from './sarfrozContext.js';
 import { QueryClientProvider, QueryClient, Query } from "@tanstack/react-query"
+import Signup from './Components/Signup/Signup.jsx';
+import Login from './Components/Login/Login.jsx';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 const api1 = `${VITE_BASE_URL}/users/profile`;
@@ -105,12 +107,25 @@ const useFetchData = (userId) => {
 };
 
 function App() {
+  const navigate = useNavigate();
   const [deleted, setDeleted] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
+
+  const [ loggedIn, setLoggedIn ] = useState(() => {
+    const savedLoggedIn = localStorage.getItem('loggedIn');
+    return savedLoggedIn ? JSON.parse(savedLoggedIn) : false;
+  })
+
   const [ userId, setUserId ] = useState(() => {
     const savedUserId = localStorage.getItem('userId');
     return savedUserId ? JSON.parse(savedUserId) : 0;
   })
+
+  const [ username, setUsername ] = useState(() => {
+    const savedUsername = localStorage.getItem('username');
+    return savedUsername ? JSON.parse(savedUsername) : 0;
+  });
+
   const { loading, error, userData, setUserData, likesState, setLikesState, usersData, setUsersData } = useFetchData(userId);
 
   // console.log('usersData', usersData);
@@ -132,6 +147,13 @@ function App() {
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
+
+      setLoggedIn(false);
+      localStorage.removeItem('token');
+      localStorage.removeItem('loggedIn');
+      localStorage.removeItem('username');
+
+      navigate('/login');
     } catch (error) {
       console.error(`There was an error with fetch operation: `, error);
       throw error;
@@ -161,7 +183,7 @@ function App() {
           <div className='tab' onClick={() => setActiveTab(1)} style={activeTab === 1 ? styleObject : null}><LuSearch size={25}/><Link to='/search'>Search</Link></div>
           <div className='tab' onClick={() => setActiveTab(2)} style={activeTab === 2 ? styleObject : null}><LuPenLine size={25}/><Link to='/post'>Post</Link></div>
           <div className='tab' onClick={() => setActiveTab(3)} style={activeTab === 3 ? styleObject : null}><IoPersonSharp size={25}/><Link to='/profile'>Profile</Link></div>
-          <div onClick={() => handleLogout} className='tab'><MdLogout size={25}/> <a href="">Logout</a> </div>
+          <div onClick={() => handleLogout()} className='tab'><MdLogout size={25}/> <a href="">Logout</a> </div>
           {/* <a href={api1} target='_blank' rel='noopener noreferrer'>Authenticate with Google</a> */}
 
         </div>
@@ -170,7 +192,7 @@ function App() {
 
       <div className="commonBackground">
         <QueryClientProvider client={pizza}>
-          <SarfrozContext.Provider value={{ userData, setUserData, userId, setUserId, likesState, updateLikeState, usersData, setUsersData, deleted, setDeleted }}>
+          <SarfrozContext.Provider value={{ userData, setUserData, userId, setUserId, loggedIn, setLoggedIn, username, setUsername, likesState, updateLikeState, usersData, setUsersData, deleted, setDeleted }}>
             <Outlet />
           </SarfrozContext.Provider>
         </QueryClientProvider>

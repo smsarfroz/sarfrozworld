@@ -1,11 +1,12 @@
 import styles from './Signup.module.css';
 import { useContext, useEffect } from 'react';
 import { SarfrozContext } from '../../sarfrozContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const Signup = () => {
+    const navigate = useNavigate();
     const { userId, setUserId } = useContext(SarfrozContext);
 
     useEffect(() => {
@@ -47,7 +48,7 @@ const Signup = () => {
             handleUserIdChange(user.id);
             console.log(user);
             console.log('user created successfully:');
-            // window.location = '/login';
+            navigate('/login');
         })
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);

@@ -1,24 +1,27 @@
 import styles from './Login.module.css';
 // import { blogContext } from '../../blogContext';
 import { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { SarfrozContext } from '../../sarfrozContext.js';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const Login = () => {
-    // const { loggedIn, setLoggedIn, setUsername } = useContext(blogContext);
+    const navigate = useNavigate();
+    const { loggedIn, setLoggedIn, setUsername } = useContext(SarfrozContext);
 
-    // useEffect(() => {
-    //     localStorage.setItem('loggedIn', JSON.stringify(loggedIn));
+    useEffect(() => {
+        localStorage.setItem('loggedIn', JSON.stringify(loggedIn));
 
-    //     if (loggedIn === false) {
-    //         localStorage.removeItem('token');
-    //     }
+        if (loggedIn === false) {
+            localStorage.removeItem('token');
+        }
 
-    // }, [loggedIn]);
+    }, [loggedIn]);
+
 
     function handleLogin(token) {
-        // setLoggedIn(true);
+        setLoggedIn(true);
         localStorage.setItem('token', (token));
     }
 
@@ -31,9 +34,9 @@ const Login = () => {
             data[key] = value;
         });
 
-        console.log(data);
+        console.log("data", data);
         localStorage.setItem('username', JSON.stringify(data['username']));
-        // setUsername(data['username']);
+        setUsername(data['username']);
 
         fetch(`${VITE_BASE_URL}/login`, {
             mode: 'cors',
@@ -54,28 +57,28 @@ const Login = () => {
             console.log('user logged in successfully:');
             handleLogin(response.token);
             // console.log('loggedIn: ', loggedIn);
-            // window.location = '/';
+            navigate('/');
         })
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
         })
     }
     return (
-        <div>
-            <h1>Login Page</h1>
+        <div className={styles.loginPage}>
+            <h1 className={styles.askHeading}>Login Page</h1>
 
             <form action="/" method="post" onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="username">Username: </label>
-                    <input type="text" name="username" id="username" required/>
+                    {/* <label htmlFor="username">Username: </label> */}
+                    <input placeholder="Username" type="text" name="username" id="username" required/>
                 </div>
 
                 <div>
-                    <label htmlFor="password">Password: </label>
-                    <input type="password" name="password" id="password" required/>
+                    {/* <label htmlFor="password">Password: </label> */}
+                    <input placeholder='Password' type="password" name="password" id="password" required/>
                 </div>
 
-                <button type="submit" className={styles.login}>Log in</button>
+                <button type="submit" className={styles.loginButton}>Log in</button>
             </form>
         </div>
     );
