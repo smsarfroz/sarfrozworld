@@ -102,8 +102,8 @@ const Profile = () => {
     useEffect(() => {
         refetch();
         if (data) {
-            // console.log('data', data);
-            setEditValue(data[0]);
+            console.log('data', data);
+            setEditValue(data);
         }
     
     }, [data, refetch]);

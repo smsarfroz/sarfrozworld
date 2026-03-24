@@ -29,10 +29,11 @@ const useFetchData = (userId) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  console.log('inside useFetchData');
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // console.log("before get fetch in App.js");
         let data = {};
         data['userId'] = userId;
         const [res1, res2, res3] = await Promise.all([
@@ -101,7 +102,7 @@ const useFetchData = (userId) => {
 
     fetchData();
 
-  }, []);
+  }, [userId]);
 
   return { loading, error, userData, setUserData, likesState, setLikesState, usersData, setUsersData };
 };
@@ -131,7 +132,7 @@ function App() {
   
   const { loading, error, userData, setUserData, likesState, setLikesState, usersData, setUsersData } = useFetchData(userId);
 
-  // console.log('usersData', usersData);
+  console.log('usersData', usersData);
 
   // const [likesState, setLikesState] = useState({});
 
@@ -155,6 +156,7 @@ function App() {
       localStorage.removeItem('token');
       localStorage.removeItem('loggedIn');
       localStorage.removeItem('username');
+      localStorage.removeItem('userId');
 
       navigate('/login');
     } catch (error) {
@@ -189,7 +191,7 @@ function App() {
           <p className='siteName'>sarfrozworld</p>
           <div className="iconList">
             
-            <div className='tab' onClick={() => setActiveTab(0)} style={activeTab === 0 ? styleObject : null}><FiHome size={25}/><Link to='/home'>Home</Link></div>
+            <div className='tab' onClick={() => setActiveTab(0)} style={activeTab === 0 ? styleObject : null}><FiHome size={25}/><Link to='/'>Home</Link></div>
             <div className='tab' onClick={() => setActiveTab(1)} style={activeTab === 1 ? styleObject : null}><LuSearch size={25}/><Link to='/search'>Search</Link></div>
             <div className='tab' onClick={() => setActiveTab(2)} style={activeTab === 2 ? styleObject : null}><LuPenLine size={25}/><Link to='/post'>Post</Link></div>
             <div className='tab' onClick={() => setActiveTab(3)} style={activeTab === 3 ? styleObject : null}><IoPersonSharp size={25}/><Link to='/profile'>Profile</Link></div>

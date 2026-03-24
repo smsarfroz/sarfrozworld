@@ -63,8 +63,7 @@ const Search = () => {
 
     if (error) return "An error has occurred: " + error.message
 
-    const User = data[0];
-    // console.log("User", User);
+    const User = data;
 
     const handleFilter = (user) => {
         let myQuery = query.toLowerCase();

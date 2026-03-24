@@ -16,10 +16,10 @@ const Login = () => {
 
         if (loggedIn === false) {
             localStorage.removeItem('token');
-        }
+        } 
 
     }, [loggedIn, userId]);
-
+     
     function handleLogin(token) {
         setLoggedIn(true);
         localStorage.setItem('token', (token));
@@ -78,7 +78,7 @@ const Login = () => {
                     {/* <label htmlFor="password">Password: </label> */}
                     <input placeholder='Password' type="password" name="password" id="password" required/>
                 </div>
-
+ 
                 <button type="submit" className={styles.loginButton}>Log in</button>
             </form>
         </div>
