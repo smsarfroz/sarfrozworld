@@ -71,14 +71,8 @@ const Signup = () => {
             <div className={styles.signupPage}>
                 <h2 className={styles.askHeading}>HAVE AN ACCOUNT? <Link to='/login'>LOGIN</Link></h2>
                 <form action="/signup" method="post" onSubmit={handleSubmit}>
-                    <div>
-                        {/* <label htmlFor="username">Username:</label> */}
-                        <input type="text" name="username" id="username" placeholder='Username*' required/>
-                    </div>
-                    <div>
-                        {/* <label htmlFor="password">Password:</label> */}
-                        <input type="password" name="password" id="password" placeholder='Password*' required/>
-                    </div>
+                    <input type="text" name="username" id="username" placeholder='Username*' required/>
+                    <input type="password" name="password" id="password" placeholder='Password*' required/>
                     <button type="submit" className={styles.signupButton}>Sign Up</button>
                 </form>
             </div>

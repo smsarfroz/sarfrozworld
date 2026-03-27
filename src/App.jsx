@@ -146,7 +146,7 @@ function App() {
   const handleLogout = async () => {
     const api = `${VITE_BASE_URL}/logout`;
     try {
-      const res = await fetch(api);
+      const res = await fetch(api, { method: "POST"} );
       console.log('res', res);
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);

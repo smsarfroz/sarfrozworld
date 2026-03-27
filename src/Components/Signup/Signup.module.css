@@ -1,14 +1,20 @@
+* {
+  box-sizing: border-box;
+}
+
 .guestPage {
     position: absolute;
     top: 45.5%;
     left: 35%;
     transform: translate(-50%, -50%);
 }
+
 .signupPage {
     position: absolute;
     top: 50%;
     left: 60%;
     transform: translate(-50%, -50%);
+    width: 20vw;
 }
 
 .verticalLine {
@@ -44,7 +50,7 @@
 }
 
 input {
-    width: 20vw;
+    max-width: 20vw;
     height: 3vw;
 }
 

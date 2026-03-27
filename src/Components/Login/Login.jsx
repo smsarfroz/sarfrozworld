@@ -56,7 +56,7 @@ const Login = () => {
             console.log('response: ', response);
             console.log('user logged in successfully:');
             handleLogin(response.token);
-            setUserId(response.User.id);
+            setUserId(response.user.id);
             // console.log('loggedIn: ', loggedIn);
             navigate('/');
         })
