@@ -7,11 +7,22 @@ const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const Signup = () => {
     const navigate = useNavigate();
-    const { userId, setUserId } = useContext(SarfrozContext);
+    const { userId, setUserId, loggedIn, setLoggedIn, setUsername } = useContext(SarfrozContext);
 
     useEffect(() => {
+        localStorage.setItem('loggedIn', JSON.stringify(loggedIn));
         localStorage.setItem('userId', JSON.stringify(userId));
-    }, [userId]);
+
+        if (loggedIn === false) {
+            localStorage.removeItem('token');
+        } 
+
+    }, [loggedIn, userId]);
+     
+    function handleLogin(token) {
+        setLoggedIn(true);
+        localStorage.setItem('token', (token));
+    }
 
     function handleUserIdChange(id) {
         setUserId(id);
@@ -54,17 +65,55 @@ const Signup = () => {
             console.error('There was a problem with the fetch operation:', error);
         })
     } 
+
+    function handleGuestSubmit() {
+
+        // let data = {};
+
+        // console.log("data", data);
+        // localStorage.setItem('username', JSON.stringify(data['username']));
+        // setUsername(data['username']);
+
+        fetch(`${VITE_BASE_URL}/login`, {
+            mode: 'cors',
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                username: "Guest User",
+                password: "sharedpassword123"
+            })
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((response) => {
+            console.log('response: ', response);
+            console.log('user logged in successfully:');
+            handleLogin(response.token);
+            setUserId(response.user.id);
+            // console.log('loggedIn: ', loggedIn);
+            navigate('/');
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        })
+    }
     return (
         <div>
             <div className={styles.guestPage}>
-            
+                
                 <h2 className={styles.askHeading}>Continue as Guest</h2>
                 <div className={styles.guestText}>
                     <p>You can browse without creating an account.</p>
                     <p>You'll have a chance to create account later.</p>
                 </div>
 
-                <button type='submit' className={styles.guestButton}>Continue As Guest</button>
+                <button type='submit' className={styles.guestButton} onClick={handleGuestSubmit}>Continue As Guest</button>
             </div>
 
             <div className={styles.verticalLine}></div>
