@@ -72,7 +72,7 @@ const Post = () => {
                 }
 
                 const data1 = await res1.json();
-                navigate('/home');
+                navigate('/');
                 return data1;
                 
             } catch (error) {

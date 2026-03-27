@@ -136,7 +136,7 @@ const Profile = () => {
     if (editValue && typeof editValue === 'object') {
         ({ bio, followers, following, github, id, photo, username, website } = editValue);
         postsUnsorted = editValue.posts || [];
-        console.log('bio inside if condition, editValue', bio, editValue);
+        console.log('photo', photo);
     }
 
     const posts = [...postsUnsorted].sort((a, b) => {

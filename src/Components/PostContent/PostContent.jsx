@@ -21,8 +21,6 @@ function PostContent({ post, user, setDeleted, showFullContent = false, comments
     const [hover, setHover] = useState(false);
     // console.log('commentsCount', commentsCount);
 
-    // console.log('post', post);
-
     useEffect(() => {
         
         if (likesState[post.id]) {
