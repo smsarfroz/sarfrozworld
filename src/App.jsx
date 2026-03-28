@@ -29,8 +29,6 @@ const useFetchData = (userId) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  console.log('inside useFetchData');
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -132,10 +130,6 @@ function App() {
   
   const { loading, error, userData, setUserData, likesState, setLikesState, usersData, setUsersData } = useFetchData(userId);
 
-  console.log('usersData', usersData);
-
-  // const [likesState, setLikesState] = useState({});
-
   const updateLikeState = (postId, liked, likesCount) => {
     setLikesState(prev => ({
       ...prev,
@@ -147,7 +141,6 @@ function App() {
     const api = `${VITE_BASE_URL}/logout`;
     try {
       const res = await fetch(api, { method: "POST"} );
-      console.log('res', res);
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }

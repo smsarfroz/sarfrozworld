@@ -50,7 +50,7 @@
     margin-bottom: 3vw;
 }
 
-input {
+form>input {
     max-width: 20vw;
     height: 3vw;
 }
@@ -70,3 +70,6 @@ input {
     margin-bottom: 1vw;
 }
 
+.loginPrompt {
+    cursor: pointer;
+}

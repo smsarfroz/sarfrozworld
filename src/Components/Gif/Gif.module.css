@@ -28,6 +28,7 @@
 }
 
 .submitButton {
+    filter: brightness(100%);
     background-color: blue;
     outline: none;
     border: none;

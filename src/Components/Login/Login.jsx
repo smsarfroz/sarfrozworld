@@ -64,23 +64,25 @@ const Login = () => {
             console.error('There was a problem with the fetch operation:', error);
         })
     }
+
+    function handleGuestClick() {
+        navigate('/signup');
+    }
+
     return (
         <div className={styles.loginPage}>
             <h1 className={styles.askHeading}>Login Page</h1>
 
             <form action="/" method="post" onSubmit={handleSubmit}>
-                <div>
-                    {/* <label htmlFor="username">Username: </label> */}
-                    <input placeholder="Username" type="text" name="username" id="username" required/>
-                </div>
+                <input placeholder="Username" type="text" name="username" id="username" required/>
 
-                <div>
-                    {/* <label htmlFor="password">Password: </label> */}
-                    <input placeholder='Password' type="password" name="password" id="password" required/>
-                </div>
+                <input placeholder='Password' type="password" name="password" id="password" required/>
  
                 <button type="submit" className={styles.loginButton}>Log in</button>
+
             </form>
+            
+            <button className={styles.guestButton} onClick={() => handleGuestClick()}>Guest login</button>
         </div>
     );
 };

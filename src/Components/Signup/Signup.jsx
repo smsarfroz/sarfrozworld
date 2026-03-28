@@ -118,7 +118,7 @@ const Signup = () => {
 
             <div className={styles.verticalLine}></div>
             <div className={styles.signupPage}>
-                <h2 className={styles.askHeading}>HAVE AN ACCOUNT? <Link to='/login'>LOGIN</Link></h2>
+                <h2 className={styles.askHeading}>HAVE AN ACCOUNT? <Link to='/login' className={styles.loginPrompt}>LOGIN</Link></h2>
                 <form action="/signup" method="post" onSubmit={handleSubmit}>
                     <input type="text" name="username" id="username" placeholder='Username*' required/>
                     <input type="password" name="password" id="password" placeholder='Password*' required/>

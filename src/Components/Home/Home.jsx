@@ -8,6 +8,8 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import PostCardPreview from '../PostCardPreview/PostCardPreview.jsx';
 import { useQuery } from '@tanstack/react-query';
+import handleFollow from '../../utils/handleFollow.js';
+import handleUnFollow from '../../utils/handleUnFollow.js';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
@@ -15,7 +17,8 @@ const api1 = `${VITE_BASE_URL}/home`;
 
 const Home = () => {
     const [currentCat, setCurrentCat] = useState(0);
-    const { deleted, setDeleted } = useContext(SarfrozContext);
+    const [User, setUser] = useState(null);
+    const { deleted, setDeleted, usersData, userId } = useContext(SarfrozContext);
     const { isPending, error, data, refetch } = useQuery({
         queryKey: ["postData", currentCat],
         staleTime: 0,   
@@ -56,8 +59,13 @@ const Home = () => {
         
         refetch();
         setDeleted(false);
+        usersData.map(user => {
+            if (user.id === userId) {
+                setUser(user);
+            }
+        })
 
-    }, [ refetch, data, deleted, setDeleted ]);
+    }, [ refetch, data, deleted, setDeleted, userId, usersData ]);
 
     const catStyle = {
         color: 'rgb(103, 103, 237)'
@@ -81,31 +89,55 @@ const Home = () => {
     if (!(Array.isArray(data) && data.length > 0)) {
         return "No posts available";
     }
- 
+
+    const lastFiveReversed = usersData.slice(-5).reverse();
+    
     return (
-        <div className={styles.homePage}>
-            
-            <div className={styles.categories}>
-                <p style={currentCat == 0 ? catStyle : null} onClick={() => clickHandler(0)} className={styles.cat}>Recent</p>
-                <p style={currentCat == 1 ? catStyle : null} onClick={() => clickHandler(1)} className={styles.cat}>Most Liked</p>
-            </div>
-            <div className={styles.posts}>
+        <>
+            <div className={styles.latestUsers}>
                 {
-                    data.map((post) => {
-                        // console.log('length', post.comments.length);
+                    lastFiveReversed.map((user) => {
                         return (
-                            <PostCardPreview 
-                                key={post.id}
-                                post={post}
-                                user={post.user}
-                                setDeleted={setDeleted}
-                                commentsCount={post.comments.length}
-                            />
+                            <div className={styles.user} key={user.id}>
+                                <div className={styles.leftPart}>
+                                    <img src={user.photo} alt="" className={styles.userPhoto}/>
+                                    <p className={styles.username}>{user.username}</p>
+                                </div>
+
+                                {User.following.includes(user.id) ? 
+                                    <button onClick={() => handleUnFollow(userId, user.id, refetch, VITE_BASE_URL)} className={styles.followingButton}>Following</button> :
+                                    <button onClick={() => handleFollow(userId, user.id, refetch, VITE_BASE_URL)} className={styles.followButton}>Follow</button> 
+                                }
+                            </div>    
                         )
                     })
                 }
             </div>
-        </div>
+
+            <div className={styles.homePage}>
+
+                <div className={styles.categories}>
+                    <p style={currentCat == 0 ? catStyle : null} onClick={() => clickHandler(0)} className={styles.cat}>Recent</p>
+                    <p style={currentCat == 1 ? catStyle : null} onClick={() => clickHandler(1)} className={styles.cat}>Most Liked</p>
+                </div>
+                <div className={styles.posts}>
+                    {
+                        data.map((post) => {
+                            return (
+                                <PostCardPreview 
+                                    key={post.id}
+                                    post={post}
+                                    user={post.user}
+                                    setDeleted={setDeleted}
+                                    commentsCount={post.comments.length}
+                                />
+                            )
+                        })
+                    }
+                </div>
+
+            </div>
+        </>
     )
 };
 
