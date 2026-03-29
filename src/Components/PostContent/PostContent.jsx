@@ -138,7 +138,7 @@ function PostContent({ post, user, setDeleted, showFullContent = false, comments
                 </div>
                 <p className={styles.text}>{post.text}</p>    
                 {post.imageLink && (
-                    <div className={styles.postImage}><img src={post.imageLink} alt="" /></div>
+                    <div className={styles.postImage}><img src={post.imageLink} alt="" className={styles.contentImage}/></div>
                 )}
             </ContentWrapper>
 

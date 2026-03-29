@@ -1,7 +1,13 @@
+* {
+    /* border: 1px solid blue; */
+}
+
 .posts {
     display: flex;
     flex-direction: column;
     gap: 2vw;
+    width: 48vw;
+    /* width: 88%; */
 }
 
 .categories {
@@ -9,7 +15,8 @@
     gap: 2vw;
     justify-content: center;
     margin: 1.4vw 0;
-    width: 600px;
+    /* width: 600px; */
+    width: 88%;
     font-size: 1.3vw;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
@@ -23,10 +30,12 @@ a {
 }
 
 .latestUsers {
-    width: 30vw;
-    height: 22vw;
+    width: 20vw;
+    height: 21.5vw;
     background-color: rgb(27, 26, 26);
     border-radius: 10px;
+    padding: 9px 8px;
+    margin-top: 3vw;
     /* position: absolute; */
     /* transform: translate(100%, 20%); */
 }
@@ -40,7 +49,7 @@ a {
 }
 
 .user {
-    width: 40vw;
+    /* width: 40vw; */
     height: 3.5vw;
     display: flex;
     justify-content: space-between;
@@ -48,7 +57,7 @@ a {
     padding: 1vw 1vw;
     border-radius: 4px;
     align-items: center;
-    margin-bottom: 1vw;
+    margin-bottom: 0.1vw;
 }
 
 .leftPart {
@@ -69,7 +78,7 @@ a {
 .followButton {
     cursor: pointer;
     height: 1.7vw;
-    width: 4.5vw;
+    width: 5vw;
     background-color: #253af5;
     outline: none;
     border: none;
@@ -81,13 +90,29 @@ a {
 .followingButton {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     background-color: black;
-    border: 2px solid white;
+    border: 2px solid rgb(128, 127, 127);
     cursor: pointer;
-    height: 1.5vw;
+    height: 1.7vw;
+    width: 7vw;
     border-radius: 4px;
     filter: brightness(100%);
 }
 
 .followingButton:hover {
     background-color: rgb(49, 49, 49);
+}
+
+.followButton:hover {
+    background-color: #3f51f6;
+}
+
+.latestUser {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin: 0 13px;
+    margin-bottom: 1vw;
+}
+
+.homeContainer {
+    display: flex;
+    gap: 3vw;
 }

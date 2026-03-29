@@ -1,5 +1,6 @@
 .post {
-    width: 600px;
+    /* width: 600px; */
+    width: 88%;
     height: auto;
     background-color: rgb(27, 26, 26);
     border-radius: 10px;
@@ -41,7 +42,14 @@
 .postImage {
     display: flex;
     justify-content: center;
-    height: 20vw;
+    height: 24vw;
+    margin: 1vw 0;
+}   
+
+.contentImage {
+    border-radius: 3px;
+    /* width: 100%; */
+    width: auto;
 }
 
 .icons {    

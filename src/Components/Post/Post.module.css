@@ -1,11 +1,11 @@
 .textareaAutosize {
     margin-top: 0.5vw !important; 
+    margin-bottom: 0vw;
     line-height: 1.2; 
     box-sizing: border-box;
-    min-height: 200px;
-    height: unset;
-    max-width: 100%;
-    min-width: 0;
+    min-height: 8vw;
+    max-height: 200vw;
+    width: 100%;
     border: 2px solid red;
     resize: none;
     outline: none;
@@ -27,7 +27,7 @@
     border-radius: 5px;
     background-color: #2836ff;
     cursor: pointer;
-    position: relative;
+    /* position: relative; */
     top: 0%;
     right: 1%;
     font-size: 1.2vw;
@@ -41,7 +41,7 @@
     background-color: rgb(17, 16, 16);
     display: flex;
     flex-direction: column;
-    gap: 2vw;
+    gap: 1vw;
     width: 70%; 
 }
 
@@ -52,6 +52,7 @@
 .postPage {
     /* border: 2px solid blueviolet */
     position: relative;
+    width: 100%;
 }
 
 .iconsContainer {
@@ -77,9 +78,15 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    position: absolute;
-    bottom: 15px;
-    padding: 0 1vw;
+    align-items: center;
+    bottom: auto;
+    padding: 1vw;
+    position: relative;
+    background-color: rgb(17, 16, 16);
+}
+
+* {
+    /* border: 1px solid blue; */
 }
 
 .icon {

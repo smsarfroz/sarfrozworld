@@ -1,3 +1,7 @@
+* {
+    /* border: 1px solid blue; */
+}
+
 .profilePhoto {
     border-radius: 50%;
     width: 5vw;
@@ -42,6 +46,7 @@
 }
 
 .profilePage {
+    width: 80%;
     /* border: 2px solid blue; */
     /* position: relative;
     left: 25%;
@@ -107,7 +112,8 @@
 
 .horizontalLine {
     border-color: rgb(103, 103, 237);
-    width: 600px;
+    /* width: 600px; */
+    width: 88%;
 }
 
 input:focus-visible {
