@@ -109,7 +109,14 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
   const [deleted, setDeleted] = useState(false);
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(() => {
+    const path = location.pathname;
+    if (path === '/') return 0;
+    if (path === '/search') return 1;
+    if (path === '/post') return 2;
+    if (path === '/profile') return 3;
+    return 0;
+  });
 
   const [ loggedIn, setLoggedIn ] = useState(() => {
     const savedLoggedIn = localStorage.getItem('loggedIn');
@@ -159,11 +166,16 @@ function App() {
   };
 
   const styleObject = {
-    backgroundColor:"rgb(65, 65, 65)",
-    opacity: "0.8", 
-    transition: "background-color 2s ease-in"
+    backgroundColor:"rgba(58, 58, 58, 1)",
+    opacity: "0.9", 
+    transition: "background-color 0.2s ease-in",
+    borderRadius: "8px"
   };
 
+  const handleTabClick = (tabIndex, path) => {
+    setActiveTab(tabIndex);
+    navigate(path);
+  };
 
   if (!loggedIn && !isAuthRoute) {
     return <Navigate to='/login' replace />;
@@ -175,6 +187,7 @@ function App() {
     return <ErrorPage />;
   }
 
+  console.log('activeTab', activeTab);
 
   return (
     <div className='sectionsContainer'>
@@ -184,11 +197,11 @@ function App() {
           <p className='siteName'>sarfrozworld</p>
           <div className="iconList">
             
-            <div className='tab' onClick={() => setActiveTab(0)} style={activeTab === 0 ? styleObject : null}><FiHome size={25}/><Link to='/'>Home</Link></div>
-            <div className='tab' onClick={() => setActiveTab(1)} style={activeTab === 1 ? styleObject : null}><LuSearch size={25}/><Link to='/search'>Search</Link></div>
-            <div className='tab' onClick={() => setActiveTab(2)} style={activeTab === 2 ? styleObject : null}><LuPenLine size={25}/><Link to='/post'>Post</Link></div>
-            <div className='tab' onClick={() => setActiveTab(3)} style={activeTab === 3 ? styleObject : null}><IoPersonSharp size={25}/><Link to='/profile'>Profile</Link></div>
-            <div onClick={() => handleLogout()} className='tab'><MdLogout size={25}/> <a href="">Logout</a> </div>
+            <div className='tab' onClick={() => handleTabClick(0, '/')} style={activeTab === 0 ? styleObject : null}><FiHome size={25}/><span>Home</span> </div>
+            <div className='tab' onClick={() => handleTabClick(1, '/search')} style={activeTab === 1 ? styleObject : null}><LuSearch size={25}/><span>Search</span> </div>
+            <div className='tab' onClick={() => handleTabClick(2, '/post')} style={activeTab === 2 ? styleObject : null}><LuPenLine size={25}/><span>Post</span> </div>
+            <div className='tab' onClick={() => handleTabClick(3, '/profile')} style={activeTab === 3 ? styleObject : null}><IoPersonSharp size={25}/><span>Profile</span> </div>
+            <div onClick={() => handleLogout()} className='tab'><MdLogout size={25}/> <span>Logout</span> </div> 
             {/* <a href={api1} target='_blank' rel='noopener noreferrer'>Authenticate with Google</a> */}
 
           </div>

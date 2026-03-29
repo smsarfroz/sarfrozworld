@@ -58,12 +58,13 @@ body {
   border-radius: 5px;
   display: flex;
   cursor: pointer;
+  transition: all 0.1s ease-in;
 }
 
 .tab:hover {
   background-color: rgb(65, 65, 65);
   opacity: 0.8;
-  transition: background-color 0.08s ease-in;
+  transition: background-color 0.1s ease-in;
   color: rgb(81, 81, 233);
 } 
 
