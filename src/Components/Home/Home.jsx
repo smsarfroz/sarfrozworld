@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import PostCardPreview from '../PostCardPreview/PostCardPreview.jsx';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 // import handleFollow from '../../utils/handleFollow.js';
 // import handleUnFollow from '../../utils/handleUnFollow.js';
 
@@ -16,6 +17,7 @@ const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 const api1 = `${VITE_BASE_URL}/home`;
 
 const Home = () => {
+    const navigate = useNavigate();
     const [currentCat, setCurrentCat] = useState(0);
     // const [User, setUser] = useState(null);
     const { deleted, setDeleted, usersData, userId } = useContext(SarfrozContext);
@@ -197,6 +199,11 @@ const Home = () => {
     const lastFiveReversed = usersData.slice(-6).reverse();
     let length = 0;
 
+    function handleUserClick(e, uid) {
+        e.stopPropagation();
+        navigate(`/u/${uid}`);
+    }
+
     return (
         <div className={styles.homeContainer}>
 
@@ -241,7 +248,7 @@ const Home = () => {
                             <div className={styles.user} key={user.id}>
                                 <div className={styles.leftPart}>
                                     <img src={user.photo} alt="" className={styles.userPhoto}/>
-                                    <p className={styles.username}>{user.username}</p>
+                                    <span onClick={(e) => handleUserClick(e, user.id)} className={styles.username}>{user.username}</span>
                                 </div>
 
                                 {User.following.includes(user.id) ? 

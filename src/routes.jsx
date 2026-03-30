@@ -7,6 +7,7 @@ import ErrorPage from "../ErrorPage.jsx";
 import Login from "./Components/Login/Login.jsx";
 import Signup from "./Components/Signup/Signup.jsx";
 import PostCard from "./Components/PostCard/PostCard.jsx";
+import UserProfile from "./Components/UserProfile/UserProfile.jsx";
 
 const routes = [
     {
@@ -41,6 +42,10 @@ const routes = [
                 path: '/posts/:postId', 
                 element: <PostCard />
             },
+            {
+                path: '/u/:uid',
+                element: <UserProfile />
+            }
         ],
         errorElement: <ErrorPage />
     }
