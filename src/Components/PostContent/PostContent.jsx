@@ -113,20 +113,30 @@ function PostContent({ post, user, setDeleted, showFullContent = false, comments
         } 
     };
 
-    const ContentWrapper = showFullContent ? 'div' : Link;
+    const ContentWrapper = showFullContent ? 'div' : 'div';
     const wrapperProps = showFullContent 
         ? { className: styles.ContentWrapper }
-        : { to: `/posts/${post.id}`, className: styles.ContentWrapper, key: post.id };
+        : { className: styles.ContentWrapper, key: post.id };
+
+    function handleClickContentWrapper(pid) {
+        if (!showFullContent) {
+            navigate(`/posts/${pid}`);
+        }
+    }
+    function handleUserClick(e, uid) {
+        e.stopPropagation();
+        navigate(`/u/${uid}`);
+    }
 
     return (
         <div className={styles.post} onMouseEnter={onHover} onMouseLeave={onLeave}>
-            <ContentWrapper {...wrapperProps}>
+            <ContentWrapper {...wrapperProps} onClick={() => handleClickContentWrapper(post.id)}>
                 <div className={styles.userDetails}>
                     <div className={styles.leftPart}>
                         <img src={user.photo} alt="" className={styles.profilePhoto}/>
-                        <Link to={`/u/${user.username}`} className={styles.username}>
+                        <span onClick={(e) => handleUserClick(e, user.id)} className={styles.username}>
                             <p className={styles.username}>{user.username}</p>
-                        </Link>
+                        </span>
                         <p className={styles.createdAt}>• <TimeAgo date={post.createdAt}/></p>
                     </div>
                     { userId === user.id && hover ? 

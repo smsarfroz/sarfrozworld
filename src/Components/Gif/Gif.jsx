@@ -90,38 +90,37 @@ const Gif = ({ handleGifLinkChange }) => {
               </div>
             </form>
 
-            {
-              loading ? 
-              <p className={styles.loadingLine}>Loading...</p> :
+            <div className={styles.gifGridContainer}>
+              {
+                loading ?
+                <p className={styles.loadingLine}>Loading...</p> :
               
-              <>
+                <>
               
-                {
-                  gifList != null ?
-                  <div className={styles.gif}>
-                    {
-                      gifList.map((gif, i) => {
-                        return (
-                          <img src={gif.images.fixed_height.url} alt="" key={i} className={styles.gifImg} onClick={() => handleGifLinkChange(gif.images.fixed_height.url)}/>
-                        )
-                      })
-
-                    }
-                  </div>  :
-
-                  <div className={styles.gif}>
-                    {
-
-                      trendingGifList.map((gif, i) => {
-                        return (
-                          <img src={gif.images.fixed_height.url} alt="" key={i} className={styles.gifImg} onClick={() => handleGifLinkChange(gif.images.fixed_height.url)}/>
-                        )
-                      })
-                    }
-                  </div> 
-                }
-              </>
-            }
+                  {
+                    gifList != null ?
+                    <div className={styles.gif}>
+                      {
+                        gifList.map((gif, i) => {
+                          return (
+                            <img src={gif.images.fixed_height.url} alt="" key={i} className={styles.gifImg} onClick={() => handleGifLinkChange(gif.images.fixed_height.url)}/>
+                          )
+                        })
+                      }
+                    </div>  :
+                    <div className={styles.gif}>
+                      {
+                        trendingGifList.map((gif, i) => {
+                          return (
+                            <img src={gif.images.fixed_height.url} alt="" key={i} className={styles.gifImg} onClick={() => handleGifLinkChange(gif.images.fixed_height.url)}/>
+                          )
+                        })
+                      }
+                    </div>
+                  }
+                </>
+              }
+            </div>
             
         </div>
     )

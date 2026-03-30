@@ -12,6 +12,8 @@ textarea {
     font-size: 16px;
     height: 200px;    
     padding: 10px;
+    color: white;
+    resize: none;
 }                     
 
 .container {
@@ -126,4 +128,8 @@ button:disabled {
     text-align: center;
     margin-top: 2vw;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.replyButton:hover {
+    background-color: rgb(107, 107, 247);
 }

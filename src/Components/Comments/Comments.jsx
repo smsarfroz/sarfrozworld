@@ -146,7 +146,9 @@ const Comments = ({ setCommentsCount=false }) => {
 
     const styleObject = {
         filter: "brightness(100%)",
-        cursor: "pointer"
+        cursor: "pointer",
+        outline: "none",
+        border: "none"
     }
 
     return (
@@ -157,7 +159,7 @@ const Comments = ({ setCommentsCount=false }) => {
                 </TextareaAutosize>
                 <div className={styles.container}>
                     <p className={styles.charCount}>{charCount}/500</p>
-                    <button onClick={postComment} style={charCount > 0 ? styleObject : null} disabled={!content.trim()}>Reply</button>
+                    <button className={styles.replyButton} onClick={postComment} style={charCount > 0 ? styleObject : null} disabled={!content.trim()}>Reply</button>
                 </div>
             </div>
             {

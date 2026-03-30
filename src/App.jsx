@@ -168,7 +168,7 @@ function App() {
   const styleObject = {
     backgroundColor:"rgba(58, 58, 58, 1)",
     opacity: "0.9", 
-    transition: "background-color 0.2s ease-in",
+    transition: "background-color 0.09s ease-in",
     borderRadius: "8px"
   };
 
@@ -186,8 +186,6 @@ function App() {
   if (error && !isAuthRoute) {
     return <ErrorPage />;
   }
-
-  console.log('activeTab', activeTab);
 
   return (
     <div className='sectionsContainer'>

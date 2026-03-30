@@ -105,7 +105,7 @@ const Profile = () => {
             console.log('data', data);
             setEditValue(data);
         }
-    
+        
     }, [data, refetch]);
 
     if (isPending) return "Loading..."
@@ -136,7 +136,6 @@ const Profile = () => {
     if (editValue && typeof editValue === 'object') {
         ({ bio, followers, following, github, id, photo, username, website } = editValue);
         postsUnsorted = editValue.posts || [];
-        console.log('photo', photo);
     }
 
     const posts = [...postsUnsorted].sort((a, b) => {
@@ -147,7 +146,7 @@ const Profile = () => {
 
     function handleEditClick() {
         setIsEditing(true);
-        setEditValue(user);
+        // setEditValue(user);
     }
     const handleSaveClick = async (data) => {
         setIsEditing(false);
@@ -186,8 +185,8 @@ const Profile = () => {
                 :
                 <div className={styles.details}>
                     { bio && <p className={styles.infoLine}>{bio}</p> }
-                    { website && <p className={styles.infoLine}><CiGlobe />{website}</p> }
-                    { github && <p className={styles.infoLine}><RiGithubLine />{github}</p> }
+                    { website && <p className={styles.infoLine}><CiGlobe /><a href={website} target="_blank" rel="noopener noreferrer">{website}</a></p> }
+                    { github && <p className={styles.infoLine}><RiGithubLine /><a href={github} target="_blank" rel="noopener noreferrer">{github}</a></p> }
                 </div>
             }
             

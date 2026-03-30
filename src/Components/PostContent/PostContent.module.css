@@ -1,3 +1,7 @@
+* {
+    /* border: 1px solid blue; */
+}
+
 .post {
     /* width: 600px; */
     width: 88%;
@@ -14,7 +18,11 @@
 
 .ContentWrapper {
     color: white;
+    display: block;
+    text-decoration: none;
+    cursor: default;
 }
+
 
 .userDetails {
     display: flex;
@@ -64,6 +72,10 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.username:hover {
+    color: rgb(105, 105, 233);
+}
+
 .icon {
     cursor: pointer;
 }
@@ -73,10 +85,16 @@
     color: rgb(103, 103, 237);
 }
 
+.deleteIcon:hover {
+    background-color: rgb(38, 38, 119);
+    border-radius: 2px;
+}
+
 .createdAt {
     color: rgb(176, 176, 176);
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 0.8vw;
+    cursor: default;
 }
 
 .likeSection {

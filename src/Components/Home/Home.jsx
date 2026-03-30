@@ -112,7 +112,8 @@ const Home = () => {
     }, [ refetch, data, deleted, setDeleted ]);
 
     const catStyle = {
-        color: 'rgb(103, 103, 237)'
+        color: 'rgb(103, 103, 237)',
+        // transition: "all 2s ease-in"
     }
     const clickHandler = (cur) => {
         if (cur == 0) {
@@ -202,9 +203,14 @@ const Home = () => {
             <div className={styles.homePage}>
 
                 <div className={styles.categories}>
-                    <p style={currentCat == 0 ? catStyle : null} onClick={() => clickHandler(0)} className={styles.cat}>Recent</p>
-                    <p style={currentCat == 1 ? catStyle : null} onClick={() => clickHandler(1)} className={styles.cat}>Most Liked</p>
+                    <div className={styles.textItem}>
+                        <p style={currentCat == 0 ? catStyle : null} onClick={() => clickHandler(0)} className={currentCat === 0 ? styles.active : styles.inactive}>Recent</p>
+                    </div>
+                    <div className={styles.textItem}>
+                        <p style={currentCat == 1 ? catStyle : null} onClick={() => clickHandler(1)} className={currentCat === 1 ? styles.active : styles.inactive}>Most Liked</p>
+                    </div>
                 </div>
+
                 <div className={styles.posts}>
                     {
                         data.map((post) => {

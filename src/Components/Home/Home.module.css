@@ -12,21 +12,37 @@
 
 .categories {
     display: flex;
-    gap: 2vw;
+    gap: 4vw;
     justify-content: center;
     margin: 1.4vw 0;
     /* width: 600px; */
     width: 88%;
     font-size: 1.3vw;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    cursor: pointer;
 }
 
-.cat {
-    cursor: pointer;
+.active {
+    border-bottom: 2px solid rgb(87, 87, 232);
+    padding-bottom: 0.4vw;
+    transition: color 0.2s ease-in;
+    /* border-b */
+}
+
+.inactive {
+    color: rgb(174, 174, 174);
+}
+
+.inactive:hover {
+    color: #6976e8;
 }
 
 a {
     cursor: default;
+}
+
+* {
+    /* border: 1px solid blue; */
 }
 
 .latestUsers {
@@ -36,6 +52,8 @@ a {
     border-radius: 10px;
     padding: 9px 8px;
     margin-top: 3vw;
+    position: fixed;
+    right: 3vw;
     /* position: absolute; */
     /* transform: translate(100%, 20%); */
 }
@@ -73,6 +91,11 @@ a {
 
 .username {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.username:hover {
+    color: #6976e8;
+    cursor: pointer;
 }
 
 .followButton {
@@ -115,4 +138,5 @@ a {
 .homeContainer {
     display: flex;
     gap: 3vw;
+    position: relative;;
 }
