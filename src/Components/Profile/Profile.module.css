@@ -24,7 +24,6 @@
     /* cursor: pointer; */
     display: flex;
     align-items: center;
-    gap: 0.5vw;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: rgb(103, 103, 237);
 }

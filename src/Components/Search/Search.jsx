@@ -4,6 +4,7 @@ import { useContext, useState } from 'react';
 import { useEffect } from 'react';
 import { SarfrozContext } from '../../sarfrozContext.js';
 import { useQuery } from '@tanstack/react-query';   
+import { useNavigate } from 'react-router-dom';
 // import handleFollow from '../../utils/handleFollow.js';
 // import handleUnFollow from '../../utils/handleUnFollow.js';
 
@@ -12,6 +13,7 @@ const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 const Search = () => {
     const { usersData, userId } = useContext(SarfrozContext);
     const [query, setQuery] = useState("");
+    const navigate = useNavigate();
     // const [user, setUser] = useState(null);
     let dataToSend = {};
     dataToSend['userId'] = userId;
@@ -140,7 +142,11 @@ const Search = () => {
         }
     } 
 
-    
+    function handleUserClick(e, uid) {
+        e.stopPropagation();
+        navigate(`/u/${uid}`);
+    }
+
     return (
         <div className={styles.searchPage}>
             <input type="text" placeholder='Search users...' value={query} onChange={(e) => setQuery(e.target.value)}/>
@@ -153,7 +159,7 @@ const Search = () => {
                                     <div className={styles.user} key={user.id}>
                                         <div className={styles.leftPart}>
                                             <img src={user.photo} alt="" className={styles.userPhoto}/>
-                                            <p className={styles.username}>{user.username}</p>
+                                            <p className={styles.username} onClick={(e) => handleUserClick(e, user.id)}>{user.username}</p>
                                         </div>
 
                                         {User.following.includes(user.id) ? 

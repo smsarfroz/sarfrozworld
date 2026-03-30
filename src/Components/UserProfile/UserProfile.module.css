@@ -167,6 +167,10 @@ input {
     filter: brightness(100%);
 }
 
+.followButton:hover {
+    background-color: #5364f5;
+}
+
 .followingButton {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     background-color: black;
@@ -179,4 +183,10 @@ input {
 
 .followingButton:hover {
     background-color: rgb(49, 49, 49);
+}
+
+.rightPart {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6vw;
 }

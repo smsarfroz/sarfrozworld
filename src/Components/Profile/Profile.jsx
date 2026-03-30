@@ -204,9 +204,9 @@ const Profile = () => {
                     <button onClick={() => handleSaveClick({ userId, bio, github, website })} className={styles.saveButton}>Save</button>
                 
                 :
-                <div className={styles.editContainer} onClick={handleEditClick}>
-                    <MdOutlineModeEdit fill="blue" size={23}  className={styles.editButton}/> <p className={styles.editText}>Edit</p>
-                </div>
+                <span className={styles.editContainer} >
+                    <MdOutlineModeEdit fill="blue" size={23} onClick={handleEditClick} className={styles.editButton}/> <p onClick={handleEditClick} className={styles.editText}>Edit</p>
+                </span>
             }
 
             <p className={styles.userPostText}>{username}'s Posts</p>
