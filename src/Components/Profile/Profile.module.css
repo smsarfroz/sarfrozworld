@@ -35,14 +35,55 @@
     outline: none;
     border: none;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    filter: brightness(90%);
+    filter: brightness(100%);
+}
+
+.profilePage input {
+    margin: 0;
+    margin-bottom: 1vw;
+    margin-top: 0;
+    font-family:monospace;
+}
+
+.profilePage textarea {
+    margin: 0;
+    margin-bottom: 1vw;
+    margin-top: 0;
+}
+
+.bioInput {
+    height: 5vw;
+    min-height: 4vw;
+    white-space: pre-wrap;
+    /* padding: ; */
+}
+
+textarea {
+    border: none;
+}
+
+textarea:focus {
+    border-width: 5px;
+}
+
+input {
+    padding: 1vw;
+}
+
+.saveButton:hover {
+    background-color: rgb(103, 103, 237);
+}
+
+.savingButton {
+    background-color: rgb(103, 103, 237);
 }
 
 .inputContainers {
     display: flex;
     flex-direction: column;
     gap: 0vw;
-    margin-top: 2vw;
+    margin-top: 1vw;
+    margin-bottom: 0vw !important;
 }
 
 .profilePage {
@@ -73,6 +114,7 @@
     margin-left: 1vw;
     color: rgb(195, 195, 195);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-bottom: 2vw;
 }
 
 .num {

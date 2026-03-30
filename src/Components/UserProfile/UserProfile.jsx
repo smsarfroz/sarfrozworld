@@ -47,12 +47,11 @@ const useUser = () => {
 
 const UserProfile = () => {
     const { uid } = useParams();
-    const userId = parseInt(uid);
-
-    console.log("userId", userId);
+    const userIdP = parseInt(uid);
+    const { userId } = useContext(SarfrozContext);
 
     let dataToSend = {};
-    dataToSend['userId'] = userId;
+    dataToSend['userId'] = userIdP;
     const { isPending, error, data, refetch } = useQuery({
         queryKey: ["userData"],
         staleTime: 1000 * 60 * 30,
@@ -92,7 +91,7 @@ const UserProfile = () => {
         refetchOnWindowFocus: true, 
         refetchOnMount: true, 
         refetchOnReconnect: true,
-        enabled: !!userId
+        enabled: !!userIdP
     })
 
     // console.log('data from react query', data);
@@ -100,7 +99,6 @@ const UserProfile = () => {
     // console.log('initialUser', initialUser);
     const [user, setUserData] = useState(initialUser);
     const [editValue, setEditValue] = useState(null);
-    const [isEditing, setIsEditing] = useState(false);
     // const postsUnsorted = initialUser['posts'];
 
     useEffect(() => {
@@ -148,22 +146,85 @@ const UserProfile = () => {
         return dateB - dateA;
     });
 
-    function handleEditClick() {
-        setIsEditing(true);
-        // setEditValue(user);
+    const handleFollow = async (id1, id2) => {
+        const api1 = `${VITE_BASE_URL}/users/follow`;
+        try {
+            const res1 = await (
+            fetch(api1, {
+                mode: 'cors',
+                credentials: 'include',
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    id1: id1,
+                    id2: id2
+                })
+            }));
+            if (!res1.ok) {
+                throw new Error(`HTTP error! Status: ${Response.status}`);
+            }
+
+            const data1 = await res1.json();
+            if (refetch !== undefined) {
+                refetch();
+            }
+            return data1;
+            
+        } catch (error) {
+            console.error(`There was a problem with the fetch operation:`, error);
+            throw error;
+        }
+    } 
+
+    const handleUnFollow = async (id1, id2) => {
+        const api1 = `${VITE_BASE_URL}/users/unfollow`;
+        try {
+            const res1 = await (
+            fetch(api1, {
+                mode: 'cors',
+                credentials: 'include',
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    id1: id1,
+                    id2: id2
+                })
+            }));
+            if (!res1.ok) {
+                throw new Error(`HTTP error! Status: ${Response.status}`);
+            }
+
+            const data1 = await res1.json();
+            if (refetch !== undefined) {
+                refetch();
+            }
+            return data1;
+            
+        } catch (error) {
+            console.error(`There was a problem with the fetch operation:`, error);
+            throw error;
+        }
     }
-    const handleSaveClick = async (data) => {
-        setIsEditing(false);
-        const updatedData = await updateUser(data);
-        setUserData(updatedData);
-    };
 
     return (
         <div className={styles.profilePage}>
 
             <div className={styles.user}>
                 <img src={photo} alt="" className={styles.profilePhoto}/>
-                <p className={styles.username}>{username}</p>
+                <div className={styles.rightPart}>
+                    <p className={styles.username}>{username}</p>
+                    {data.id !== userId ?  
+                        data.followers.includes(userId) ?
+                            <button onClick={() => handleUnFollow(userId, data.id)} className={styles.followingButton}>Following</button> :
+                            <button onClick={() => handleFollow(userId, data.id)} className={styles.followButton}>Follow</button>
+                        :
+                        null
+                    }
+                </div>
             </div>
             <div className={styles.counters}>
                 <div className={styles.counterContainer}>
@@ -177,30 +238,16 @@ const UserProfile = () => {
                 <div className={styles.counterContainer}>
                     <p className={styles.num}>{posts.length}</p>
                     <p>Posts</p>
-                </div>
+                </div>   
             </div>
             
-            { isEditing ? 
-                <div className={styles.inputContainers}>
-                    <input type="text" name='Bio' placeholder='edit bio...' value={bio ? bio : ""} onChange={(e) => setEditValue((prevVal) => ({...prevVal, bio: e.target.value}))}/>
-                    <input type="text" name='Website' placeholder='edit website...' value={website ? website: ""} onChange={(e) => setEditValue((prevVal) => ({...prevVal, website: e.target.value}))}/>
-                    <input type="text" name='Github' placeholder='edit Github username or URL...' value={github ? github : ""} onChange={(e) => setEditValue((prevVal) => ({...prevVal, github: e.target.value}))}/>
-                </div>
-                :
-                <div className={styles.details}>
-                    { bio && <p className={styles.infoLine}>{bio}</p> }
-                    { website && <p className={styles.infoLine}><CiGlobe /><a href={website} target="_blank" rel="noopener noreferrer">{website}</a></p> }
-                    { github && <p className={styles.infoLine}><RiGithubLine /><a href={github} target="_blank" rel="noopener noreferrer">{github}</a></p> }
-                </div>
-            }
-            
-            { isEditing ? 
-                <button onClick={() => handleSaveClick({ userId, bio, github, website })} className={styles.saveButton}>Save</button>
-                :
-                <div className={styles.editContainer} onClick={handleEditClick}>
-                    <MdOutlineModeEdit fill="blue" size={23}  className={styles.editButton}/> <p className={styles.editText}>Edit</p>
-                </div>
-            }
+
+            <div className={styles.details}>
+                { bio && <p className={styles.infoLine}>{bio}</p> }
+                { website && <p className={styles.infoLine}><CiGlobe /><a href={website} target="_blank" rel="noopener noreferrer">{website}</a></p> }
+                { github && <p className={styles.infoLine}><RiGithubLine /><a href={github} target="_blank" rel="noopener noreferrer">{github}</a></p> }
+            </div>
+        
 
             <p className={styles.userPostText}>{username}'s Posts</p>
             <hr className={styles.horizontalLine}/>

@@ -154,3 +154,29 @@ input:-webkit-autofill:focus {
 input {
     border-radius: 3px;
 }
+
+.followButton {
+    cursor: pointer;
+    height: 1.7vw;
+    width: 4.5vw;
+    background-color: #253af5;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+    filter: brightness(100%);
+}
+
+.followingButton {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: black;
+    border: 2px solid rgb(135, 135, 135);
+    cursor: pointer;
+    height: 1.5vw;
+    border-radius: 4px;
+    filter: brightness(100%);
+}
+
+.followingButton:hover {
+    background-color: rgb(49, 49, 49);
+}

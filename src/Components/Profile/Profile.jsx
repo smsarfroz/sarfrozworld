@@ -14,9 +14,11 @@ const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 const useUser = () => {
     const api1 = `${VITE_BASE_URL}/users/profile/update`;
     const { userData, setUserData } = useContext(SarfrozContext);
+    const [loading, setLoading] = useState(false);
 
     const updateUser = async (data) => {
         try {
+            setLoading(true);
             const [res1] = await Promise.all([
             fetch(api1, {
                 mode: 'cors',
@@ -29,20 +31,23 @@ const useUser = () => {
             })
             ]);
             if (!res1.ok) {
+                setLoading(false);
                 throw new Error(`HTTP error! Status: ${Response.status}`);
             }
 
             const data1 = await res1.json();
             setUserData(data1);
+            setLoading(false);
             return data1;
             
         } catch (error) {
+            setLoading(false);
             console.error(`There was a problem with the fetch operation:`, error);
-            throw error;
+            throw error; 
         }
     };
 
-    return { userData, updateUser };
+    return { userData, updateUser, loading };
 };
 
 const Profile = () => {
@@ -92,7 +97,7 @@ const Profile = () => {
     })
 
     // console.log('data from react query', data);
-    const { userData: initialUser, updateUser } = useUser();
+    const { userData: initialUser, updateUser, loading } = useUser();
     // console.log('initialUser', initialUser);
     const [user, setUserData] = useState(initialUser);
     const [editValue, setEditValue] = useState(null);
@@ -148,6 +153,7 @@ const Profile = () => {
         setIsEditing(true);
         // setEditValue(user);
     }
+
     const handleSaveClick = async (data) => {
         setIsEditing(false);
         const updatedData = await updateUser(data);
@@ -178,7 +184,8 @@ const Profile = () => {
             
             { isEditing ? 
                 <div className={styles.inputContainers}>
-                    <input type="text" name='Bio' placeholder='edit bio...' value={bio ? bio : ""} onChange={(e) => setEditValue((prevVal) => ({...prevVal, bio: e.target.value}))}/>
+                    {/* <input className={styles.bioInput} maxLength={200} height={20} size={20} type="text" name='Bio' placeholder='edit bio...' value={bio ? bio : ""} onChange={(e) => setEditValue((prevVal) => ({...prevVal, bio: e.target.value}))}/> */}
+                    <textarea className={styles.bioInput} maxLength={200} rows={3} type="text" name='Bio' placeholder='edit bio...' value={bio ? bio : ""} onChange={(e) => setEditValue((prevVal) => ({...prevVal, bio: e.target.value}))}/>
                     <input type="text" name='Website' placeholder='edit website...' value={website ? website: ""} onChange={(e) => setEditValue((prevVal) => ({...prevVal, website: e.target.value}))}/>
                     <input type="text" name='Github' placeholder='edit Github username or URL...' value={github ? github : ""} onChange={(e) => setEditValue((prevVal) => ({...prevVal, github: e.target.value}))}/>
                 </div>
@@ -191,7 +198,11 @@ const Profile = () => {
             }
             
             { isEditing ? 
-                <button onClick={() => handleSaveClick({ userId, bio, github, website })} className={styles.saveButton}>Save</button>
+                
+                    loading ? 
+                    <button className={styles.savingButton}>Saving...</button>:
+                    <button onClick={() => handleSaveClick({ userId, bio, github, website })} className={styles.saveButton}>Save</button>
+                
                 :
                 <div className={styles.editContainer} onClick={handleEditClick}>
                     <MdOutlineModeEdit fill="blue" size={23}  className={styles.editButton}/> <p className={styles.editText}>Edit</p>
