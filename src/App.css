@@ -99,6 +99,7 @@ a {
   gap: 2vw;
   position: relative;
   justify-content: center;
+  height: 99vh;
 }
 
 .vertical-line {

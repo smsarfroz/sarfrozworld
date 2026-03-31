@@ -26,7 +26,8 @@ textarea {
 .commentContainer {
     display: flex;
     flex-direction: column;
-    width: 600px;
+    /* width: 600px; */
+    width: 44vw;
     margin-top: 1.5vw;
     margin-bottom: 3.5vw;
 }
@@ -54,7 +55,8 @@ button {
     border-radius: 10px;
     padding: 12px;
     margin: 2vw 0;
-    width: 600px;
+    /* width: 600px; */
+    width: 44vw;
     display: flex;
     justify-content: space-between;
 }

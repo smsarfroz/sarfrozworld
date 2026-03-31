@@ -49,6 +49,10 @@ const UserProfile = () => {
     const { uid } = useParams();
     const userIdP = parseInt(uid);
     const { userId } = useContext(SarfrozContext);
+    const [id1, setId1] = useState(null);
+    const [id2, setId2] = useState(null);
+    const [loading1, setLoading1] = useState(false);
+    const [loading2, setLoading2] = useState(false);
 
     let dataToSend = {};
     dataToSend['userId'] = userIdP;
@@ -148,6 +152,8 @@ const UserProfile = () => {
 
     const handleFollow = async (id1, id2) => {
         const api1 = `${VITE_BASE_URL}/users/follow`;
+        setLoading1(true);
+        setId1(id2);
         try {
             const res1 = await (
             fetch(api1, {
@@ -163,6 +169,7 @@ const UserProfile = () => {
                 })
             }));
             if (!res1.ok) {
+                setLoading1(false);
                 throw new Error(`HTTP error! Status: ${Response.status}`);
             }
 
@@ -170,9 +177,11 @@ const UserProfile = () => {
             if (refetch !== undefined) {
                 refetch();
             }
+            setLoading1(false);
             return data1;
             
         } catch (error) {
+            setLoading1(false);
             console.error(`There was a problem with the fetch operation:`, error);
             throw error;
         }
@@ -180,6 +189,8 @@ const UserProfile = () => {
 
     const handleUnFollow = async (id1, id2) => {
         const api1 = `${VITE_BASE_URL}/users/unfollow`;
+        setLoading2(true);
+        setId2(id2);
         try {
             const res1 = await (
             fetch(api1, {
@@ -195,6 +206,7 @@ const UserProfile = () => {
                 })
             }));
             if (!res1.ok) {
+                setLoading2(false);
                 throw new Error(`HTTP error! Status: ${Response.status}`);
             }
 
@@ -202,12 +214,23 @@ const UserProfile = () => {
             if (refetch !== undefined) {
                 refetch();
             }
+            setLoading2(false);
             return data1;
             
         } catch (error) {
+            setLoading2(false);
             console.error(`There was a problem with the fetch operation:`, error);
             throw error;
         }
+    }
+
+    const loadingStyle1 = {
+        backgroundColor: "#5d6cec",
+        disabled: "false"
+    }
+    const loadingStyle2 = {
+        backgroundColor: "rgb(49, 49, 49)",
+        disabled: "true"
     }
 
     return (
@@ -219,8 +242,8 @@ const UserProfile = () => {
                     <p className={styles.username}>{username}</p>
                     {data.id !== userId ?  
                         data.followers.includes(userId) ?
-                            <button onClick={() => handleUnFollow(userId, data.id)} className={styles.followingButton}>Following</button> :
-                            <button onClick={() => handleFollow(userId, data.id)} className={styles.followButton}>Follow</button>
+                            <button style={loading1 && id1 == user.id ? loadingStyle1 : null} onClick={() => handleUnFollow(userId, data.id)} className={styles.followingButton}>Following</button> :
+                            <button style={loading2 && id2 == user.id ? loadingStyle2 : null} onClick={() => handleFollow(userId, data.id)} className={styles.followButton}>Follow</button>
                         :
                         null
                     }

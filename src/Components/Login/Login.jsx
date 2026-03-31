@@ -3,6 +3,7 @@ import styles from './Login.module.css';
 import { useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { SarfrozContext } from '../../sarfrozContext.js';
+import sarfrozworld from '../../assets/sarfrozworldlogo.png';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
@@ -68,10 +69,14 @@ const Login = () => {
     function handleGuestClick() {
         navigate('/signup');
     }
+    function handleSignClick() {
+        navigate('/signup');
+    }
 
     return (
         <div className={styles.loginPage}>
-            <h1 className={styles.askHeading}>Login Page</h1>
+            <img src={sarfrozworld} alt="" className={styles.logo}/>
+            {/* <h2 className={styles.askHeading}>sarfrozworld</h2> */}
 
             <form action="/" method="post" onSubmit={handleSubmit}>
                 <input placeholder="Username" type="text" name="username" id="username" required/>
@@ -82,7 +87,9 @@ const Login = () => {
 
             </form>
             
+            <button className={styles.signButton} onClick={() => handleSignClick()}>Sign up</button>
             <button className={styles.guestButton} onClick={() => handleGuestClick()}>Guest login</button>
+            <p className={styles.text}>By signing up, you agree to our terms of service and privacy policy.</p>
         </div>
     );
 };
