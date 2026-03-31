@@ -81,7 +81,7 @@ const Login = () => {
             <form action="/" method="post" onSubmit={handleSubmit}>
                 <input placeholder="Username" type="text" name="username" id="username" required/>
 
-                <input placeholder='Password' type="password" name="password" id="password" required/>
+                <input placeholder='Password' type="password" name="password" id="password" minLength={8} required/>
  
                 <button type="submit" className={styles.loginButton}>Log in</button>
 
@@ -89,7 +89,7 @@ const Login = () => {
             
             <button className={styles.signButton} onClick={() => handleSignClick()}>Sign up</button>
             <button className={styles.guestButton} onClick={() => handleGuestClick()}>Guest login</button>
-            <p className={styles.text}>By signing up, you agree to our terms of service and privacy policy.</p>
+            <p className={styles.text}>By signing in, you agree to our terms of service and privacy policy.</p>
         </div>
     );
 };

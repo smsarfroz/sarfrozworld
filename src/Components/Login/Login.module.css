@@ -21,6 +21,10 @@ form>input {
     margin-bottom: 1vw;
 }
 
+form>input:focus {
+    border: 2px solid grey;
+}
+
 .loginButton {
     filter: brightness(100%);
     outline: none;

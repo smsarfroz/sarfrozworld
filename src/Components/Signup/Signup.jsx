@@ -1,13 +1,18 @@
 import styles from './Signup.module.css';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { SarfrozContext } from '../../sarfrozContext';
 import { Link, useNavigate } from 'react-router-dom';
+import { useMemo } from 'react';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const Signup = () => {
     const navigate = useNavigate();
-    const { userId, setUserId, loggedIn, setLoggedIn, setUsername } = useContext(SarfrozContext);
+    const { userId, setUserId, loggedIn, setLoggedIn } = useContext(SarfrozContext);
+    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
+    const [uFocus, setUFocus] = useState(false);
+    const [pFocus, setPFocus] = useState(false);
 
     useEffect(() => {
         localStorage.setItem('loggedIn', JSON.stringify(loggedIn));
@@ -18,6 +23,23 @@ const Signup = () => {
         } 
 
     }, [loggedIn, userId]);
+
+    const validationCriteria = useMemo(() => {
+        return {
+            minLength: password.length >= 8,
+            hasUpperCase: /[A-Z]/.test(password),
+            hasLowerCase: /[a-z]/.test(password),
+            hasNumber: /\d/.test(password),
+            hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+        };
+
+    }, [password]);
+
+    const validateUsername = useMemo(() => {
+        return {
+            minLength: username.length >= 3
+        };
+    }, [username]);
      
     function handleLogin(token) {
         setLoggedIn(true);
@@ -42,7 +64,7 @@ const Signup = () => {
         fetch(`${VITE_BASE_URL}/signup`, {
             mode: 'cors',
             method: "post",
-            headers: {
+            headers: { 
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data)
@@ -103,6 +125,22 @@ const Signup = () => {
             console.error('There was a problem with the fetch operation:', error);
         })
     }
+
+    function handleSignIn(e) {
+        if (!validateUsername.minLength ||
+            !validationCriteria.hasLowerCase ||
+            !validationCriteria.hasNumber ||
+            !validationCriteria.hasSpecialChar ||
+            !validationCriteria.hasUpperCase ||
+            !validationCriteria.minLength
+        ) {
+            e.preventDefault();
+            setPFocus(true);
+            setUFocus(true);
+        }
+    }
+
+    console.log('password', password, validationCriteria);
     return (
         <div>
             <div className={styles.guestPage}>
@@ -120,9 +158,40 @@ const Signup = () => {
             <div className={styles.signupPage}>
                 <h2 className={styles.askHeading}>Sign Up</h2>
                 <form action="/signup" method="post" onSubmit={handleSubmit}>
-                    <input type="text" name="username" id="username" placeholder='Username*' required/>
-                    <input type="password" name="password" id="password" placeholder='Password*' required/>
-                    <button type="submit" className={styles.signupButton}>Sign Up</button>
+                    <input type="text" name="username" id="username" placeholder='Username*' onFocus={() => setUFocus(true)} maxLength={13} onChange={(e) => setUsername(e.target.value)}  required/>
+                    {uFocus ?
+                        <div className={styles.message1}>
+                            <p className={`${validateUsername.minLength ? styles.valid : styles.invalid}`}>
+                            At least 3 characters
+                            </p>
+                        </div> : 
+                        null
+                    }
+                    
+                    <input type="password" name="password" id="password" placeholder='Password*' onFocus={() => setPFocus(true)} maxLength={13} value={password} onChange={(e) => setPassword(e.target.value)} required/>
+                    
+                    {pFocus ? 
+
+                        <div className={styles.message}>
+                            <p className={`${validationCriteria.minLength ? styles.valid : styles.invalid}`}>
+                            Minimum of 8 characters
+                            </p>
+                            <p className={`${validationCriteria.hasUpperCase ? styles.valid : styles.invalid}`}>
+                            At least one capital letter
+                            </p>
+                            <p className={`${validationCriteria.hasLowerCase ? styles.valid : styles.invalid}`}>
+                            At least one lowercase letter
+                            </p>
+                            <p className={`${validationCriteria.hasNumber ? styles.valid : styles.invalid}`}>
+                            At least one number
+                            </p>
+                            <p className={`${validationCriteria.hasSpecialChar ? styles.valid : styles.invalid}`}>
+                            At least one special character
+                            </p>
+                        </div> :
+                        null
+                    }
+                    <button type="submit" className={styles.signupButton} onClick={(e) => handleSignIn(e)}>Sign Up</button>
                 </form>
                 <p className={styles.text}>Already have an account? <Link to='/login' className={styles.loginPrompt}>Sign in</Link></p>
             </div>

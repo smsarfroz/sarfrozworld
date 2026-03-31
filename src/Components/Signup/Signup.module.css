@@ -97,3 +97,20 @@ form>input {
 button:hover {
     background-color: rgb(118, 118, 241);
 }
+
+.invalid {
+    color: red;
+}
+
+.valid {
+    color: green;
+}
+
+.message {
+    font-size: 1vw;
+    margin-bottom: 0.7vw;
+}
+
+.message1 {
+    margin-bottom: 0.7vw;
+}
