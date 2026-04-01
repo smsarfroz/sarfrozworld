@@ -13,6 +13,9 @@ const Signup = () => {
     const [username, setUsername] = useState('');
     const [uFocus, setUFocus] = useState(false);
     const [pFocus, setPFocus] = useState(false);
+    const [loading2, setLoading2] = useState(false);
+    const [loading1, setLoading1] = useState(false);
+
 
     useEffect(() => {
         localStorage.setItem('loggedIn', JSON.stringify(loggedIn));
@@ -52,14 +55,13 @@ const Signup = () => {
 
     function handleSubmit(e) {
         e.preventDefault();
+        setLoading2(true);
         const formData = new FormData(e.target);
 
         let data = {};
         formData.forEach((value, key) => {
             data[key] = value;
         });
-
-        console.log(data);
 
         fetch(`${VITE_BASE_URL}/signup`, {
             mode: 'cors',
@@ -69,11 +71,14 @@ const Signup = () => {
             },
             body: JSON.stringify(data)
         })
-        .then((response) => {
-            console.log('response', response);
-            console.log('type', typeof response);
+        .then((response) => {  
+            console.log('response', response);     
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                setLoading2(false);
+                return response.json().then(errorData => {
+                    console.error('Server errors:', errorData.errors);
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                })
             }
             return response.json();
         })
@@ -81,9 +86,11 @@ const Signup = () => {
             handleUserIdChange(user.id);
             console.log(user);
             console.log('user created successfully:');
+            setLoading2(false);
             navigate('/login');
         })
         .catch(error => {
+            setLoading2(false);
             console.error('There was a problem with the fetch operation:', error);
         })
     } 
@@ -95,6 +102,9 @@ const Signup = () => {
         // console.log("data", data);
         // localStorage.setItem('username', JSON.stringify(data['username']));
         // setUsername(data['username']);
+        setLoading1(true);
+        setPFocus(false);
+        setUFocus(false);
 
         fetch(`${VITE_BASE_URL}/login`, {
             mode: 'cors',
@@ -109,19 +119,21 @@ const Signup = () => {
         })
         .then((response) => {
             if (!response.ok) {
+                setLoading1(false);
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response.json();
         })
         .then((response) => {
-            console.log('response: ', response);
             console.log('user logged in successfully:');
             handleLogin(response.token);
             setUserId(response.user.id);
             // console.log('loggedIn: ', loggedIn);
+            setLoading1(false);
             navigate('/');
         })
         .catch(error => {
+            setLoading1(false);
             console.error('There was a problem with the fetch operation:', error);
         })
     }
@@ -134,13 +146,16 @@ const Signup = () => {
             !validationCriteria.hasUpperCase ||
             !validationCriteria.minLength
         ) {
-            e.preventDefault();
+            // e.preventDefault();
             setPFocus(true);
             setUFocus(true);
         }
     }
 
-    console.log('password', password, validationCriteria);
+    const blurredButton = {
+        backgroundColor: "rgb(118, 118, 241)"
+    };
+
     return (
         <div>
             <div className={styles.guestPage}>
@@ -151,7 +166,7 @@ const Signup = () => {
                     <p>You'll have a chance to create account later.</p>
                 </div>
 
-                <button type='submit' className={styles.guestButton} onClick={handleGuestSubmit}>Continue As Guest</button>
+                <button type='submit' className={styles.guestButton} style={ loading1 ? blurredButton : null } onClick={handleGuestSubmit}>Continue As Guest</button>
             </div>
 
             <div className={styles.verticalLine}></div>
@@ -191,7 +206,7 @@ const Signup = () => {
                         </div> :
                         null
                     }
-                    <button type="submit" className={styles.signupButton} onClick={(e) => handleSignIn(e)}>Sign Up</button>
+                    <button type="submit" className={styles.signupButton} style={loading2 ? blurredButton : null} onClick={(e) => handleSignIn(e)}>Sign Up</button>
                 </form>
                 <p className={styles.text}>Already have an account? <Link to='/login' className={styles.loginPrompt}>Sign in</Link></p>
             </div>
