@@ -17,6 +17,7 @@ const useUser = () => {
     const [loading, setLoading] = useState(false);
 
     const updateUser = async (data) => {
+        console.log('data in updateUser', data);
         try {
             setLoading(true);
             const [res1] = await Promise.all([
@@ -46,12 +47,14 @@ const useUser = () => {
             throw error; 
         }
     };
+    console.log('userData in updateUser', userData);
 
     return { userData, updateUser, loading };
 };
 
 const Profile = () => {
     const { userId } = useContext(SarfrozContext);
+    const [updateLoading, setUpdateLoading] = useState(false);
     let dataToSend = {};
     dataToSend['userId'] = userId;
     const { isPending, error, data, refetch } = useQuery({
@@ -107,38 +110,21 @@ const Profile = () => {
     useEffect(() => {
         refetch();
         if (data) {
-            console.log('data', data);
             setEditValue(data);
         }
         
     }, [data, refetch]);
 
-    if (isPending) return "Loading..."
+    if (isPending || !data) return "Loading..."
 
     if (error) return "An error has occurred: " + error.message
 
-    // console.log('bool', !editValue , (data.length !== 0), data.length );
-
-    // if (!editValue) {
-    //     return <div>Loading user data...</div>;
-    // }
-    // setEditValue(data[0]);
     let bio = null, followers = null, following = null, github = null, 
     id = null, photo = null, username = null, website = null;
     let postsUnsorted = [];
 
-    // console.log('editValue', editValue, editValue?.length);
-
-    // if (editValue?.length !== undefined) {
-    //     ({ bio, followers, following, github, id, photo, username, website } = editValue);
-    //     postsUnsorted = editValue['posts'] || [];
-    // }
-
-    // const posts = [...postsUnsorted].sort((a, b) => {
-    //     return new Date(b.createdAt) - new Date(a.createdAt);
-    // });
-
     if (editValue && typeof editValue === 'object') {
+        console.log('editValue in block', editValue);
         ({ bio, followers, following, github, id, photo, username, website } = editValue);
         postsUnsorted = editValue.posts || [];
     }
@@ -151,33 +137,54 @@ const Profile = () => {
 
     function handleEditClick() {
         setIsEditing(true);
+        setUpdateLoading(false);
         // setEditValue(user);
     }
 
-    const handleSaveClick = async (data) => {
+    const handleSaveClick = async ({ userId, bio, github, website }) => {
         setIsEditing(false);
-        const updatedData = await updateUser(data);
+        setUpdateLoading(true);
+        if (!URL.canParse(github)) {
+            github = "https://github.com/" + github;
+            console.log('github', github);
+        }
+        if (!URL.canParse(website)) {
+            website = "https://" + website;
+        }
+        const urlGithub = new URL(github);
+        const path1 = urlGithub.pathname.substring(1);
+        const urlWebsite = new URL(website);
+        const contentAfterProtocol = urlWebsite.host + urlWebsite.pathname;
+        console.log(path1, contentAfterProtocol);
+        const updatedData = await updateUser({ userId, bio, github: path1, website: contentAfterProtocol});
         setUserData(updatedData);
+        setEditValue(updatedData);
+        setUpdateLoading(false);
+        refetch();
+    };
+
+    const blurredButton = {
+        backgroundColor: "rgb(118, 118, 241)"
     };
 
     return (
         <div className={styles.profilePage}>
 
             <div className={styles.user}>
-                <img src={photo} alt="" className={styles.profilePhoto}/>
-                <p className={styles.username}>{username}</p>
+                <img src={data.photo} alt="" className={styles.profilePhoto}/>
+                <p className={styles.username}>{data.username}</p>
             </div>
             <div className={styles.counters}>
                 <div className={styles.counterContainer}>
-                    <p className={styles.num}>{followers == null ? 0 : followers.length}</p>
+                    <p className={styles.num}>{data.followers == [] ? 0 : data.followers.length}</p>
                     <p>Followers</p>
                 </div>
                 <div className={styles.counterContainer}>
-                    <p className={styles.num}>{following == null ? 0 : following.length}</p>
+                    <p className={styles.num}>{data.following == [] ? 0 : data.following.length}</p>
                     <p>Following</p>
                 </div>
                 <div className={styles.counterContainer}>
-                    <p className={styles.num}>{posts.length}</p>
+                    <p className={styles.num}>{data.posts.length}</p>
                     <p>Posts</p>
                 </div>
             </div>
@@ -186,30 +193,30 @@ const Profile = () => {
                 <div className={styles.inputContainers}>
                     {/* <input className={styles.bioInput} maxLength={200} height={20} size={20} type="text" name='Bio' placeholder='edit bio...' value={bio ? bio : ""} onChange={(e) => setEditValue((prevVal) => ({...prevVal, bio: e.target.value}))}/> */}
                     <textarea className={styles.bioInput} maxLength={200} rows={3} type="text" name='Bio' placeholder='edit bio...' value={bio ? bio : ""} onChange={(e) => setEditValue((prevVal) => ({...prevVal, bio: e.target.value}))}/>
-                    <input type="text" name='Website' placeholder='edit website...' value={website ? website: ""} onChange={(e) => setEditValue((prevVal) => ({...prevVal, website: e.target.value}))}/>
+                    <input type="text" name='Website' placeholder='edit website...' value={website ? website : ""} onChange={(e) => setEditValue((prevVal) => ({...prevVal, website: e.target.value}))}/>
                     <input type="text" name='Github' placeholder='edit Github username or URL...' value={github ? github : ""} onChange={(e) => setEditValue((prevVal) => ({...prevVal, github: e.target.value}))}/>
                 </div>
                 :
                 <div className={styles.details}>
-                    { bio && <p className={styles.infoLine}>{bio}</p> }
-                    { website && <p className={styles.infoLine}><CiGlobe /><a href={website} target="_blank" rel="noopener noreferrer">{website}</a></p> }
-                    { github && <p className={styles.infoLine}><RiGithubLine /><a href={github} target="_blank" rel="noopener noreferrer">{github}</a></p> }
+                    { data.bio && <p className={styles.infoLine}>{data.bio}</p> }
+                    { data.website && <p className={styles.infoLine}><CiGlobe /><a href={`https://${data.website}`} target="_blank" rel="noopener noreferrer">{data.website}</a></p> }
+                    { data.github && <p className={styles.infoLine}><RiGithubLine /><a href={`https://github.com/${data.github}`} target="_blank" rel="noopener noreferrer">{data.github}</a></p> }
                 </div>
             }
             
             { isEditing ? 
                 
-                    loading ? 
-                    <button className={styles.savingButton}>Saving...</button>:
-                    <button onClick={() => handleSaveClick({ userId, bio, github, website })} className={styles.saveButton}>Save</button>
+                    updateLoading ? 
+                    <button className={styles.savingButton} style={ updateLoading ? blurredButton : null }>Saving...</button>:
+                    <button onClick={() => handleSaveClick({ userId, bio, github, website })} className={styles.saveButton} >Save</button>
                 
                 :
                 <span className={styles.editContainer} >
-                    <MdOutlineModeEdit fill="blue" size={23} onClick={handleEditClick} className={styles.editButton}/> <p onClick={handleEditClick} className={styles.editText}>Edit</p>
+                    <MdOutlineModeEdit fill="blue" size={23} onClick={() => handleEditClick()} className={styles.editButton}/> <p onClick={() => handleEditClick()} className={styles.editText}>Edit</p>
                 </span>
             }
 
-            <p className={styles.userPostText}>{username}'s Posts</p>
+            <p className={styles.userPostText}>{data.username}'s Posts</p>
             <hr className={styles.horizontalLine}/>
 
             <div className={styles.posts}>

@@ -1,6 +1,6 @@
 import styles from './Login.module.css';
 // import { blogContext } from '../../blogContext';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { SarfrozContext } from '../../sarfrozContext.js';
 import sarfrozworld from '../../assets/sarfrozworldlogo.png';
@@ -10,6 +10,7 @@ const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 const Login = () => {
     const navigate = useNavigate();
     const { userId, setUserId, loggedIn, setLoggedIn, setUsername } = useContext(SarfrozContext);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         localStorage.setItem('loggedIn', JSON.stringify(loggedIn));
@@ -29,6 +30,7 @@ const Login = () => {
     function handleSubmit(e) {
         e.preventDefault();
         const formData = new FormData(e.target);
+        setLoading(true);
 
         let data = {};
         formData.forEach((value, key) => {
@@ -49,7 +51,11 @@ const Login = () => {
         })
         .then((response) => {
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                setLoading(false);
+                return response.json().then(errorData => {
+                    console.error('Server errors:', errorData.errors);
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                })
             }
             return response.json();
         })
@@ -59,9 +65,11 @@ const Login = () => {
             handleLogin(response.token);
             setUserId(response.user.id);
             // console.log('loggedIn: ', loggedIn);
+            setLoading(false);
             navigate('/');
         })
         .catch(error => {
+            setLoading(false);
             console.error('There was a problem with the fetch operation:', error);
         })
     }
@@ -72,6 +80,9 @@ const Login = () => {
     function handleSignClick() {
         navigate('/signup');
     }
+    const blurredButton = {
+        backgroundColor: "rgb(118, 118, 241)"
+    };
 
     return (
         <div className={styles.loginPage}>
@@ -83,7 +94,7 @@ const Login = () => {
 
                 <input placeholder='Password' type="password" name="password" id="password" minLength={8} required/>
  
-                <button type="submit" className={styles.loginButton}>Log in</button>
+                <button type="submit" className={styles.loginButton} style={ loading ? blurredButton : null }>Log in</button>
 
             </form>
             

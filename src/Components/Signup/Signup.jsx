@@ -120,7 +120,11 @@ const Signup = () => {
         .then((response) => {
             if (!response.ok) {
                 setLoading1(false);
-                throw new Error(`HTTP error! status: ${response.status}`);
+                return response.json().then(errorData => {
+                    console.error('Server errors:', errorData.errors);
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                })
+                // throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response.json();
         })
