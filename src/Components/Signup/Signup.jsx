@@ -15,6 +15,7 @@ const Signup = () => {
     const [pFocus, setPFocus] = useState(false);
     const [loading2, setLoading2] = useState(false);
     const [loading1, setLoading1] = useState(false);
+    const [error, setError] = useState("");
 
 
     useEffect(() => {
@@ -76,7 +77,10 @@ const Signup = () => {
             if (!response.ok) {
                 setLoading2(false);
                 return response.json().then(errorData => {
-                    console.error('Server errors:', errorData.errors);
+                    if (errorData.error) {
+                        console.error('Server error:', errorData.error);
+                        setError(errorData.error);
+                    }
                     throw new Error(`HTTP error! status: ${response.status}`);
                 })
             }
@@ -124,7 +128,6 @@ const Signup = () => {
                     console.error('Server errors:', errorData.errors);
                     throw new Error(`HTTP error! status: ${response.status}`);
                 })
-                // throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response.json();
         })
@@ -150,7 +153,7 @@ const Signup = () => {
             !validationCriteria.hasUpperCase ||
             !validationCriteria.minLength
         ) {
-            // e.preventDefault();
+            e.preventDefault();
             setPFocus(true);
             setUFocus(true);
         }
@@ -212,7 +215,9 @@ const Signup = () => {
                     }
                     <button type="submit" className={styles.signupButton} style={loading2 ? blurredButton : null} onClick={(e) => handleSignIn(e)}>Sign Up</button>
                 </form>
+                <p className={styles.error}>{error}</p>
                 <p className={styles.text}>Already have an account? <Link to='/login' className={styles.loginPrompt}>Sign in</Link></p>
+
             </div>
         </div>
     );

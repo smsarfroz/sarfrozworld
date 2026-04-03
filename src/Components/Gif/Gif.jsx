@@ -43,7 +43,7 @@ const Gif = ({ handleGifLinkChange }) => {
     const navigate = useNavigate();
   
     const api1 = import.meta.env.VITE_API_KEY;
-    const gifUrl1 = `https://api.giphy.com/v1/gifs/search?api_key=${api1}&q=${searchText}&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`;
+    
     const gifUrl2 = `https://api.giphy.com/v1/gifs/trending?api_key=${api1}&limit=25&offset=0&rating=g&bundle=messaging_non_clips`;
 
     console.log("in Gif component");
@@ -65,9 +65,11 @@ const Gif = ({ handleGifLinkChange }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-      
+
+        const safeQuery = encodeURIComponent(searchText.trim());
+        const gifUrl1 = `https://api.giphy.com/v1/gifs/search?api_key=${api1}&q=${safeQuery}&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`;
+        const url = searchText == "" ? gifUrl2 : gifUrl1;
         try {
-          const url = searchText == "" ? gifUrl2 : gifUrl1;
           const list = await getGifs(url);
           setGifList(list);
           // navigate('/home');
@@ -85,7 +87,7 @@ const Gif = ({ handleGifLinkChange }) => {
         <div className={styles.GifContainer}>
             <form action="" method='post' onSubmit={handleSubmit}>
               <div className={styles.topContainer}>
-                    <input type="text" className={styles.searchBar} placeholder='Search GIFs' value={searchText} onChange={(e) => setSearchText(e.target.value)}/>
+                    <input type="text" className={styles.searchBar} placeholder='Search GIFs' value={searchText} maxLength={50} onChange={(e) => setSearchText(e.target.value)}/>
                     <button type='submit' className={styles.submitButton} onClick={handleSubmit}>Submit</button>
               </div>
             </form>

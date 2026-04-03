@@ -14,6 +14,8 @@ import { SarfrozContext } from './sarfrozContext.js';
 import { QueryClientProvider, QueryClient, Query } from "@tanstack/react-query"
 import Signup from './Components/Signup/Signup.jsx';
 import Login from './Components/Login/Login.jsx';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/ReactToastify.css';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 const api1 = `${VITE_BASE_URL}/users/profile`;
@@ -187,8 +189,10 @@ function App() {
     return <ErrorPage />;
   }
 
+
   return (
     <div className='sectionsContainer'>
+      <ToastContainer position="bottom-right" autoClose={5000} />
       {loggedIn && !isAuthRoute && (
 
         <div className="navigationRoutes">

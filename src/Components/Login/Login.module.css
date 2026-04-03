@@ -100,3 +100,7 @@ form>input:focus {
     font-size: 0.9vw;
     margin-top: 2vw;
 }
+
+.error {
+    color: red;
+}

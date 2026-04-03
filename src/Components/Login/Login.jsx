@@ -4,6 +4,8 @@ import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { SarfrozContext } from '../../sarfrozContext.js';
 import sarfrozworld from '../../assets/sarfrozworldlogo.png';
+import { toast } from 'react-toastify';
+import getErrorMessage from '../../utils/getErrorMessage.js';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
@@ -11,6 +13,7 @@ const Login = () => {
     const navigate = useNavigate();
     const { userId, setUserId, loggedIn, setLoggedIn, setUsername } = useContext(SarfrozContext);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         localStorage.setItem('loggedIn', JSON.stringify(loggedIn));
@@ -52,8 +55,10 @@ const Login = () => {
         .then((response) => {
             if (!response.ok) {
                 setLoading(false);
+                console.log('response', response);
                 return response.json().then(errorData => {
-                    console.error('Server errors:', errorData.errors);
+                    setError(errorData.error);
+                    console.error('Server errors:', errorData.error);
                     throw new Error(`HTTP error! status: ${response.status}`);
                 })
             }
@@ -66,6 +71,7 @@ const Login = () => {
             setUserId(response.user.id);
             // console.log('loggedIn: ', loggedIn);
             setLoading(false);
+            toast.success("Logged in successfully");
             navigate('/');
         })
         .catch(error => {
@@ -87,17 +93,17 @@ const Login = () => {
     return (
         <div className={styles.loginPage}>
             <img src={sarfrozworld} alt="" className={styles.logo}/>
-            {/* <h2 className={styles.askHeading}>sarfrozworld</h2> */}
 
             <form action="/" method="post" onSubmit={handleSubmit}>
-                <input placeholder="Username" type="text" name="username" id="username" required/>
+                <input placeholder="Username" type="text" name="username" id="username" onChange={() => setError(null)} required/>
 
-                <input placeholder='Password' type="password" name="password" id="password" minLength={8} required/>
- 
+                <input placeholder='Password' type="password" name="password" id="password" minLength={8} onChange={() => setError(null)} required/>
+                
                 <button type="submit" className={styles.loginButton} style={ loading ? blurredButton : null }>Log in</button>
 
             </form>
             
+            <p className={styles.error}>{error}</p>
             <button className={styles.signButton} onClick={() => handleSignClick()}>Sign up</button>
             <button className={styles.guestButton} onClick={() => handleGuestClick()}>Guest login</button>
             <p className={styles.text}>By signing in, you agree to our terms of service and privacy policy.</p>

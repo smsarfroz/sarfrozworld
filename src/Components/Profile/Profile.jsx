@@ -17,7 +17,7 @@ const useUser = () => {
     const [loading, setLoading] = useState(false);
 
     const updateUser = async (data) => {
-        console.log('data in updateUser', data);
+        // console.log('data in updateUser', data);
         try {
             setLoading(true);
             const [res1] = await Promise.all([
@@ -33,7 +33,10 @@ const useUser = () => {
             ]);
             if (!res1.ok) {
                 setLoading(false);
-                throw new Error(`HTTP error! Status: ${Response.status}`);
+                return res1.json().then(errorData => {
+                    console.error('Server errors:', errorData.errors);
+                    throw new Error(`HTTP error! status: ${res1.status}`);
+                })
             }
 
             const data1 = await res1.json();
@@ -47,7 +50,7 @@ const useUser = () => {
             throw error; 
         }
     };
-    console.log('userData in updateUser', userData);
+    // console.log('userData in updateUser', userData);
 
     return { userData, updateUser, loading };
 };
@@ -124,7 +127,7 @@ const Profile = () => {
     let postsUnsorted = [];
 
     if (editValue && typeof editValue === 'object') {
-        console.log('editValue in block', editValue);
+        // console.log('editValue in block', editValue);
         ({ bio, followers, following, github, id, photo, username, website } = editValue);
         postsUnsorted = editValue.posts || [];
     }
@@ -155,7 +158,7 @@ const Profile = () => {
         const path1 = urlGithub.pathname.substring(1);
         const urlWebsite = new URL(website);
         const contentAfterProtocol = urlWebsite.host + urlWebsite.pathname;
-        console.log(path1, contentAfterProtocol);
+        // console.log(path1, contentAfterProtocol);
         const updatedData = await updateUser({ userId, bio, github: path1, website: contentAfterProtocol});
         setUserData(updatedData);
         setEditValue(updatedData);

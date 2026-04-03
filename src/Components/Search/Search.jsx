@@ -75,7 +75,7 @@ const Search = () => {
 
     const handleFilter = (user) => {
         let myQuery = query.toLowerCase();
-        if (myQuery === '' || user.username.toLowerCase().includes(query)) {
+        if (myQuery === '' || (user.username && user.username.toLowerCase().includes(myQuery))) {
             return true;
         } else {
             return false;

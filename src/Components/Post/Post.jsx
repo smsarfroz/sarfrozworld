@@ -9,6 +9,8 @@ import { SarfrozContext } from '../../sarfrozContext.js';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
+import { toast } from 'react-toastify';
+import getErrorMessage from '../../utils/getErrorMessage.js';
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const Post = () => {
@@ -56,7 +58,7 @@ const Post = () => {
             data['imageLink'] = (imageLink ? imageLink : publicURL);
             data['userId'] = userId;
             try {
-                const [res1] = await Promise.all([
+                const [res1] = await (
                     fetch(api1, {
                         mode: 'cors',
                         credentials: 'include',
@@ -66,9 +68,10 @@ const Post = () => {
                         },
                         body: JSON.stringify(data)
                     })
-                ]);
+                );
                 if (!res1.ok) {
-                    throw new Error(`HTTP error! Status: ${Response.status}`);
+                    toast.error(getErrorMessage(res1.status));
+                    throw new Error(`HTTP error! Status: ${res1.status}`);
                 }
 
                 const data1 = await res1.json();
@@ -77,6 +80,7 @@ const Post = () => {
                 
             } catch (error) {
                 console.error(`There was a problem with the fetch operation:`, error);
+                toast.error(`There was a problem with the fetch operation`);
                 throw error;
             }
         };
@@ -141,6 +145,7 @@ const Post = () => {
                 ]); 
                 console.log('res1', res1);
                 if (!res1.ok) {
+                    toast.error(getErrorMessage(res1.status));
                     throw new Error(`HTTP error! Status: ${res1.status}`);
                 }
 
@@ -152,6 +157,7 @@ const Post = () => {
                 
             } catch (error) {
                 console.error(`There was a problem with the fetch operation:`, error);
+                toast.error(`There was a problem with the fetch operation`);
                 setClicked(false);
                 throw error;
             }
