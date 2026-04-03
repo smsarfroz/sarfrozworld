@@ -10,6 +10,8 @@ import { FaHeart } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
 import TimeAgo from 'react-timeago';
+import { toast } from 'react-toastify';
+import getErrorMessage from '../../utils/getErrorMessage.js';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
@@ -67,11 +69,13 @@ function PostContent({ post, user, setDeleted, showFullContent = false, comments
                 })
             ]);
             if (!res1.ok) {
-                throw new Error(`HTTP error! Status: ${Response.status}`);
+                toast.error(getErrorMessage(res1.status));
+                throw new Error(`HTTP error! Status: ${res1.status}`);
             }
 
         } catch (error) {
             console.error(`There was a problem with the fetch operation:`, error);
+            toast.error('There was a problem with fetch operation');
             throw error;
         }
     };
@@ -100,10 +104,12 @@ function PostContent({ post, user, setDeleted, showFullContent = false, comments
                     })
                 );
                 if (!res1.ok) {
-                    throw new Error(`HTTP error! Status: ${Response.status}`);
+                    toast.error(getErrorMessage(res1.status));
+                    throw new Error(`HTTP error! Status: ${res1.status}`);
                 }
             } catch (error) {
                 console.error(`There was a problem with the fetch operation:`, error);
+                toast.error('There was a problem with fetch operation');
                 throw error;
             }
             setDeleted(true);

@@ -6,6 +6,8 @@ import { SarfrozContext } from '../../sarfrozContext';
 import { useQuery } from '@tanstack/react-query';
 import { RiDeleteBinLine } from "react-icons/ri";
 import TimeAgo from 'react-timeago';
+import { toast } from 'react-toastify';
+import getErrorMessage from '../../utils/getErrorMessage';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
@@ -36,6 +38,7 @@ const Comments = ({ setCommentsCount=false }) => {
                 if (!response.ok) {
                     const errorText = await response.text();
                     console.error('Error response:', errorText);
+                    toast.error(getErrorMessage(response.status));
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 
@@ -45,6 +48,7 @@ const Comments = ({ setCommentsCount=false }) => {
                 
             } catch (error) {
                 console.error('Fetch error:', error);
+                toast.error('There was a problem with fetch operation');
                 throw error;
             }
         },
@@ -64,7 +68,7 @@ const Comments = ({ setCommentsCount=false }) => {
 
         const api = `${VITE_BASE_URL}/posts/${id}/comments`;
         try {
-            const [res1] = await Promise.all([
+            const [res1] = await (
                 fetch(api, {
                     mode: 'cors',
                     credentials: 'include',
@@ -78,9 +82,10 @@ const Comments = ({ setCommentsCount=false }) => {
                         content: content
                     })
                 })
-            ]);
+            );
             if (!res1.ok) {
-                throw new Error(`HTTP error! Status: ${Response.status}`);
+                toast.error(getErrorMessage(res1.status));
+                throw new Error(`HTTP error! Status: ${res1.status}`);
             }
             const data = await res1.json();
             console.log('added comment', data);
@@ -91,6 +96,7 @@ const Comments = ({ setCommentsCount=false }) => {
 
         } catch (error) {
             console.error(`There was a problem with the fetch operation:`, error);
+            toast.error('There was a problem with fetch operation');
             throw error;
         }
     };
@@ -119,7 +125,8 @@ const Comments = ({ setCommentsCount=false }) => {
                 })
             );
             if (!res1.ok) {
-                throw new Error(`HTTP error! Status: ${Response.status}`);
+                toast.error(getErrorMessage(res1.status));
+                throw new Error(`HTTP error! Status: ${res1.status}`);
             }
             const data = await res1.json();
             console.log('deleted comment', data);
@@ -132,6 +139,7 @@ const Comments = ({ setCommentsCount=false }) => {
             
         } catch (error) {
             console.error(`There was a problem with the fetch operation:`, error);
+            toast.error('There was a problem with fetch operation');
             refetch();
             throw error;
         } finally {

@@ -9,6 +9,8 @@ import { useState } from 'react';
 import PostCardPreview from '../PostCardPreview/PostCardPreview.jsx';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import getErrorMessage from '../../utils/getErrorMessage.js';
+import { toast } from 'react-toastify';
 // import handleFollow from '../../utils/handleFollow.js';
 // import handleUnFollow from '../../utils/handleUnFollow.js';
 
@@ -46,6 +48,7 @@ const Home = () => {
                 if (!response.ok) {
                     const errorText = await response.text();
                     console.error('Error response:', errorText);
+                    toast.error(getErrorMessage(response.status));
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 
@@ -54,6 +57,7 @@ const Home = () => {
                 
             } catch (error) {
                 console.error('Fetch error:', error);
+                toast.error("There was a problem with fetch operation");
                 throw error;
             }
         },
@@ -84,6 +88,7 @@ const Home = () => {
                 if (!response.ok) {
                     const errorText = await response.text();
                     console.error('Error response:', errorText);
+                    toast.error(getErrorMessage(response.status));
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 
@@ -92,6 +97,7 @@ const Home = () => {
                 
             } catch (error) {
                 console.error('Fetch error:', error);
+                toast.error(getErrorMessage('There was a problem with fetch operation'));
                 throw error;
             }
         },
@@ -149,7 +155,8 @@ const Home = () => {
             }));
             if (!res1.ok) {
                 setLoading1(false);
-                throw new Error(`HTTP error! Status: ${Response.status}`);
+                toast.error(getErrorMessage(res1.status));
+                throw new Error(`HTTP error! Status: ${res1.status}`);
             }
 
             const data1 = await res1.json();
@@ -160,6 +167,7 @@ const Home = () => {
         } catch (error) {
             setLoading1(false);
             console.error(`There was a problem with the fetch operation:`, error);
+            toast.error(`There was a problem with the fetch operation`);
             throw error;
         }
     } 
@@ -184,7 +192,8 @@ const Home = () => {
             }));
             if (!res1.ok) {
                 setLoading2(false);
-                throw new Error(`HTTP error! Status: ${Response.status}`);
+                toast.error(getErrorMessage(res1.status));
+                throw new Error(`HTTP error! Status: ${res1.status}`);
             }
 
             const data1 = await res1.json();
@@ -195,6 +204,7 @@ const Home = () => {
         } catch (error) {
             setLoading2(false);
             console.error(`There was a problem with the fetch operation:`, error);
+            toast.error(`There was a problem with the fetch operation`);
             throw error;
         }
     } 

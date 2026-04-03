@@ -3,6 +3,8 @@ import { useContext, useEffect, useState } from 'react';
 import { SarfrozContext } from '../../sarfrozContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMemo } from 'react';
+import { toast } from 'react-toastify';
+import getErrorMessage from '../../utils/getErrorMessage';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
@@ -81,6 +83,7 @@ const Signup = () => {
                         console.error('Server error:', errorData.error);
                         setError(errorData.error);
                     }
+                    toast.error(getErrorMessage(response.status));
                     throw new Error(`HTTP error! status: ${response.status}`);
                 })
             }
@@ -90,12 +93,14 @@ const Signup = () => {
             handleUserIdChange(user.id);
             console.log(user);
             console.log('user created successfully:');
+            toast.success('user created successfully');
             setLoading2(false);
             navigate('/login');
         })
         .catch(error => {
             setLoading2(false);
             console.error('There was a problem with the fetch operation:', error);
+            toast.error('There was a problem with the fetch operation');
         })
     } 
 
@@ -126,13 +131,15 @@ const Signup = () => {
                 setLoading1(false);
                 return response.json().then(errorData => {
                     console.error('Server errors:', errorData.errors);
+                    toast.error(getErrorMessage(response.status));
                     throw new Error(`HTTP error! status: ${response.status}`);
                 })
             }
             return response.json();
         })
         .then((response) => {
-            console.log('user logged in successfully:');
+            // console.log('user logged in successfully:');
+            toast.success('Guest logged in successfully');
             handleLogin(response.token);
             setUserId(response.user.id);
             // console.log('loggedIn: ', loggedIn);
@@ -142,6 +149,7 @@ const Signup = () => {
         .catch(error => {
             setLoading1(false);
             console.error('There was a problem with the fetch operation:', error);
+            toast.error('There was a problem with the fetch operation');
         })
     }
 

@@ -59,14 +59,15 @@ const Login = () => {
                 return response.json().then(errorData => {
                     setError(errorData.error);
                     console.error('Server errors:', errorData.error);
+                    toast.error(getErrorMessage(response.status));
                     throw new Error(`HTTP error! status: ${response.status}`);
                 })
             }
             return response.json();
         })
         .then((response) => {
-            console.log('response: ', response);
-            console.log('user logged in successfully:');
+            // console.log('response: ', response);
+            // console.log('user logged in successfully:');
             handleLogin(response.token);
             setUserId(response.user.id);
             // console.log('loggedIn: ', loggedIn);
@@ -77,6 +78,7 @@ const Login = () => {
         .catch(error => {
             setLoading(false);
             console.error('There was a problem with the fetch operation:', error);
+            toast.error('There was a problem with the fetch operation');
         })
     }
 

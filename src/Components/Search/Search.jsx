@@ -5,6 +5,8 @@ import { useEffect } from 'react';
 import { SarfrozContext } from '../../sarfrozContext.js';
 import { useQuery } from '@tanstack/react-query';   
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import getErrorMessage from '../../utils/getErrorMessage.js';
 // import handleFollow from '../../utils/handleFollow.js';
 // import handleUnFollow from '../../utils/handleUnFollow.js';
 
@@ -41,6 +43,7 @@ const Search = () => {
                 if (!response.ok) {
                     const errorText = await response.text();
                     console.error('Error response:', errorText);
+                    toast.error(getErrorMessage(response.status));
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 
@@ -49,6 +52,7 @@ const Search = () => {
                 
             } catch (error) {
                 console.error('Fetch error:', error);
+                toast.error('There was a problem with fetch operation');
                 throw error;
             }
         },
@@ -102,7 +106,8 @@ const Search = () => {
             }));
             if (!res1.ok) {
                 setLoading1(false);
-                throw new Error(`HTTP error! Status: ${Response.status}`);
+                toast.error(getErrorMessage(res1.status));
+                throw new Error(`HTTP error! Status: ${res1.status}`);
             }
 
             const data1 = await res1.json();
@@ -115,6 +120,7 @@ const Search = () => {
         } catch (error) {
             setLoading1(false);
             console.error(`There was a problem with the fetch operation:`, error);
+            toast.error('There was a problem with fetch operation');
             throw error;
         }
     } 
@@ -139,7 +145,8 @@ const Search = () => {
             }));
             if (!res1.ok) {
                 setLoading2(false);
-                throw new Error(`HTTP error! Status: ${Response.status}`);
+                toast.error(getErrorMessage(res1.status));
+                throw new Error(`HTTP error! Status: ${res1.status}`);
             }
 
             const data1 = await res1.json();
@@ -152,6 +159,7 @@ const Search = () => {
         } catch (error) {
             setLoading2(false);
             console.error(`There was a problem with the fetch operation:`, error);
+            toast.error('There was a problem with fetch operation');
             throw error;
         }
     } 

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './Gif.module.css';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import getErrorMessage from '../../utils/getErrorMessage';
 
 const useGif = () => {
 
@@ -17,6 +19,7 @@ const useGif = () => {
       );
       console.log('res1 in getGifs', res1);
       if (!res1.ok) {
+        toast.error(getErrorMessage(res1.status));
         throw new Error(`HTTP error! Status: ${res1.status}`);
       }
 
@@ -26,6 +29,7 @@ const useGif = () => {
 
     } catch (error) {
       console.error(`There was a problem with the fetch operation:`, error);
+      toast.error('There was a problem with fetch operation');
       throw error;    
     }
   };
@@ -75,6 +79,7 @@ const Gif = ({ handleGifLinkChange }) => {
           // navigate('/home');
         } catch (error) {
           console.error("Submission Error:", error);
+          toast.error("There was a problem while submitting.");
         } finally {
           setLoading(false);
         }

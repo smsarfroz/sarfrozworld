@@ -8,6 +8,8 @@ import { RiGithubLine } from "react-icons/ri";
 import { LuBiohazard } from 'react-icons/lu';
 import PostCardPreview from '../PostCardPreview/PostCardPreview.jsx';
 import { useQuery } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
+import getErrorMessage from '../../utils/getErrorMessage.js';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
@@ -35,6 +37,7 @@ const useUser = () => {
                 setLoading(false);
                 return res1.json().then(errorData => {
                     console.error('Server errors:', errorData.errors);
+                    toast.error(getErrorMessage(res1.status));
                     throw new Error(`HTTP error! status: ${res1.status}`);
                 })
             }
@@ -47,6 +50,7 @@ const useUser = () => {
         } catch (error) {
             setLoading(false);
             console.error(`There was a problem with the fetch operation:`, error);
+            toast.error('There was a problem with fetch operation');
             throw error; 
         }
     };
@@ -84,6 +88,7 @@ const Profile = () => {
                 if (!response.ok) {
                     const errorText = await response.text();
                     console.error('Error response:', errorText);
+                    toast.error(getErrorMessage(response.status));
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 
@@ -93,6 +98,7 @@ const Profile = () => {
                 
             } catch (error) {
                 console.error('Fetch error:', error);
+                toast.error('There was a problem with fetch operation');
                 throw error;
             }
         },

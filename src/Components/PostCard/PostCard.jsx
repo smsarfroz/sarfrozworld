@@ -4,6 +4,8 @@ import { SarfrozContext } from "../../sarfrozContext.js";
 import { useParams } from "react-router-dom";
 import Comments from "../Comments/Comments.jsx";
 import { useQuery } from '@tanstack/react-query';
+import { toast } from "react-toastify";
+import getErrorMessage from "../../utils/getErrorMessage.js";
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
@@ -27,6 +29,7 @@ function PostCard() {
                 if (!response.ok) {
                     const errorText = await response.text();
                     console.error('Error response:', errorText);
+                    toast.error(getErrorMessage(response.status));
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 
@@ -36,6 +39,7 @@ function PostCard() {
                 
             } catch (error) {
                 console.error('Fetch error:', error);
+                toast.error('There was a problem with fetch operation');
                 throw error;
             }
         },
