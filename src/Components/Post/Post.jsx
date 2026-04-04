@@ -24,6 +24,7 @@ const Post = () => {
     const [showGif, setShowGif] = useState(false);
     const [text, setText] = useState(null);
     const [clicked, setClicked] = useState(false);
+    const [loading, setLoading] = useState(false);
     const { userId } = useContext(SarfrozContext);
     const gifRef = useRef(null);
 
@@ -70,15 +71,18 @@ const Post = () => {
                     })
                 );
                 if (!res1.ok) {
+                    setLoading(false);
                     toast.error(getErrorMessage(res1.status));
                     throw new Error(`HTTP error! Status: ${res1.status}`);
                 }
 
                 const data1 = await res1.json();
+                setLoading(false);
                 navigate('/');
                 return data1;
                 
             } catch (error) {
+                setLoading(false);
                 console.error(`There was a problem with the fetch operation:`, error);
                 toast.error(`There was a problem with the fetch operation`);
                 throw error;
@@ -108,6 +112,7 @@ const Post = () => {
     };
     const handleCancel = () => {
         setShowImage(false);
+        setImageLink(null);
     };
     const handleGifClick = () => {
         setShowGif(true);
@@ -121,6 +126,7 @@ const Post = () => {
     
     const sendFile = async () => {
         
+        setLoading(true);
         if (clicked) return;
 
         setClicked(true);
@@ -144,9 +150,15 @@ const Post = () => {
                     })
                 ]); 
                 console.log('res1', res1);
+                console.log('res1.ok', res1.ok);
                 if (!res1.ok) {
-                    toast.error(getErrorMessage(res1.status));
-                    throw new Error(`HTTP error! Status: ${res1.status}`);
+                    setLoading(false);
+                    return res1.json().then(errorData => {
+                        console.log('errorData', errorData);
+                        console.error('Server errors:', errorData.error);
+                        toast.error(errorData.error);
+                        throw new Error(`HTTP error! status: ${res1.status}`);
+                    })
                 }
 
                 const data1 = await res1.json();
@@ -156,8 +168,9 @@ const Post = () => {
                 setClicked(false);
                 
             } catch (error) {
+                setLoading(false);
                 console.error(`There was a problem with the fetch operation:`, error);
-                toast.error(`There was a problem with the fetch operation`);
+                toast.error(error);
                 setClicked(false);
                 throw error;
             }
@@ -165,7 +178,7 @@ const Post = () => {
         await sendImage();
     }
     const customStyle = {
-        color: "red"
+        backgroundColor: "rgb(118, 118, 241)"
     };
     const styleObject = {
         brightness: '100%',
@@ -175,7 +188,7 @@ const Post = () => {
     return (
         <div className={styles.postPage}>
             <div className={styles.textareaContainer}>
-                <TextareaAutosize className={styles.textareaAutosize} rows="10" name="" id="" placeholder='Share something...' disabled={clicked} maxLength="2000" cols="10" onChange={e => {setCount(e.target.value.length); setText(e.target.value)}}>
+                <TextareaAutosize className={styles.textareaAutosize} rows="10" name="" id="" placeholder='Share something...' disabled={loading} maxLength="2000" cols="10" onChange={e => {setCount(e.target.value.length); setText(e.target.value)}}>
                 </TextareaAutosize>
                 {showImage ? 
                     <div className={styles.previewImageContainer}>
@@ -198,11 +211,11 @@ const Post = () => {
                     </div>
                     <div className={styles.postContainer}>
                         <p className={styles.characterCounter}>{count}/2000</p>
-                        {clicked ? 
+                        {loading ? 
                         
                             <button className={styles.postButton} style={customStyle} onClick={sendFile}>Posting...</button>
                             :
-                            <button className={styles.postButton} onClick={sendFile} disabled={!count} style={count > 0 ? styleObject : null}>Post</button>
+                            <button className={styles.postButton} onClick={sendFile} disabled={!count && !imageLink} style={count > 0 ? styleObject : null}>Post</button>
                         }
                     </div>
                 </div>

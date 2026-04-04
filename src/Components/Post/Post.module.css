@@ -114,6 +114,7 @@
 
 .previewImageContainer {
     position: relative;
+    top: 1vw;
     bottom: 5vw;
     margin-bottom: 1.5vw;
 }
