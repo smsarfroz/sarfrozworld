@@ -192,7 +192,7 @@ function App() {
 
   return (
     <div className='sectionsContainer'>
-      <ToastContainer position="bottom-right" autoClose={5000} />
+      <ToastContainer position="top-center" autoClose={5000} />
       {loggedIn && !isAuthRoute && (
 
         <div className="navigationRoutes">

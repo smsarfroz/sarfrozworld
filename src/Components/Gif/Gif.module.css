@@ -3,26 +3,24 @@
 }
 
 .GifContainer {
-    width: 81%;
+    position: absolute;
+    width: 88%;
     /* height: 500px; */
     height: 35vw;
     background-color: rgb(33, 33, 33);
-    position: absolute;
-    left: 20%;
-    top: 100%;
-    margin-left: -20%;
-    margin-top: -250px;
+    /* left: 20%; */
+    /* top: 100%; */
+    /* margin-left: -20%; */
+    /* margin-top: -250px; */
 
-    /* top: 50%;
-    left: 50%;  
-    transform: translate(-50%, -50%); */
+    top: 56%;
+    left: 35%;  
+    transform: translate(-50%, -50%); 
 
     padding: 1vw 1vw;
     overflow: auto;
     scrollbar-color: rgb(94, 39, 39);
-/*     display: flex;
-    flex-direction: column;
- */}
+}
 
 .searchBar {
     /* width: 100%; */

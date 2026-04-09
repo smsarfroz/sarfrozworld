@@ -155,7 +155,6 @@ const Profile = () => {
         setUpdateLoading(true);
         if (!URL.canParse(github)) {
             github = "https://github.com/" + github;
-            console.log('github', github);
         }
         if (!URL.canParse(website)) {
             website = "https://" + website;

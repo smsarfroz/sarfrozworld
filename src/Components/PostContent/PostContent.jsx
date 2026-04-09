@@ -113,6 +113,7 @@ function PostContent({ post, user, setDeleted, showFullContent = false, comments
                 throw error;
             }
             setDeleted(true);
+            toast.success(`Post deleted successfully.`);
             if (showFullContent) {
                 navigate('/home');
             }
@@ -122,7 +123,7 @@ function PostContent({ post, user, setDeleted, showFullContent = false, comments
     const ContentWrapper = showFullContent ? 'div' : 'div';
     const wrapperProps = showFullContent 
         ? { className: styles.ContentWrapper }
-        : { className: styles.ContentWrapper, key: post.id };
+        : { className: styles.ContentWrapper };
 
     function handleClickContentWrapper(pid) {
         if (!showFullContent) {
@@ -136,7 +137,7 @@ function PostContent({ post, user, setDeleted, showFullContent = false, comments
 
     return (
         <div className={styles.post} onMouseEnter={onHover} onMouseLeave={onLeave}>
-            <ContentWrapper {...wrapperProps} onClick={() => handleClickContentWrapper(post.id)}>
+            <ContentWrapper {...wrapperProps} key={post.id} onClick={() => handleClickContentWrapper(post.id)}>
                 <div className={styles.userDetails}>
                     <div className={styles.leftPart}>
                         <img src={user.photo} alt="" className={styles.profilePhoto}/>
@@ -168,7 +169,7 @@ function PostContent({ post, user, setDeleted, showFullContent = false, comments
                     }
                     <p>{tempLike}</p>
                 </div>
-                <div className={styles.commentsSection}>
+                <div className={styles.commentsSection} onClick={() => handleClickContentWrapper(post.id)}>
                     <FaRegComment className={styles.icon}/> 
                     <p>{commentsCount}</p>
                 </div>

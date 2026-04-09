@@ -22,7 +22,7 @@ const Post = () => {
     const [imageFile, setImageFile] = useState(null);
     const [publicURL, setPublicURL] = useState(null);
     const [showGif, setShowGif] = useState(false);
-    const [text, setText] = useState(null);
+    const [text, setText] = useState("");
     const [clicked, setClicked] = useState(false);
     const [loading, setLoading] = useState(false);
     const { userId } = useContext(SarfrozContext);
@@ -49,17 +49,16 @@ const Post = () => {
 
     }, [showGif]);
 
-    const handlePost = useCallback(() => {
-        if (!text.trim()) return;
+    const handlePost = useCallback((publicURL) => {
+        if (text.trim() !== "" && !imageLink) return;
         const api1 = `${VITE_BASE_URL}/post`;
-        // console.log('imageLink, publicUrl', imageLink, publicURL);
         const sendPost = async () => {
             let data = {};
             data['text'] = text;
-            data['imageLink'] = (imageLink ? imageLink : publicURL);
+            data['imageLink'] = (publicURL ? publicURL : imageLink);
             data['userId'] = userId;
             try {
-                const [res1] = await (
+                const res1 = await (
                     fetch(api1, {
                         mode: 'cors',
                         credentials: 'include',
@@ -89,13 +88,8 @@ const Post = () => {
             }
         };
         sendPost();    
-    }, [text, userId, navigate, publicURL, imageLink]);
+    }, [text, userId, navigate, imageLink]);
 
-    // useEffect(() => {
-    //     if (publicURL) {
-    //         handlePost();
-    //     }
-    // }, [publicURL, handlePost]);
     const handlePictureClick = () => {
         fileInputRef.current.click();
     };
@@ -103,8 +97,6 @@ const Post = () => {
     const handleFileChange = (e) => {
         const files = e.target.files;
         if (files && files.length > 0) {
-            // console.log('Selected file:', files[0].name, files[0]);
-            // console.log(URL.createObjectURL(files[0]));
             setImageFile(files[0]);
             setImageLink(URL.createObjectURL(files[0]));
             setShowImage(true);
@@ -139,18 +131,16 @@ const Post = () => {
         const sendImage = async () => {
             const formData = new FormData();
             formData.append('file', imageFile);
-            console.log('formData', [...formData]);
+            // console.log('formData', [...formData]);
             try {
-                const [res1] = await Promise.all([
+                const res1 = await (
                     fetch(api1, {
                         mode: 'cors',
                         credentials: 'include',
                         method: "post",
                         body: formData
                     })
-                ]); 
-                console.log('res1', res1);
-                console.log('res1.ok', res1.ok);
+                ); 
                 if (!res1.ok) {
                     setLoading(false);
                     return res1.json().then(errorData => {
@@ -164,7 +154,7 @@ const Post = () => {
                 const data1 = await res1.json();
                 setPublicURL(data1);
 
-                await handlePost();
+                await handlePost(data1);
                 setClicked(false);
                 
             } catch (error) {

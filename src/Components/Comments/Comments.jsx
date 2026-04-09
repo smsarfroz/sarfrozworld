@@ -19,6 +19,8 @@ const Comments = ({ setCommentsCount=false }) => {
     // const [comments, setComments] = useState(null);
     const [hoveredCommentId, setHoveredCommentId] = useState(null);
     const [deletingCommentId, setDeletingCommentId] = useState(null);
+    const [loading, setLoading] = useState(false);
+
     const id = parseInt(postId);
 
     const api1 = `${VITE_BASE_URL}/posts/${id}/comments`;
@@ -66,9 +68,10 @@ const Comments = ({ setCommentsCount=false }) => {
     const postComment = async () => {
         if (!content.trim()) return;
 
+        setLoading(true);
         const api = `${VITE_BASE_URL}/posts/${id}/comments`;
         try {
-            const [res1] = await (
+            const res1 = await (
                 fetch(api, {
                     mode: 'cors',
                     credentials: 'include',
@@ -84,17 +87,20 @@ const Comments = ({ setCommentsCount=false }) => {
                 })
             );
             if (!res1.ok) {
+                setLoading(false);
                 toast.error(getErrorMessage(res1.status));
                 throw new Error(`HTTP error! Status: ${res1.status}`);
             }
             const data = await res1.json();
-            console.log('added comment', data);
+            // console.log('added comment', data);
             setCommentsCount(prevCt => prevCt + 1);
             setContent("");
             setCharCount(0); 
+            setLoading(false);
             refetch();
 
         } catch (error) {
+            setLoading(false);
             console.error(`There was a problem with the fetch operation:`, error);
             toast.error('There was a problem with fetch operation');
             throw error;
@@ -167,7 +173,10 @@ const Comments = ({ setCommentsCount=false }) => {
                 </TextareaAutosize>
                 <div className={styles.container}>
                     <p className={styles.charCount}>{charCount}/500</p>
-                    <button className={styles.replyButton} onClick={postComment} style={charCount > 0 ? styleObject : null} disabled={!content.trim()}>Reply</button>
+                    {loading ? 
+                        <button className={styles.replyButton} onClick={postComment} style={charCount > 0 ? styleObject : null} disabled={true}>Replying...</button> :
+                        <button className={styles.replyButton} onClick={postComment} style={charCount > 0 ? styleObject : null} disabled={!content.trim()}>Reply</button>
+                    }
                 </div>
             </div>
             {
