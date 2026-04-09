@@ -272,7 +272,7 @@ const Home = () => {
 
             <div className={styles.latestUsers} key={location.pathname}>
 
-                <h3 className={styles.latestUser}>Latest Users</h3>
+                <p className={styles.latestUser}>Latest Users</p>
                 {
                     lastFiveReversed.map((user) => {
                         if (user.id !== userId) length++;

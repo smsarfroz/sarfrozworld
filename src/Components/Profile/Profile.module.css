@@ -4,11 +4,11 @@
 
 .profilePhoto {
     border-radius: 50%;
-    width: 5vw;
+    width: 4.5vw;
 }
 
 .username {
-    font-size: 30px;
+    font-size: 1.8vw;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
@@ -114,6 +114,7 @@ input {
     color: rgb(195, 195, 195);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin-bottom: 2vw;
+    font-size: 1vw;
 }
 
 .num {
@@ -128,13 +129,14 @@ input {
     gap: 1vw;
     margin: 1vw 0vw;
     margin-top: 3vw;
+    font-size: 1vw;
 }
 
 .userPostText {
     margin-top: 3vw;
     margin-bottom: 1vw;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 20px;
+    font-size: 1.5vw;
 }
 
 .infoLine {

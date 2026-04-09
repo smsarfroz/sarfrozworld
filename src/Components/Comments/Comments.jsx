@@ -97,6 +97,7 @@ const Comments = ({ setCommentsCount=false }) => {
             setContent("");
             setCharCount(0); 
             setLoading(false);
+            toast.success("Comment added successfully.");
             refetch();
 
         } catch (error) {
@@ -135,7 +136,8 @@ const Comments = ({ setCommentsCount=false }) => {
                 throw new Error(`HTTP error! Status: ${res1.status}`);
             }
             const data = await res1.json();
-            console.log('deleted comment', data);
+            // console.log('deleted comment', data);
+            toast.success('Comment deleted successfully.');
 
             // setComments(prevComments => 
             //     prevComments.filter(comment => comment.id !== commentId)

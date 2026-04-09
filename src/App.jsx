@@ -135,8 +135,6 @@ function App() {
     return savedUsername ? JSON.parse(savedUsername) : 0;
   });
 
-  const isAuthRoute = location.pathname === '/login' || location.pathname === '/signup';
-  
   const { loading, error, userData, setUserData, likesState, setLikesState, usersData, setUsersData } = useFetchData(userId);
 
   const updateLikeState = (postId, liked, likesCount) => {
@@ -174,41 +172,39 @@ function App() {
     borderRadius: "8px"
   };
 
+  const styleObject2 = {
+    color: "rgb(81, 81, 233)",
+  }
+
   const handleTabClick = (tabIndex, path) => {
     setActiveTab(tabIndex);
     navigate(path);
   };
 
-  if (!loggedIn && !isAuthRoute) {
-    return <Navigate to='/login' replace />;
-  }
-  if (loading && !isAuthRoute) {
+  if (loading) {
     return <Loading />;
   }
-  if (error && !isAuthRoute) {
+  if (error) {
     return <ErrorPage />;
   }
 
 
   return (
     <div className='sectionsContainer'>
-      <ToastContainer position="top-center" autoClose={5000} />
-      {loggedIn && !isAuthRoute && (
+      <ToastContainer position="top-center" autoClose={2000} />    
 
-        <div className="navigationRoutes">
-          <p className='siteName'>sarfrozworld</p>
-          <div className="iconList">
-            
-            <div className='tab' onClick={() => handleTabClick(0, '/')} style={activeTab === 0 ? styleObject : null}><FiHome size={25}/><span>Home</span> </div>
-            <div className='tab' onClick={() => handleTabClick(1, '/search')} style={activeTab === 1 ? styleObject : null}><LuSearch size={25}/><span>Search</span> </div>
-            <div className='tab' onClick={() => handleTabClick(2, '/post')} style={activeTab === 2 ? styleObject : null}><LuPenLine size={25}/><span>Post</span> </div>
-            <div className='tab' onClick={() => handleTabClick(3, '/profile')} style={activeTab === 3 ? styleObject : null}><IoPersonSharp size={25}/><span>Profile</span> </div>
-            <div onClick={() => handleLogout()} className='tab'><MdLogout size={25}/> <span>Logout</span> </div> 
-            {/* <a href={api1} target='_blank' rel='noopener noreferrer'>Authenticate with Google</a> */}
+      <div className="navigationRoutes">
+        <p className='siteName'>sarfrozworld</p>
+        <div className="iconList">
+          
+          <div className='tab' onClick={() => handleTabClick(0, '/')} style={activeTab === 0 ? styleObject : null}><FiHome size={25}/><span>Home</span> </div>
+          <div className='tab' onClick={() => handleTabClick(2, '/post')} style={activeTab === 2 ? styleObject : null}><LuPenLine size={25}/><span>Post</span> </div>
+          <div className='tab' onClick={() => handleTabClick(1, '/search')} style={activeTab === 1 ? styleObject : null}><LuSearch size={25}/><span>Search</span> </div>
+          <div className='tab' onClick={() => handleTabClick(3, '/profile')} style={activeTab === 3 ? styleObject : null}><IoPersonSharp size={25}/><span>Profile</span> </div>
+          <div onClick={() => handleLogout()} className='tab'><MdLogout size={25}/> <span>Logout</span> </div> 
 
-          </div>
         </div>
-      )}
+      </div>      
 
       <div className="commonBackground">
         <QueryClientProvider client={pizza}>
@@ -218,6 +214,15 @@ function App() {
         </QueryClientProvider>
       </div>
 
+      <footer className="iconListM">
+        
+        <div className='tabM' onClick={() => handleTabClick(0, '/')} style={activeTab === 0 ? styleObject2 : null}><FiHome size={28}/> </div>
+        <div className='tabM' onClick={() => handleTabClick(2, '/post')} style={activeTab === 2 ? styleObject2 : null}><LuPenLine size={28}/> </div>
+        <div className='tabM' onClick={() => handleTabClick(1, '/search')} style={activeTab === 1 ? styleObject2 : null}><LuSearch size={28}/> </div>
+        <div className='tabM' onClick={() => handleTabClick(3, '/profile')} style={activeTab === 3 ? styleObject2 : null}><IoPersonSharp size={28}/> </div>
+        <div onClick={() => handleLogout()} className='tabM'><MdLogout size={25}/> </div> 
+
+      </footer>
     </div>
   )
 }

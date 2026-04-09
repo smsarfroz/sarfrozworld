@@ -46,10 +46,12 @@ input {
     border-radius: 4px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
     filter: brightness(100%);
+    font-size: 0.9vw;
 }
 
 .username {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 0.9vw;
 }
 
 .username:hover {
@@ -65,6 +67,7 @@ input {
     height: 1.5vw;
     border-radius: 4px;
     filter: brightness(100%);
+    font-size: 0.9vw;
 }
 
 .followingButton:hover {
