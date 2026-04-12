@@ -136,7 +136,29 @@
         margin: 0;
         padding: 35px;
     }
-    textareaAutosize {
-        min-height: 200px;
+    .textareaContainer {
+        height: 280px;
+        padding: 15px 15px;
+    }
+    .textareaAutosize {
+        font-size: 20px;
+    }
+    .postButton {
+        width: 100px;
+        height: 60px;
+        font-size: 20px;
+    }
+    .iconsContainer {
+        gap: 10px;
+    }
+    .icon {
+        width: 60px;
+        height: 60px;
+    }
+    .characterCounter {
+        font-size: 20px;
+    }
+    .postContainer {
+        gap: 10px;
     }
 }
