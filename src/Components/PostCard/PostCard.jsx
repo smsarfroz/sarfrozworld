@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import PostContent from "../PostContent/PostContent.jsx";
+import styles from './PostCard.module.css';
 import { SarfrozContext } from "../../sarfrozContext.js";
 import { useParams } from "react-router-dom";
 import Comments from "../Comments/Comments.jsx";
@@ -79,18 +80,20 @@ function PostCard() {
     // };
 
     return (
-        <>
-            <PostContent
-                post={post}
-                user={post.user}
-                setDeleted={setDeleted}
-                showFullContent={true}
-                commentsCount={commentsCount}
-            />
+        <div>
+            <div className={styles.post}>
+                <PostContent
+                    post={post}
+                    user={post.user}
+                    setDeleted={setDeleted}
+                    showFullContent={true}
+                    commentsCount={commentsCount}
+                />
+            </div>
             <Comments 
                 setCommentsCount={setCommentsCount}
             />
-        </>
+        </div>
     )
 }
 

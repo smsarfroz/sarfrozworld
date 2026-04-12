@@ -1,3 +1,8 @@
+.searchPage {
+    margin-left: 65px;
+    margin-top: 20px;
+}
+
 input {
     outline: none;
     width: 40vw;

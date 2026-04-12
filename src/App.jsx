@@ -193,7 +193,7 @@ function App() {
     <div className='sectionsContainer'>
       <ToastContainer position="top-center" autoClose={2000} />    
 
-      <div className="navigationRoutes">
+      <nav className="navigationRoutes">
         <p className='siteName'>sarfrozworld</p>
         <div className="iconList">
           
@@ -204,23 +204,23 @@ function App() {
           <div onClick={() => handleLogout()} className='tab'><MdLogout size={25}/> <span>Logout</span> </div> 
 
         </div>
-      </div>      
+      </nav>      
 
-      <div className="commonBackground">
+      <main className="commonBackground">
         <QueryClientProvider client={pizza}>
           <SarfrozContext.Provider value={{ userData, setUserData, userId, setUserId, loggedIn, setLoggedIn, username, setUsername, likesState, updateLikeState, usersData, setUsersData, deleted, setDeleted }}>
             <Outlet />
           </SarfrozContext.Provider>
         </QueryClientProvider>
-      </div>
+      </main>
 
       <footer className="iconListM">
         
-        <div className='tabM' onClick={() => handleTabClick(0, '/')} style={activeTab === 0 ? styleObject2 : null}><FiHome size={28}/> </div>
-        <div className='tabM' onClick={() => handleTabClick(2, '/post')} style={activeTab === 2 ? styleObject2 : null}><LuPenLine size={28}/> </div>
-        <div className='tabM' onClick={() => handleTabClick(1, '/search')} style={activeTab === 1 ? styleObject2 : null}><LuSearch size={28}/> </div>
-        <div className='tabM' onClick={() => handleTabClick(3, '/profile')} style={activeTab === 3 ? styleObject2 : null}><IoPersonSharp size={28}/> </div>
-        <div onClick={() => handleLogout()} className='tabM'><MdLogout size={25}/> </div> 
+        <div className='tabM' onClick={() => handleTabClick(0, '/')} style={activeTab === 0 ? styleObject2 : null}><FiHome size={50}/> </div>
+        <div className='tabM' onClick={() => handleTabClick(2, '/post')} style={activeTab === 2 ? styleObject2 : null}><LuPenLine size={50}/> </div>
+        <div className='tabM' onClick={() => handleTabClick(1, '/search')} style={activeTab === 1 ? styleObject2 : null}><LuSearch size={50}/> </div>
+        <div className='tabM' onClick={() => handleTabClick(3, '/profile')} style={activeTab === 3 ? styleObject2 : null}><IoPersonSharp size={50}/> </div>
+        <div onClick={() => handleLogout()} className='tabM'><MdLogout size={50}/> </div> 
 
       </footer>
     </div>

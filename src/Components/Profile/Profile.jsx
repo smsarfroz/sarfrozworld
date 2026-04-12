@@ -54,7 +54,6 @@ const useUser = () => {
             throw error; 
         }
     };
-    // console.log('userData in updateUser', userData);
 
     return { userData, updateUser, loading };
 };
@@ -67,11 +66,9 @@ const Profile = () => {
     const { isPending, error, data, refetch } = useQuery({
         queryKey: ["userData"],
         staleTime: 1000 * 60 * 30,
-        // queryFn: () => fetch(`${VITE_BASE_URL}/users/profile`).then(res => res.json())
 
         queryFn: async () => {
             try {
-                // console.log('Sending request with:', dataToSend);
                 
                 const response = await fetch(`${VITE_BASE_URL}/users/profile`, {
                     mode: 'cors',
@@ -83,8 +80,6 @@ const Profile = () => {
                     body: JSON.stringify(dataToSend)
                 });
                 
-                // console.log('Response status:', response.status);
-                
                 if (!response.ok) {
                     const errorText = await response.text();
                     console.error('Error response:', errorText);
@@ -93,7 +88,6 @@ const Profile = () => {
                 }
                 
                 const jsonData = await response.json();
-                // console.log('Response data:', jsonData);
                 return jsonData;
                 
             } catch (error) {
@@ -108,11 +102,9 @@ const Profile = () => {
         enabled: !!userId
     })
 
-    // console.log('data from react query', data);
     const { userData: initialUser, updateUser, loading } = useUser();
-    // console.log('initialUser', initialUser);
     const [user, setUserData] = useState(initialUser);
-    const [editValue, setEditValue] = useState(null);
+    const [editValue, setEditValue] = useState(data);
     const [isEditing, setIsEditing] = useState(false);
     // const postsUnsorted = initialUser['posts'];
 
@@ -124,7 +116,7 @@ const Profile = () => {
         
     }, [data, refetch]);
 
-    if (isPending || !data) return "Loading..."
+    if (isPending || !data || loading || !editValue) return "Loading..."
 
     if (error) return "An error has occurred: " + error.message
 
@@ -133,7 +125,6 @@ const Profile = () => {
     let postsUnsorted = [];
 
     if (editValue && typeof editValue === 'object') {
-        // console.log('editValue in block', editValue);
         ({ bio, followers, following, github, id, photo, username, website } = editValue);
         postsUnsorted = editValue.posts || [];
     }
@@ -147,7 +138,6 @@ const Profile = () => {
     function handleEditClick() {
         setIsEditing(true);
         setUpdateLoading(false);
-        // setEditValue(user);
     }
 
     const handleSaveClick = async ({ userId, bio, github, website }) => {
@@ -163,7 +153,6 @@ const Profile = () => {
         const path1 = urlGithub.pathname.substring(1);
         const urlWebsite = new URL(website);
         const contentAfterProtocol = urlWebsite.host + urlWebsite.pathname;
-        // console.log(path1, contentAfterProtocol);
         const updatedData = await updateUser({ userId, bio, github: path1, website: contentAfterProtocol});
         setUserData(updatedData);
         setEditValue(updatedData);
@@ -220,7 +209,7 @@ const Profile = () => {
                 
                 :
                 <span className={styles.editContainer} >
-                    <MdOutlineModeEdit fill="blue" size={23} onClick={() => handleEditClick()} className={styles.editButton}/> <p onClick={() => handleEditClick()} className={styles.editText}>Edit</p>
+                    <MdOutlineModeEdit fill="blue"  onClick={() => handleEditClick()} className={styles.editButton}/> <p onClick={() => handleEditClick()} className={styles.editText}>Edit</p>
                 </span>
             }
 
@@ -229,7 +218,7 @@ const Profile = () => {
 
             <div className={styles.posts}>
                 {
-                    posts.map((post) => {
+                    data.posts.map((post) => {
                         return (
                             <PostCardPreview 
                                 key={post.id}

@@ -4,10 +4,11 @@
 
 .post {
     /* width: 600px; */
-    width: 88%;
-    height: auto;
+    /* width: 88%; */
+    width: 628px;
+    /* height: auto; */
+    /* margin-left: 65px; */
     background-color: rgb(27, 26, 26);
-    border-radius: 10px;
     padding: 1vw 1vw;
     transition: background-color 0.3s ease;
 }
@@ -21,8 +22,8 @@
     display: block;
     text-decoration: none;
     cursor: default;
+    height: auto;
 }
-
 
 .userDetails {
     display: flex;
@@ -51,7 +52,7 @@
 .postImage {
     display: flex;
     justify-content: center;
-    height: 24vw;
+    height: 350px;
     margin: 1vw 0;
 }   
 
@@ -118,4 +119,48 @@
     align-items: center;
     color: rgb(103, 103, 237);
     cursor: pointer;
+}
+
+@media (max-width: 500px) {
+    .post {
+        width: 85%;
+        /* height: 400px; */
+        padding: 20px 20px;
+    }
+    .photo {
+        padding: 0 20px;
+    }
+    .postImage {
+        /* height: auto; */
+        width: auto;
+        min-width: auto;
+        max-width: auto;
+        margin: 15px 20px;
+    }
+    .profilePhoto {
+        width: 50px;
+    }
+    .username {
+        font-size: 22px;
+    }
+    .createdAt {
+        font-size: 20px;
+    }
+    .icons {
+        font-size: 25px;
+        gap: 30px;
+    }
+    .text {
+        font-size: 22px;
+        margin-top: 13px;
+    }
+    .leftPart {
+        gap: 14px;
+    }
+    .likeSection {
+        gap: 10px;
+    }
+    .commentsSection {
+        gap: 10px;
+    }
 }
