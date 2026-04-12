@@ -130,3 +130,13 @@
     position: relative;
     z-index: 1000;
 }
+
+@media (max-width: 500px) {
+    .postPage {
+        margin: 0;
+        padding: 35px;
+    }
+    textareaAutosize {
+        min-height: 200px;
+    }
+}

@@ -199,9 +199,10 @@ const Comments = ({ setCommentsCount=false }) => {
                                                     <p className={styles.username}>{comment.user.username} </p>
                                                     <p className={styles.createdAt}>{' '} • <TimeAgo date={comment.createdAt} /></p>
                                                 </div>
-                                                <p className={styles.content}>{comment.content}</p>
                                             </div>
                                         </div>
+                                        
+                                        <p className={styles.content}>{comment.content}</p>
 
                                         { userId === comment.user.id && hoveredCommentId === comment.id ? 
                                                             

@@ -80,7 +80,7 @@ function PostCard() {
     // };
 
     return (
-        <div>
+        <div className={styles.postCardPage}>
             <div className={styles.post}>
                 <PostContent
                     post={post}
