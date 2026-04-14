@@ -128,8 +128,8 @@ a {
       position: fixed;
       bottom: 0;
       width: 100%;
-      background-color: rgba(39, 38, 38, 0.3);
-      backdrop-filter: blur(10px);
+      background-color: rgba(40, 39, 39, 0.3);
+      backdrop-filter: blur(20px);
       height: 130px;
     }
     .commonBackground {

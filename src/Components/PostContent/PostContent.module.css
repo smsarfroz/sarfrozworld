@@ -126,7 +126,7 @@
         /* width: 92%; */
         /* height: 400px; */
         padding: 20px 20px;
-        margin: 0 25px;
+        /* margin: 0 25px; */
     }
     .photo {
         padding: 0 20px;
@@ -164,4 +164,5 @@
     .commentsSection {
         gap: 10px;
     }
+    
 }
