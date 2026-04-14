@@ -90,11 +90,11 @@
 
 @media (max-width: 500px) {
     .GifContainer {
-        top: 100%;
+        top: 150%;
         left: 50%;
         transform: translate(-50%, -50%);
         width: 600px;
-        height: 600px;
+        height: 800px;
         padding: 20px 20px;
         border-bottom: 10px solid rgb(33, 33, 33);
     }

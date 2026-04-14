@@ -184,7 +184,7 @@ const Search = () => {
             {
                 usersData.map(user => {
                     return (
-                        <div key={user.id}>  
+                        <div key={user.id} className={styles.users}>  
                             {
                                 handleFilter(user) && user.id != userId ? (
                                     <div className={styles.user} key={user.id}>
