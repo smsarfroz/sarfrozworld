@@ -216,11 +216,11 @@ function App() {
 
       <footer className="iconListM">
         
-        <div className='tabM' onClick={() => handleTabClick(0, '/')} style={activeTab === 0 ? styleObject2 : null}><FiHome size={50}/> </div>
-        <div className='tabM' onClick={() => handleTabClick(2, '/post')} style={activeTab === 2 ? styleObject2 : null}><LuPenLine size={50}/> </div>
-        <div className='tabM' onClick={() => handleTabClick(1, '/search')} style={activeTab === 1 ? styleObject2 : null}><LuSearch size={50}/> </div>
-        <div className='tabM' onClick={() => handleTabClick(3, '/profile')} style={activeTab === 3 ? styleObject2 : null}><IoPersonSharp size={50}/> </div>
-        <div onClick={() => handleLogout()} className='tabM'><MdLogout size={50}/> </div> 
+        <div className='tabM' onClick={() => handleTabClick(0, '/')} style={activeTab === 0 ? styleObject2 : null}><FiHome size={31}/> </div>
+        <div className='tabM' onClick={() => handleTabClick(2, '/post')} style={activeTab === 2 ? styleObject2 : null}><LuPenLine size={31}/> </div>
+        <div className='tabM' onClick={() => handleTabClick(1, '/search')} style={activeTab === 1 ? styleObject2 : null}><LuSearch size={31}/> </div>
+        <div className='tabM' onClick={() => handleTabClick(3, '/profile')} style={activeTab === 3 ? styleObject2 : null}><IoPersonSharp size={31}/> </div>
+        <div onClick={() => handleLogout()} className='tabM'><MdLogout size={31}/> </div> 
 
       </footer>
     </div>

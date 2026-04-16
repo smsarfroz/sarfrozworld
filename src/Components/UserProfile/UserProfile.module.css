@@ -192,3 +192,46 @@ input {
     flex-direction: column;
     gap: 0.6vw;
 }
+
+
+@media (max-width: 500px) {
+    .profilePage {
+        padding: 0 11vw;
+        padding-top: 12vw;
+        padding-bottom: 30.6vw;
+        width: auto;
+    }  
+    .posts {
+        gap: 8vw;
+    } 
+    .profilePhoto {
+        width: 22vw;
+    }
+    .username {
+        font-size: 9vw;
+        margin-left: 4vw;
+    }
+    .counters {
+        font-size: 6vw;
+        margin-top: 12vw;
+        margin-left: 8vw;
+        justify-content: space-around;
+    }
+    .num {
+        font-size: 6vw;
+    }
+    .userPostText {
+        font-size: 6vw;
+        margin-top: 7vw;
+        margin-bottom: 4vw;
+    }
+    .details {
+        font-size: 5.4vw;
+        margin-bottom: 3vw;
+        margin-top: 10vw;
+        gap: 4vw;
+    }
+    .horizontalLine {
+        margin-bottom: 6vw;
+    }
+}

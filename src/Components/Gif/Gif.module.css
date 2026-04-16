@@ -90,34 +90,33 @@
 
 @media (max-width: 500px) {
     .GifContainer {
-        top: 150%;
+        top: 120%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 600px;
-        height: 800px;
-        padding: 20px 20px;
-        border-bottom: 10px solid rgb(33, 33, 33);
+        width: 93vw;
+        height: 130vw;
+        padding: 4vw 4vw;
+        border-bottom: 2vw solid rgb(33, 33, 33);
     }
     .searchBar {
-        height: 45px;
-        font-size: 20px;
-        padding: 0 10px;
+        height: 9vw;
+        font-size: 4vw;
+        padding: 0 2vw;
     }
     .submitButton {
-        height: 45px;
-        width: 80px;
-        font-size: 20px;
+        height: 9vw;
+        width: 16vw;
+        font-size: 4vw;
     }
     .topContainer {
-        gap: 11px;
+        gap: 2.2vw;
     }
     .gifGridContainer {
-        margin-top: 55px;
+        margin-top: 11vw;
     }
     .gifImg {
-        width: 170px;
-        height: 180px;
-        margin-right: 14px;
+        width: 25vw;
+        height: 25vw;
+        margin-right: 2vw;
     }
-
 }

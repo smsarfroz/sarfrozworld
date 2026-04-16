@@ -134,35 +134,46 @@
 @media (max-width: 500px) {
     .postPage {
         margin: 0;
-        padding: 35px;
+        padding: 7vw;
+        width: 100%;
     }
     .textareaContainer {
-        min-height: 280px;
-        padding: 15px 15px;
+        width: 100%;
+        min-height: 56vw;
+        padding: 3vw 3vw;
     }
     .textareaAutosize {
-        font-size: 20px;
+        font-size: 4vw;
     }
     .postButton {
-        width: 100px;
-        height: 60px;
-        font-size: 20px;
+        width: 20vw;
+        height: 12vw;
+        font-size: 4vw;
     }
     .iconsContainer {
-        gap: 10px;
+        gap: 2vw;
     }
     .icon {
-        width: 60px;
-        height: 60px;
+        width: 12vw;
+        height: 12vw;
     }
     .characterCounter {
-        font-size: 20px;
+        font-size: 4vw;
     }
     .postContainer {
-        gap: 10px;
+        gap: 2vw;
     }
     .previewImage {
-        margin-top: 80px;
-        margin-bottom: 20px;
+        margin-top: 16vw;
+        margin-bottom: 4vw;
+        width: auto;
+        height: auto;
+        max-width: 60vw;
+        max-height: 50vw;
+    }
+    .cancelButton {
+        bottom: calc(50% + 15vw);
+        left: calc(50% + 35vw);
+        transform: translate(-50%, -50%);
     }
 }

@@ -190,8 +190,8 @@ const Profile = () => {
                 <div className={styles.inputContainers}>
                     {/* <input className={styles.bioInput} maxLength={200} height={20} size={20} type="text" name='Bio' placeholder='edit bio...' value={bio ? bio : ""} onChange={(e) => setEditValue((prevVal) => ({...prevVal, bio: e.target.value}))}/> */}
                     <textarea className={styles.bioInput} maxLength={200} rows={3} type="text" name='Bio' placeholder='edit bio...' value={bio ? bio : ""} onChange={(e) => setEditValue((prevVal) => ({...prevVal, bio: e.target.value}))}/>
-                    <input type="text" name='Website' placeholder='edit website...' value={website ? website : ""} onChange={(e) => setEditValue((prevVal) => ({...prevVal, website: e.target.value}))}/>
-                    <input type="text" name='Github' placeholder='edit Github username or URL...' value={github ? github : ""} onChange={(e) => setEditValue((prevVal) => ({...prevVal, github: e.target.value}))}/>
+                    <input className={styles.websiteInput} type="text" name='Website' placeholder='edit website...' value={website ? website : ""} onChange={(e) => setEditValue((prevVal) => ({...prevVal, website: e.target.value}))}/>
+                    <input className={styles.githubInput} type="text" name='Github' placeholder='edit Github username or URL...' value={github ? github : ""} onChange={(e) => setEditValue((prevVal) => ({...prevVal, github: e.target.value}))}/>
                 </div>
                 :
                 <div className={styles.details}>

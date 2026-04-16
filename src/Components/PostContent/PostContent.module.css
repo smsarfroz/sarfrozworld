@@ -122,47 +122,49 @@
 }
 
 @media (max-width: 500px) {
-    .post {
+     .post {
         /* width: 92%; */
         /* height: 400px; */
-        padding: 20px 20px;
+        padding: 4vw 4vw;
+        width: 90vw;
+        /* width: 180vw; */
         /* margin: 0 25px; */
     }
     .photo {
-        padding: 0 20px;
+        padding: 0 4vw;
     }
     .postImage {
         /* height: auto; */
         width: auto;
         min-width: auto;
         max-width: auto;
-        margin: 15px 20px;
+        margin: 3vw 4vw;
+        height: 50vw;
     }
     .profilePhoto {
-        width: 50px;
+        width: 10vw;
     }
     .username {
-        font-size: 22px;
+        font-size: 4.4vw;
     }
     .createdAt {
-        font-size: 20px;
+        font-size: 4vw;
     }
     .icons {
-        font-size: 25px;
-        gap: 30px;
+        font-size: 5vw;
+        gap: 6vw;
     }
     .text {
-        font-size: 22px;
-        margin-top: 13px;
+        font-size: 4.4vw;
+        margin-top: 2.6vw;
     }
     .leftPart {
-        gap: 14px;
+        gap: 2.8vw;
     }
     .likeSection {
-        gap: 10px;
+        gap: 2vw;
     }
     .commentsSection {
-        gap: 10px;
+        gap: 2vw;
     }
-    
 }

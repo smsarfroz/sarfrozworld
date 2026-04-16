@@ -130,11 +130,11 @@ a {
       width: 100%;
       background-color: rgba(40, 39, 39, 0.3);
       backdrop-filter: blur(20px);
-      height: 130px;
+      height: 17vw;
     }
     .commonBackground {
       margin: 0;
-      /* width: 100%; */
+      width: 100%;
       padding: 0;
     }
 }

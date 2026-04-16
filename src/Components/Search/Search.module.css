@@ -79,7 +79,7 @@ input {
     background-color: rgb(49, 49, 49);
 }
 
-@media (max-width: 500px) {
+/* @media (max-width: 500px) {
     input {
         width: 628px;
         height: 70px;
@@ -115,4 +115,41 @@ input {
         font-size: 25px;
     }
 
+} */
+
+@media (max-width: 500px) {
+    input {
+        width: 80vw;
+        height: 10vw;
+        font-size: 4vw;
+        padding: 0 3.6vw;
+        margin-bottom: 10vw;
+    }
+    .searchPage {
+        margin: 12vw 9vw;
+        padding-bottom: 30.6vw;
+    }
+    .user {
+        width: 80vw;
+        height: 13vw;
+        margin-bottom: 6vw;
+        padding: 0 4vw;
+    }
+    .userPhoto {
+        width: 9vw;
+    }
+    .username {
+        font-size: 4.2vw;
+        margin-left: 3vw;
+    }
+    .followButton {
+        width: 20vw;
+        height: 7vw;
+        font-size: 3vw;
+    }
+    .followingButton {
+        width: 25vw;
+        height: 6.4vw;
+        font-size: 3vw;
+    }
 }
