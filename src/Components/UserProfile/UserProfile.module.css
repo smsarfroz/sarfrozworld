@@ -196,29 +196,30 @@ input {
 
 @media (max-width: 500px) {
     .profilePage {
-        padding: 0 11vw;
+        padding: 0 5vw;
         padding-top: 12vw;
         padding-bottom: 30.6vw;
-        width: auto;
+        width: 100%;
     }  
     .posts {
         gap: 8vw;
+        width: auto;
     } 
     .profilePhoto {
-        width: 22vw;
+        width: 18vw;
     }
     .username {
-        font-size: 9vw;
+        font-size: 7vw;
         margin-left: 4vw;
     }
+
     .counters {
-        font-size: 6vw;
-        margin-top: 12vw;
-        margin-left: 8vw;
+        font-size: 4vw;
+        margin-top: 8vw;
         justify-content: space-around;
     }
     .num {
-        font-size: 6vw;
+        font-size: 5vw;
     }
     .userPostText {
         font-size: 6vw;
@@ -226,12 +227,13 @@ input {
         margin-bottom: 4vw;
     }
     .details {
-        font-size: 5.4vw;
-        margin-bottom: 3vw;
-        margin-top: 10vw;
+        font-size: 4vw;
+        margin-bottom: 5vw;
+        margin-top: 8vw;
         gap: 4vw;
     }
     .horizontalLine {
+        width: auto;
         margin-bottom: 6vw;
     }
 }

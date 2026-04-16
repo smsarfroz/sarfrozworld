@@ -1,12 +1,22 @@
 * {
   box-sizing: border-box;
+  /* border: 1px solid blue; */
+}
+
+.signup {
+    display: flex;
+    /* width: 75vw; */
+    height: 100%;
+    gap: 10vw;
+    align-items: center;
+    justify-content: center;
 }
 
 .guestPage {
-    position: absolute;
-    top: 50%;
+    /* position: absolute; */
+    /* top: 50%;
     left: 35%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
     background-color: white;
     color: black;
     border-radius: 4px;
@@ -17,10 +27,10 @@
 }
 
 .signupPage {
-    position: absolute;
-    top: 50%;
+    /* position: absolute; */
+    /* top: 50%;
     left: 61.3%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
     width: 22vw;
     background-color: white;
     padding: 1vw;
@@ -120,3 +130,46 @@ button:hover {
     margin-top: 0.6vw;
 }
 
+@media (max-width: 500px) {
+    .signup {
+        display: flex;
+        flex-direction: column;
+    }
+    .guestPage {
+        padding: 2vw 2vw;
+        height: 38vw;
+    }
+    .verticalLine {
+        display: none;
+    }
+    .signupPage {
+        padding: 2vw 0;
+        width: 70vw;
+        max-width: 80vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    form>input {
+        min-width: 58vw;
+        height: 10vw;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+        gap: 1vw;
+    }
+    .signupButton {
+        margin: 2vw 0;
+        width: 58vw;
+        height: 10vw;
+    }
+    .guestButton {
+        width: 35vw;
+        height: 20vw;
+    }
+    .message {
+        font-size: 3.4vw;
+    }
+}

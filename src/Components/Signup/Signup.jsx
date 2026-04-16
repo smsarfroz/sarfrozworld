@@ -172,7 +172,7 @@ const Signup = () => {
     };
 
     return (
-        <div>
+        <div className={styles.signup}>
             <div className={styles.guestPage}>
                 
                 <h2 className={styles.askHeading}>Continue as Guest</h2>
