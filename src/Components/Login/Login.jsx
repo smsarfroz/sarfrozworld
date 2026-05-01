@@ -6,26 +6,35 @@ import { SarfrozContext } from '../../sarfrozContext.js';
 import sarfrozworld from '../../assets/sarfrozworldlogo.png';
 import { toast } from 'react-toastify';
 import getErrorMessage from '../../utils/getErrorMessage.js';
+import { jwtDecode } from 'jwt-decode';
+import Cookies from 'universal-cookie';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const Login = () => {
     const navigate = useNavigate();
-    const { userId, setUserId, loggedIn, setLoggedIn, setUsername } = useContext(SarfrozContext);
+    const { loggedIn, setLoggedIn, userObj, setUserObj } = useContext(SarfrozContext);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const cookies = new Cookies();
 
-    useEffect(() => {
-        localStorage.setItem('loggedIn', JSON.stringify(loggedIn));
-        localStorage.setItem('userId', JSON.stringify(userId));
+    // useEffect(() => {
+    //     localStorage.setItem('loggedIn', JSON.stringify(loggedIn));
+    //     localStorage.setItem('userId', JSON.stringify(userId));
 
-        if (loggedIn === false) {
-            localStorage.removeItem('token');
-        } 
+    //     if (loggedIn === false) {
+    //         localStorage.removeItem('token');
+    //     } 
 
-    }, [loggedIn, userId]);
+    // }, [loggedIn, userId]);
      
     function handleLogin(token) {
+        const decoded = jwtDecode(token);
+        setUserObj(decoded);
+        cookies.set("jwt_authorization", token, {
+            expires: new Date(decoded.exp * 1000),  
+        });
+        // console.log('decoded, user', decoded, user);
         setLoggedIn(true);
         localStorage.setItem('token', (token));
     }
@@ -40,9 +49,9 @@ const Login = () => {
             data[key] = value;
         });
 
-        console.log("data", data);
-        localStorage.setItem('username', JSON.stringify(data['username']));
-        setUsername(data['username']);
+        // console.log("data", data);
+        // localStorage.setItem('username', JSON.stringify(data['username']));
+        // setUsername(data['username']);
 
         fetch(`${VITE_BASE_URL}/login`, {
             mode: 'cors',
@@ -66,11 +75,8 @@ const Login = () => {
             return response.json();
         })
         .then((response) => {
-            // console.log('response: ', response);
-            // console.log('user logged in successfully:');
             handleLogin(response.token);
-            setUserId(response.user.id);
-            // console.log('loggedIn: ', loggedIn);
+            // setUserId(response.user.id);
             setLoading(false);
             toast.success("Logged in successfully");
             navigate('/');

@@ -13,7 +13,7 @@ import getErrorMessage from '../../utils/getErrorMessage.js';
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const Search = () => {
-    const { usersData, userId } = useContext(SarfrozContext);
+    const { usersData, userObj } = useContext(SarfrozContext);
     const [query, setQuery] = useState("");
     const navigate = useNavigate();
     const [loading1, setLoading1] = useState(false);
@@ -22,7 +22,7 @@ const Search = () => {
     const [id2, setId2] = useState(null);
     // const [user, setUser] = useState(null);
     let dataToSend = {};
-    dataToSend['userId'] = userId;
+    dataToSend['userId'] = userObj.userId;
     const { isPending, error, data, refetch } = useQuery({
         queryKey: ["userData"],
         staleTime: 0,
@@ -59,7 +59,7 @@ const Search = () => {
         refetchOnWindowFocus: true, 
         refetchOnMount: true, 
         refetchOnReconnect: true,
-        enabled: !!userId
+        enabled: !!userObj.userId
     })
 
     // useEffect(() => {
@@ -111,10 +111,10 @@ const Search = () => {
             }
 
             const data1 = await res1.json();
+            setLoading1(false);
             if (refetch !== undefined) {
                 refetch();
             }
-            setLoading1(false);
             return data1;
             
         } catch (error) {
@@ -150,10 +150,10 @@ const Search = () => {
             }
 
             const data1 = await res1.json();
+            setLoading2(false);
             if (refetch !== undefined) {
                 refetch();
             }
-            setLoading2(false);
             return data1;
             
         } catch (error) {
@@ -186,7 +186,7 @@ const Search = () => {
                     return (
                         <div key={user.id} className={styles.users}>  
                             {
-                                handleFilter(user) && user.id != userId ? (
+                                handleFilter(user) && user.id != userObj.userId ? (
                                     <div className={styles.user} key={user.id}>
                                         <div className={styles.leftPart}>
                                             <img src={user.photo} alt="" className={styles.userPhoto}/>
@@ -194,8 +194,8 @@ const Search = () => {
                                         </div>
 
                                         {User.following.includes(user.id) ? 
-                                            <button style={loading1 && id1 == user.id ? loadingStyle1 : null} onClick={() => handleUnFollow(userId, user.id)} className={styles.followingButton}>Following</button> :
-                                            <button style={loading2 && id2 == user.id ? loadingStyle2 : null} onClick={() => handleFollow(userId, user.id)} className={styles.followButton}>Follow</button> 
+                                            <button style={(loading1 && id1 == user.id) ? loadingStyle1 : null} onClick={() => handleUnFollow(userObj.userId, user.id)} className={styles.followingButton}>Following</button> :
+                                            <button style={loading2 && id2 == user.id ? loadingStyle2 : null} onClick={() => handleFollow(userObj.userId, user.id)} className={styles.followButton}>Follow</button> 
                                         }
                                     </div>
                                 ) : null

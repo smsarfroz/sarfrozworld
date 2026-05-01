@@ -116,6 +116,11 @@ a {
   display: none;
 }
 
+.loadingSign {
+  text-align: center;
+  margin-top: 20vw;
+}
+
 @media (max-width: 500px) {
     .navigationRoutes {
       display: none;

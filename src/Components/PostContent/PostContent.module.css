@@ -123,18 +123,13 @@
 
 @media (max-width: 500px) {
      .post {
-        /* width: 92%; */
-        /* height: 400px; */
         padding: 4vw 4vw;
         width: 90vw;
-        /* width: 180vw; */
-        /* margin: 0 25px; */
     }
     .photo {
         padding: 0 4vw;
     }
     .postImage {
-        /* height: auto; */
         width: auto;
         min-width: auto;
         max-width: auto;
@@ -153,6 +148,7 @@
     .icons {
         font-size: 5vw;
         gap: 6vw;
+        margin-top: 5vw;
     }
     .text {
         font-size: 4.4vw;

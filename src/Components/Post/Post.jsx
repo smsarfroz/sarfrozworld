@@ -25,7 +25,7 @@ const Post = () => {
     const [text, setText] = useState("");
     const [clicked, setClicked] = useState(false);
     const [loading, setLoading] = useState(false);
-    const { userId } = useContext(SarfrozContext);
+    const { userObj } = useContext(SarfrozContext);
     const gifRef = useRef(null);
 
     const textArea = document.querySelector('textarea');
@@ -50,13 +50,15 @@ const Post = () => {
     }, [showGif]);
 
     const handlePost = useCallback((publicURL) => {
-        if (text.trim() !== "" && !imageLink) return;
+        if (text.trim() == "" && !imageLink) return;
         const api1 = `${VITE_BASE_URL}/post`;
+        console.log('inside handlePost');
         const sendPost = async () => {
             let data = {};
             data['text'] = text;
             data['imageLink'] = (publicURL ? publicURL : imageLink);
-            data['userId'] = userId;
+            data['userId'] = userObj.userId;
+            console.log('data', data);
             try {
                 const res1 = await (
                     fetch(api1, {
@@ -69,6 +71,7 @@ const Post = () => {
                         body: JSON.stringify(data)
                     })
                 );
+                console.log('res1', res1);
                 if (!res1.ok) {
                     setLoading(false);
                     toast.error(getErrorMessage(res1.status));
@@ -88,12 +91,11 @@ const Post = () => {
             }
         };
         sendPost();    
-    }, [text, userId, navigate, imageLink]);
+    }, [text, userObj.userId, navigate, imageLink]);
 
     const handlePictureClick = () => {
         fileInputRef.current.click();
     };
-
     const handleFileChange = (e) => {
         const files = e.target.files;
         if (files && files.length > 0) {
@@ -123,6 +125,7 @@ const Post = () => {
 
         setClicked(true);
         if (!imageFile) {
+            console.log('inside no imageFile');
             await handlePost();
             setClicked(false);
             return;

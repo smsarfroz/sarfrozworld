@@ -52,7 +52,7 @@ const useUser = () => {
 const UserProfile = () => {
     const { uid } = useParams();
     const userIdP = parseInt(uid);
-    const { userId } = useContext(SarfrozContext);
+    const { userObj } = useContext(SarfrozContext);
     const [id1, setId1] = useState(null);
     const [id2, setId2] = useState(null);
     const [loading1, setLoading1] = useState(false);
@@ -250,10 +250,10 @@ const UserProfile = () => {
                 <img src={photo} alt="" className={styles.profilePhoto}/>
                 <div className={styles.rightPart}>
                     <p className={styles.username}>{username}</p>
-                    {data.id !== userId ?  
-                        data.followers.includes(userId) ?
-                            <button style={loading1 && id1 == user.id ? loadingStyle1 : null} onClick={() => handleUnFollow(userId, data.id)} className={styles.followingButton}>Following</button> :
-                            <button style={loading2 && id2 == user.id ? loadingStyle2 : null} onClick={() => handleFollow(userId, data.id)} className={styles.followButton}>Follow</button>
+                    {data.id !== userObj.userId ?  
+                        data.followers.includes(userObj.userId) ?
+                            <button style={loading1 && id1 == user.id ? loadingStyle1 : null} onClick={() => handleUnFollow(userObj.userId, data.id)} className={styles.followingButton}>Following</button> :
+                            <button style={loading2 && id2 == user.id ? loadingStyle2 : null} onClick={() => handleFollow(userObj.userId, data.id)} className={styles.followButton}>Follow</button>
                         :
                         null
                     }

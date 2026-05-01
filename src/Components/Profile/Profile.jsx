@@ -59,10 +59,10 @@ const useUser = () => {
 };
 
 const Profile = () => {
-    const { userId } = useContext(SarfrozContext);
+    const { userObj } = useContext(SarfrozContext);
     const [updateLoading, setUpdateLoading] = useState(false);
     let dataToSend = {};
-    dataToSend['userId'] = userId;
+    dataToSend['userId'] = userObj.userId;
     const { isPending, error, data, refetch } = useQuery({
         queryKey: ["userData"],
         staleTime: 1000 * 60 * 30,
@@ -99,7 +99,7 @@ const Profile = () => {
         refetchOnWindowFocus: true, 
         refetchOnMount: true, 
         refetchOnReconnect: true,
-        enabled: !!userId
+        enabled: !!userObj.userId
     })
 
     const { userData: initialUser, updateUser, loading } = useUser();
@@ -205,7 +205,7 @@ const Profile = () => {
                 
                     updateLoading ? 
                     <button className={styles.savingButton} style={ updateLoading ? blurredButton : null }>Saving...</button>:
-                    <button onClick={() => handleSaveClick({ userId, bio, github, website })} className={styles.saveButton} >Save</button>
+                    <button onClick={() => handleSaveClick({ userId: userObj.userId, bio, github, website })} className={styles.saveButton} >Save</button>
                 
                 :
                 <span className={styles.editContainer} >

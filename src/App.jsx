@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { Navigate, Outlet, useLocation, useNavigate } from 'react-router';
+import { Navigate, Outlet, useNavigate } from 'react-router';
 // import { sarfrozContext } from './sarfrozContext'; 
 import { FiHome } from "react-icons/fi";
 import { LuSearch } from "react-icons/lu";
@@ -14,8 +14,11 @@ import { SarfrozContext } from './sarfrozContext.js';
 import { QueryClientProvider, QueryClient, Query } from "@tanstack/react-query"
 import Signup from './Components/Signup/Signup.jsx';
 import Login from './Components/Login/Login.jsx';
+import { useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/ReactToastify.css';
+import Cookies from 'universal-cookie';
+import { jwtDecode } from 'jwt-decode';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 const api1 = `${VITE_BASE_URL}/users/profile`;
@@ -32,10 +35,13 @@ const useFetchData = (userId) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+
+    // if (!userId) return;
     const fetchData = async () => {
       try {
         let data = {};
         data['userId'] = userId;
+        // console.log('userId', userId);
         const [res1, res2, res3] = await Promise.all([
           fetch(api1, {
             method: 'POST',
@@ -67,6 +73,9 @@ const useFetchData = (userId) => {
             mode: 'cors',
           }),
         ]);
+
+        // console.log('res1', res1);
+
         if (!res1.ok) {
           throw new Error(`HTTP error! Status: ${res1.status}`);
         }
@@ -104,6 +113,7 @@ const useFetchData = (userId) => {
 
   }, [userId]);
 
+  // if (!userId) return;
   return { loading, error, userData, setUserData, likesState, setLikesState, usersData, setUsersData };
 };
 
@@ -111,6 +121,28 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
   const [deleted, setDeleted] = useState(false);
+  const cookies = new Cookies();
+  const [userObj, setUserObj] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const { loading, error, userData, setUserData, likesState, setLikesState, usersData, setUsersData } = useFetchData(userObj ? userObj.userId : 9);
+
+  useEffect(() => {
+      const token = cookies.get('jwt_authorization');
+
+      if (!token) {
+        navigate('/login');
+      }
+      // console.log('token user', token, user);
+      const decoded = token ? jwtDecode(token) : null;
+      setUserObj(decoded);
+      setLoggedIn(true);
+  }, []);
+
+  useEffect(() => {
+    
+  }, [userObj]);
+  
   const [activeTab, setActiveTab] = useState(() => {
     const path = location.pathname;
     if (path === '/') return 0;
@@ -120,22 +152,23 @@ function App() {
     return 0;
   });
 
-  const [ loggedIn, setLoggedIn ] = useState(() => {
-    const savedLoggedIn = localStorage.getItem('loggedIn');
-    return savedLoggedIn ? JSON.parse(savedLoggedIn) : false;
-  })
+  const pathname = useLocation().pathname;
+  const hiddenPaths = ['/login', '/signup'];
 
-  const [ userId, setUserId ] = useState(() => {
-    const savedUserId = localStorage.getItem('userId');
-    return savedUserId ? JSON.parse(savedUserId) : 0;
-  })
+  // const [ loggedIn, setLoggedIn ] = useState(() => {
+  //   const savedLoggedIn = localStorage.getItem('loggedIn');
+  //   return savedLoggedIn ? JSON.parse(savedLoggedIn) : false;
+  // })
 
-  const [ username, setUsername ] = useState(() => {
-    const savedUsername = localStorage.getItem('username');
-    return savedUsername ? JSON.parse(savedUsername) : 0;
-  });
+  // const [ userId, setUserId ] = useState(() => {
+  //   const savedUserId = localStorage.getItem('userId');
+  //   return savedUserId ? JSON.parse(savedUserId) : 0;
+  // })
 
-  const { loading, error, userData, setUserData, likesState, setLikesState, usersData, setUsersData } = useFetchData(userId);
+  // const [ username, setUsername ] = useState(() => {
+  //   const savedUsername = localStorage.getItem('username');
+  //   return savedUsername ? JSON.parse(savedUsername) : 0;
+  // });
 
   const updateLikeState = (postId, liked, likesCount) => {
     setLikesState(prev => ({
@@ -152,11 +185,13 @@ function App() {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
 
+      setUserObj(null);
+      cookies.remove("jwt_authorization");
       setLoggedIn(false);
-      localStorage.removeItem('token');
-      localStorage.removeItem('loggedIn');
-      localStorage.removeItem('username');
-      localStorage.removeItem('userId');
+      // localStorage.removeItem('token');
+      // localStorage.removeItem('loggedIn');
+      // localStorage.removeItem('username');
+      // localStorage.removeItem('userId');
 
       navigate('/login');
     } catch (error) {
@@ -182,47 +217,57 @@ function App() {
   };
 
   if (loading) {
-    return <Loading />;
+    return <p className="loadingSign">Loading...</p>;
   }
   if (error) {
     return <ErrorPage />;
   }
 
+  // if (user && hiddenPaths.includes(pathname)) {
+  //   return navigate('/');
+  // }
 
   return (
     <div className='sectionsContainer'>
       <ToastContainer position="top-center" autoClose={2000} />    
 
-      <nav className="navigationRoutes">
-        <p className='siteName'>sarfrozworld</p>
-        <div className="iconList">
-          
-          <div className='tab' onClick={() => handleTabClick(0, '/')} style={activeTab === 0 ? styleObject : null}><FiHome size={25}/><span>Home</span> </div>
-          <div className='tab' onClick={() => handleTabClick(2, '/post')} style={activeTab === 2 ? styleObject : null}><LuPenLine size={25}/><span>Post</span> </div>
-          <div className='tab' onClick={() => handleTabClick(1, '/search')} style={activeTab === 1 ? styleObject : null}><LuSearch size={25}/><span>Search</span> </div>
-          <div className='tab' onClick={() => handleTabClick(3, '/profile')} style={activeTab === 3 ? styleObject : null}><IoPersonSharp size={25}/><span>Profile</span> </div>
-          <div onClick={() => handleLogout()} className='tab'><MdLogout size={25}/> <span>Logout</span> </div> 
+      {!hiddenPaths.includes(pathname) ? 
+      
+        <nav className="navigationRoutes">
+          <p className='siteName'>sarfrozworld</p>
+          <div className="iconList">
+            
+            <div className='tab' onClick={() => handleTabClick(0, '/')} style={activeTab === 0 ? styleObject : null}><FiHome size={25}/><span>Home</span> </div>
+            <div className='tab' onClick={() => handleTabClick(2, '/post')} style={activeTab === 2 ? styleObject : null}><LuPenLine size={25}/><span>Post</span> </div>
+            <div className='tab' onClick={() => handleTabClick(1, '/search')} style={activeTab === 1 ? styleObject : null}><LuSearch size={25}/><span>Search</span> </div>
+            <div className='tab' onClick={() => handleTabClick(3, '/profile')} style={activeTab === 3 ? styleObject : null}><IoPersonSharp size={25}/><span>Profile</span> </div>
+            <div onClick={() => handleLogout()} className='tab'><MdLogout size={25}/> <span>Logout</span> </div> 
 
-        </div>
-      </nav>      
+          </div>
+        </nav>   
+        : null   
+      }
 
       <main className="commonBackground">
         <QueryClientProvider client={pizza}>
-          <SarfrozContext.Provider value={{ userData, setUserData, userId, setUserId, loggedIn, setLoggedIn, username, setUsername, likesState, updateLikeState, usersData, setUsersData, deleted, setDeleted }}>
+          <SarfrozContext.Provider value={{ userData, setUserData, loggedIn, setLoggedIn, likesState, updateLikeState, usersData, setUsersData, deleted, setDeleted, userObj, setUserObj }}>
             <Outlet />
           </SarfrozContext.Provider>
         </QueryClientProvider>
       </main>
 
-      <footer className="iconListM">
-        
-        <div className='tabM' onClick={() => handleTabClick(0, '/')} style={activeTab === 0 ? styleObject2 : null}><FiHome size={31}/> </div>
-        <div className='tabM' onClick={() => handleTabClick(2, '/post')} style={activeTab === 2 ? styleObject2 : null}><LuPenLine size={31}/> </div>
-        <div className='tabM' onClick={() => handleTabClick(1, '/search')} style={activeTab === 1 ? styleObject2 : null}><LuSearch size={31}/> </div>
-        <div className='tabM' onClick={() => handleTabClick(3, '/profile')} style={activeTab === 3 ? styleObject2 : null}><IoPersonSharp size={31}/> </div>
-        <div onClick={() => handleLogout()} className='tabM'><MdLogout size={31}/> </div> 
+      {!hiddenPaths.includes(pathname) ?
+        <footer className="iconListM">
+          
+          <div className='tabM' onClick={() => handleTabClick(0, '/')} style={activeTab === 0 ? styleObject2 : null}><FiHome size={31}/> </div>
+          <div className='tabM' onClick={() => handleTabClick(2, '/post')} style={activeTab === 2 ? styleObject2 : null}><LuPenLine size={31}/> </div>
+          <div className='tabM' onClick={() => handleTabClick(1, '/search')} style={activeTab === 1 ? styleObject2 : null}><LuSearch size={31}/> </div>
+          <div className='tabM' onClick={() => handleTabClick(3, '/profile')} style={activeTab === 3 ? styleObject2 : null}><IoPersonSharp size={31}/> </div>
+          <div onClick={() => handleLogout()} className='tabM'><MdLogout size={31}/> </div> 
 
-      </footer>
+        </footer>
+        : null
+      }
     </div>
   )
 }

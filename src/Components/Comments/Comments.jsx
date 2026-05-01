@@ -13,7 +13,7 @@ const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const Comments = ({ setCommentsCount=false }) => {
     const [charCount, setCharCount] = useState(0);
-    const { userId } = useContext(SarfrozContext);
+    const { userObj } = useContext(SarfrozContext);
     const { postId } = useParams();
     const [content, setContent] = useState("");
     // const [comments, setComments] = useState(null);
@@ -81,7 +81,7 @@ const Comments = ({ setCommentsCount=false }) => {
                     },
                     body: JSON.stringify({
                         postId: id, 
-                        userId: userId, 
+                        userId: userObj.userId, 
                         content: content
                     })
                 })
@@ -204,7 +204,7 @@ const Comments = ({ setCommentsCount=false }) => {
                                         </div>
                                         
 
-                                        { userId === comment.user.id && hoveredCommentId === comment.id ? 
+                                        { userObj.userId === comment.user.id && hoveredCommentId === comment.id ? 
                                                             
                                             <RiDeleteBinLine className={`${styles.deleteIcon} ${deletingCommentId === comment.id ? styles.deleting : ''}`} onClick={(e) => handleDelete(comment.id, e)}/>
                                             :

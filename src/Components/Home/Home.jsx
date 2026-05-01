@@ -21,8 +21,7 @@ const api1 = `${VITE_BASE_URL}/home`;
 const Home = () => {
     const navigate = useNavigate();
     const [currentCat, setCurrentCat] = useState(0);
-    // const [User, setUser] = useState(null);
-    const { deleted, setDeleted, usersData, userId } = useContext(SarfrozContext);
+    const { deleted, setDeleted, usersData, userObj } = useContext(SarfrozContext);
     const [id1, setId1] = useState(null);
     const [id2, setId2] = useState(null);
     const [loading1, setLoading1] = useState(false);
@@ -81,7 +80,7 @@ const Home = () => {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        userId
+                        userId: userObj.userId
                     })
                 });
                 
@@ -104,7 +103,7 @@ const Home = () => {
         refetchOnWindowFocus: true, 
         refetchOnMount: true, 
         refetchOnReconnect: true,
-        enabled: !!userId
+        enabled: !!userObj.userId
     })
 
     /* useEffect(() => {
@@ -275,9 +274,9 @@ const Home = () => {
                 <p className={styles.latestUser}>Latest Users</p>
                 {
                     lastFiveReversed.map((user) => {
-                        if (user.id !== userId) length++;
+                        if (user.id !== userObj.userId) length++;
                         return (
-                            (user.id === userId || length > 5) ? null :
+                            (user.id === userObj.userId || length > 5) ? null :
 
                             <div className={styles.user} key={user.id}>
                                 <div className={styles.leftPart}>
@@ -286,8 +285,8 @@ const Home = () => {
                                 </div>
 
                                 {User.following.includes(user.id) ? 
-                                    <button style={loading1 && id1 == user.id ? loadingStyle1 : null} onClick={() => handleUnFollow(userId, user.id)} className={styles.followingButton}>Following</button> :
-                                    <button style={loading2 && id2 == user.id ? loadingStyle2 : null} onClick={() => handleFollow(userId, user.id)} className={styles.followButton}>Follow</button> 
+                                    <button style={loading1 && id1 == user.id ? loadingStyle1 : null} onClick={() => handleUnFollow(userObj.userId, user.id)} className={styles.followingButton}>Following</button> :
+                                    <button style={loading2 && id2 == user.id ? loadingStyle2 : null} onClick={() => handleFollow(userObj.userId, user.id)} className={styles.followButton}>Follow</button> 
                                 }
                             </div>    
                         )

@@ -17,7 +17,7 @@ const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 function PostContent({ post, user, setDeleted, showFullContent = false, commentsCount}) {
     const navigate = useNavigate();
-    const { likesState, updateLikeState, userId } = useContext(SarfrozContext);
+    const { likesState, updateLikeState, userObj } = useContext(SarfrozContext);
     const [tempLike, setTempLike] = useState(null);
     const [liked, setLiked] = useState(null);
     const [hover, setHover] = useState(false);
@@ -55,7 +55,7 @@ function PostContent({ post, user, setDeleted, showFullContent = false, comments
         let data = {};
         data['postId'] = post.id;
         data['delta'] = delta;
-        data['userId'] = userId;
+        data['userId'] = userObj.userId;
         try {
             const [res1] = await Promise.all([
                 fetch(api1, {
@@ -146,7 +146,7 @@ function PostContent({ post, user, setDeleted, showFullContent = false, comments
                         </span>
                         <p className={styles.createdAt}>• <TimeAgo date={post.createdAt}/></p>
                     </div>
-                    { userId === user.id && hover ? 
+                    { userObj.userId === user.id && hover ? 
                     
                         <RiDeleteBinLine className={styles.deleteIcon} onClick={handleDelete}/>
                         :

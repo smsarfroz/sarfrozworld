@@ -7,7 +7,7 @@ import getErrorMessage from '../../utils/getErrorMessage';
 const useGif = () => {
 
   const getGifs = async (url) => {
-      
+        
     try {
       console.log("here");
       const res1 = await (

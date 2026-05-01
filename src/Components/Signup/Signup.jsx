@@ -5,12 +5,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useMemo } from 'react';
 import { toast } from 'react-toastify';
 import getErrorMessage from '../../utils/getErrorMessage';
+import Cookies from 'universal-cookie';
+import { jwtDecode } from 'jwt-decode';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const Signup = () => {
     const navigate = useNavigate();
-    const { userId, setUserId, loggedIn, setLoggedIn } = useContext(SarfrozContext);
+    const { loggedIn, setLoggedIn, userObj, setUserObj } = useContext(SarfrozContext);
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [uFocus, setUFocus] = useState(false);
@@ -18,17 +20,17 @@ const Signup = () => {
     const [loading2, setLoading2] = useState(false);
     const [loading1, setLoading1] = useState(false);
     const [error, setError] = useState("");
+    const cookies = new Cookies();
 
+        // useEffect(() => {
+        //     localStorage.setItem('loggedIn', JSON.stringify(loggedIn));
+        //     localStorage.setItem('userId', JSON.stringify(userId));
 
-    useEffect(() => {
-        localStorage.setItem('loggedIn', JSON.stringify(loggedIn));
-        localStorage.setItem('userId', JSON.stringify(userId));
+        //     if (loggedIn === false) {
+        //         localStorage.removeItem('token');
+        //     } 
 
-        if (loggedIn === false) {
-            localStorage.removeItem('token');
-        } 
-
-    }, [loggedIn, userId]);
+        // }, [loggedIn, userId]);
 
     const validationCriteria = useMemo(() => {
         return {
@@ -48,13 +50,19 @@ const Signup = () => {
     }, [username]);
      
     function handleLogin(token) {
+        const decoded = jwtDecode(token);
+        setUserObj(decoded);
+        cookies.set("jwt_authorization",  token, {
+            expires: new Date(decoded.exp * 1000)
+        });
+        // console.log('decoded, user', decoded, user);
         setLoggedIn(true);
         localStorage.setItem('token', (token));
     }
 
-    function handleUserIdChange(id) {
-        setUserId(id);
-    }
+    // function handleUserIdChange(id) {
+    //     setUserId(id);
+    // }
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -90,7 +98,7 @@ const Signup = () => {
             return response.json();
         })
         .then((user) => {
-            handleUserIdChange(user.id);
+            // handleUserIdChange(user.id);
             console.log(user);
             console.log('user created successfully:');
             toast.success('user created successfully');
@@ -141,7 +149,7 @@ const Signup = () => {
             // console.log('user logged in successfully:');
             toast.success('Guest logged in successfully');
             handleLogin(response.token);
-            setUserId(response.user.id);
+            // setUserId(response.user.id);
             // console.log('loggedIn: ', loggedIn);
             setLoading1(false);
             navigate('/');
