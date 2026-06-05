@@ -19,6 +19,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/ReactToastify.css';
 import Cookies from 'universal-cookie';
 import { jwtDecode } from 'jwt-decode';
+import getErrorMessage from './utils/getErrorMessage.js';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 const api1 = `${VITE_BASE_URL}/users/profile`;
@@ -77,12 +78,15 @@ const useFetchData = (userId) => {
         // console.log('res1', res1);
 
         if (!res1.ok) {
+          toast.error(getErrorMessage(res1.status));
           throw new Error(`HTTP error! Status: ${res1.status}`);
         }
         if (!res2.ok) {
+          toast.error(getErrorMessage(res1.status));
           throw new Error(`HTTP error! Status: ${res2.status}`);
         }
         if (!res3.ok) {
+          toast.error(getErrorMessage(res1.status));
           throw new Error(`HTTP error! Status: ${res3.status}`);
         }
 
@@ -100,7 +104,7 @@ const useFetchData = (userId) => {
         setError(error);  
         setUserData([]);
         setUsersData(null);
-      
+        toast.error(`There was a problem with the fetch operation`);
       } finally {
         
         setLoading(false);
@@ -182,6 +186,7 @@ function App() {
     try {
       const res = await fetch(api, { method: "POST"} );
       if (!res.ok) {
+        toast.error(getErrorMessage(res.status));
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
 
@@ -195,6 +200,7 @@ function App() {
 
       navigate('/login');
     } catch (error) {
+      toast.error('There was an error with fetch operation');
       console.error(`There was an error with fetch operation: `, error);
       throw error;
     }

@@ -88,7 +88,7 @@ input {
 
 .profilePage {
     width: 80%;
-    margin: 20px 0 65px 0;
+    margin: 20px 0 65px 4vw;
     /* border: 2px solid blue; */
     /* position: relative;
     left: 25%;
@@ -208,6 +208,7 @@ input {
         padding-top: 12vw;
         padding-bottom: 30.6vw;
         width: 100%;
+        margin: 0 !important;
     }  
     .posts {
         gap: 8vw;
