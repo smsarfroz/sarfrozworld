@@ -34,10 +34,17 @@ const useFetchData = (userId) => {
   const [usersData, setUsersData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const cookies = new Cookies();
+  const navigate = useNavigate();
 
   useEffect(() => {
 
     // if (!userId) return;
+    const token = cookies.get('jwt_authorization');
+
+    if (!token) {
+      navigate('/login');
+    }
     const fetchData = async () => {
       try {
         let data = {};
