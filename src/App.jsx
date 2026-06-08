@@ -34,15 +34,15 @@ const useFetchData = (userId) => {
   const [usersData, setUsersData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const cookies = new Cookies();
   const navigate = useNavigate();
 
   useEffect(() => {
+    const cookies = new Cookies();
 
     // if (!userId) return;
     const token = cookies.get('jwt_authorization');
 
-    console.log('in useFetchData token', token, !token);
+    // console.log('in useFetchData token', token, !token);
 
     const fetchData = async () => {
       try {
@@ -126,7 +126,7 @@ const useFetchData = (userId) => {
       fetchData();
     }
 
-  }, [userId, cookies, navigate]);
+  }, [userId, navigate]);
 
   // if (!userId) return;
   return { loading, error, userData, setUserData, likesState, setLikesState, usersData, setUsersData };
