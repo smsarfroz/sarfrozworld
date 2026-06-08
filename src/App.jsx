@@ -42,9 +42,8 @@ const useFetchData = (userId) => {
     // if (!userId) return;
     const token = cookies.get('jwt_authorization');
 
-    if (!token) {
-      navigate('/login');
-    }
+    console.log('in useFetchData token', token, !token);
+
     const fetchData = async () => {
       try {
         let data = {};
@@ -101,6 +100,7 @@ const useFetchData = (userId) => {
         const data2 = await res2.json();
         const data3 = await res3.json();
 
+        console.log('datas', data1, data2, data3);
         setUserData(data1[0]);
         setLikesState(data2);
         setUsersData(data3);
@@ -117,12 +117,16 @@ const useFetchData = (userId) => {
         setLoading(false);
 
       }
-
     };
 
-    fetchData();
+    if (!token) {
+      setLoading(false);
+      navigate('/login');
+    } else {
+      fetchData();
+    }
 
-  }, [userId]);
+  }, [userId, cookies, navigate]);
 
   // if (!userId) return;
   return { loading, error, userData, setUserData, likesState, setLikesState, usersData, setUsersData };
@@ -136,14 +140,14 @@ function App() {
   const [userObj, setUserObj] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
 
-  const token = cookies.get('jwt_authorization');
-
-  if (!token) {
-    navigate('/login');
-  }
   const { loading, error, userData, setUserData, likesState, setLikesState, usersData, setUsersData } = useFetchData(userObj ? userObj.userId : 9);
 
   useEffect(() => {
+      const token = cookies.get('jwt_authorization');
+
+      if (!token) {
+        navigate('/login');
+      }
       // console.log('token user', token, user);
       const decoded = token ? jwtDecode(token) : null;
       setUserObj(decoded);
