@@ -90,7 +90,7 @@
 |POST|`/uploadfile`|Upload image/file (single file, multer)|
 
 
-## 📦 Installation Procedure
+## Installation Procedure
 
 ### Prerequisites
 
@@ -108,25 +108,34 @@ bash
 # 1. Clone the repository
 git clone https://github.com/yourusername/sarfrozworld.git
 cd sarfrozworld
+
 # 2. Install backend dependencies
 npm install
+
 # 3. Install frontend dependencies
 cd client  # or your frontend folder
 npm install
 cd ..
+
 # 4. Set up environment variables
 cp .env.example .env
+
 # Edit .env with your database URL, JWT secret, Google OAuth keys
+
 # 5. Set up database
 npx prisma migrate dev --name init
 npx prisma generate
+
 # 6. Create uploads directory
 mkdir -p public/data/uploads
+
 # 7. Run development server
 npm run dev  # Backend on port 5000 (default)
+
 # 8. In another terminal, run frontend
 cd client
 npm run dev  # Frontend on port 5173
+
 ```
 
 ### Environment Variables (.env)
