@@ -126,6 +126,7 @@ const Signup = () => {
         fetch(`${VITE_BASE_URL}/login`, {
             mode: 'cors',
             method: "post",
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
             },
@@ -189,7 +190,7 @@ const Signup = () => {
                     <p>You'll have a chance to create account later.</p>
                 </div>
 
-                <button type='submit' className={styles.guestButton} style={ loading1 ? blurredButton : null } onClick={handleGuestSubmit}>Continue As Guest</button>
+                <button type='submit' className={styles.guestButton} style={ loading1 ? blurredButton : null } disabled={loading1} onClick={handleGuestSubmit}>Continue As Guest</button>
             </div>
 
             <div className={styles.verticalLine}></div>
@@ -229,7 +230,7 @@ const Signup = () => {
                         </div> :
                         null
                     }
-                    <button type="submit" className={styles.signupButton} style={loading2 ? blurredButton : null} onClick={(e) => handleSignIn(e)}>Sign Up</button>
+                    <button type="submit" className={styles.signupButton} style={loading2 ? blurredButton : null} disabled={loading2} onClick={(e) => handleSignIn(e)}>Sign Up</button>
                 </form>
                 <p className={styles.error}>{error}</p>
                 <p className={styles.text}>Already have an account? <Link to='/login' className={styles.loginPrompt}>Sign in</Link></p>
