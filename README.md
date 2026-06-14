@@ -100,11 +100,12 @@
     
 - Google OAuth credentials (for Passport)
     
-```
+
 ### Steps
 
-bash
+`bash`
 
+```
 # 1. Clone the repository
 git clone https://github.com/yourusername/sarfrozworld.git
 cd sarfrozworld
