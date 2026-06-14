@@ -144,10 +144,10 @@ npm run dev  # Frontend on port 5173
 `env`
 ```
 DATABASE_URL="postgresql://user:password@localhost:5432/sarfrozworld"
-SESSION_SECRET="your-secret-key"
-JWT_SECRET="your-jwt-secret"
-PORT=5000
-NODE_ENV=development
+SECRET_KEY="your-secret-key"
+PORT=3000
+SUPABASE_URL = 'your-supabase-url'
+SUPABASE_KEY = 'your-supabase-key'
 ```
 
 ## Contact
