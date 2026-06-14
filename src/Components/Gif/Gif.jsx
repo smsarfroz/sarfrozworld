@@ -9,7 +9,7 @@ const useGif = () => {
   const getGifs = async (url) => {
         
     try {
-      console.log("here");
+      // console.log("here");
       const res1 = await (
         fetch(url, {
           headers: {
@@ -17,14 +17,14 @@ const useGif = () => {
           },
         })
       );
-      console.log('res1 in getGifs', res1);
+      // console.log('res1 in getGifs', res1);
       if (!res1.ok) {
         toast.error(getErrorMessage(res1.status));
         throw new Error(`HTTP error! Status: ${res1.status}`);
       }
 
       const data1 = await res1.json();
-      console.log("images", data1);
+      // console.log("images", data1);
       return data1.data;
 
     } catch (error) {
@@ -50,12 +50,12 @@ const Gif = ({ handleGifLinkChange }) => {
     
     const gifUrl2 = `https://api.giphy.com/v1/gifs/trending?api_key=${api1}&limit=25&offset=0&rating=g&bundle=messaging_non_clips`;
 
-    console.log("in Gif component");
+    // console.log("in Gif component");
     useEffect(() => {
-      console.log("in useEffect");
+      // console.log("in useEffect");
       const fetchData = async () => {
         try {
-          console.log("inside fetchData");
+          // console.log("inside fetchData");
           const list = await getGifs(gifUrl2);
           setTrendingGifList(list);
         } catch (error) {

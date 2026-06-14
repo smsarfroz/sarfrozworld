@@ -100,8 +100,8 @@ const useFetchData = (userId) => {
         const data2 = await res2.json();
         const data3 = await res3.json();
 
-        console.log('datas', data1, data2, data3);
-        setUserData(data1[0]);
+        // console.log('datas', data1, data2, data3);
+        setUserData(data1 ? data1[0]: null);
         setLikesState(data2);
         setUsersData(data3);
         setError(null);
@@ -237,6 +237,7 @@ function App() {
     return <p className="loadingSign">Loading...</p>;
   }
   if (error) {
+    console.log('error: ', error);
     return <ErrorPage />;
   }
 

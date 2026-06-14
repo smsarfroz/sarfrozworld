@@ -215,7 +215,7 @@ const Post = () => {
             </div>
             {showGif && !clicked ?
                 <>
-                    <div styleName={styles.gifWrapper} ref={gifRef}>
+                    <div stylename="gifwrapper" ref={gifRef}>
                         <Gif handleGifLinkChange={handleGifLinkChange} />
                     </div>
                 </> :
