@@ -1,6 +1,6 @@
 **SarfrozWorld** is a social media platform where you can connect and share content. Visit the live site at [sarfrozworld-ms.vercel.app/](https://sarfrozworld-ms.vercel.app/ "https://sarfrozworld-ms.vercel.app/")
 
-**Get started in two ways:**
+## **Get started in two ways:**
 
 - Create your own personalized profile
 - Or use the designated guest account to explore instantly with no sign-in required
@@ -34,7 +34,7 @@
 - Supabase for real-time capabilities and storage
 - JWT for stateless authentication
 
-**Social Features**
+## **Social Features**
 - Browse global feed with sorting options (recent/popular)
 - Customize profile with bio and social links.
 - Follow/unfollow other users
