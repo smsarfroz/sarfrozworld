@@ -113,7 +113,7 @@
 
 .cancelButton {
     position: absolute;
-    bottom: calc(50% + 150px);
+    bottom: calc(50% + 180px);
     left: calc(50% + 200px);
     transform: translate(-50%, -50%);
     cursor: pointer;

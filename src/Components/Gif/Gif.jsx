@@ -4,28 +4,31 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import getErrorMessage from '../../utils/getErrorMessage';
 
+const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
+
+const api = `${VITE_BASE_URL}/gifs/search`;
+
 const useGif = () => {
 
-  const getGifs = async (url) => {
+  const getGifs = async (searchText) => {
         
     try {
-      // console.log("here");
       const res1 = await (
-        fetch(url, {
+        fetch(`${api}?searchText=${searchText}`, {
           headers: {
               "Content-Type": "application/json",
           },
         })
       );
-      // console.log('res1 in getGifs', res1);
+
       if (!res1.ok) {
         toast.error(getErrorMessage(res1.status));
         throw new Error(`HTTP error! Status: ${res1.status}`);
       }
 
       const data1 = await res1.json();
-      // console.log("images", data1);
-      return data1.data;
+
+      return data1;
 
     } catch (error) {
       console.error(`There was a problem with the fetch operation:`, error);
@@ -46,17 +49,10 @@ const Gif = ({ handleGifLinkChange }) => {
     const { getGifs } = useGif();
     const navigate = useNavigate();
   
-    const api1 = import.meta.env.VITE_API_KEY;
-    
-    const gifUrl2 = `https://api.giphy.com/v1/gifs/trending?api_key=${api1}&limit=25&offset=0&rating=g&bundle=messaging_non_clips`;
-
-    // console.log("in Gif component");
     useEffect(() => {
-      // console.log("in useEffect");
       const fetchData = async () => {
         try {
-          // console.log("inside fetchData");
-          const list = await getGifs(gifUrl2);
+          const list = await getGifs(searchText);
           setTrendingGifList(list);
         } catch (error) {
           setError(error);
@@ -71,12 +67,9 @@ const Gif = ({ handleGifLinkChange }) => {
         setLoading(true);
 
         const safeQuery = encodeURIComponent(searchText.trim());
-        const gifUrl1 = `https://api.giphy.com/v1/gifs/search?api_key=${api1}&q=${safeQuery}&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`;
-        const url = searchText == "" ? gifUrl2 : gifUrl1;
         try {
-          const list = await getGifs(url);
+          const list = await getGifs(safeQuery);
           setGifList(list);
-          // navigate('/home');
         } catch (error) {
           console.error("Submission Error:", error);
           toast.error("There was a problem while submitting.");

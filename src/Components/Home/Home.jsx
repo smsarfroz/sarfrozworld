@@ -103,7 +103,7 @@ const Home = () => {
         refetchOnWindowFocus: true, 
         refetchOnMount: true, 
         refetchOnReconnect: true,
-        enabled: !!userObj.userId
+        enabled: !!userObj?.userId
     })
 
     /* useEffect(() => {
