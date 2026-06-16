@@ -15,6 +15,7 @@ const useGif = () => {
     try {
       const res1 = await (
         fetch(`${api}?searchText=${searchText}`, {
+          credentials: true,
           headers: {
               "Content-Type": "application/json",
           },

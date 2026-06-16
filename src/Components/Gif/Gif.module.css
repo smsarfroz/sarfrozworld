@@ -71,13 +71,15 @@
 .gifGridContainer {
     overflow-y: auto;
     overflow-x: hidden;
+    scrollbar-color: #888888 rgb(62, 62, 62); 
+    /* scrollbar-width: thin;  */
 }
 
 .gifImg {
     /* width: 230px; */
     /* height: 230px; */
-    width: 12vw;
-    height: 12vw;
+    width: 12.5vw;
+    height: 12.5vw;
     margin: 0.7vw 0.7vw;
     cursor: pointer;
 }

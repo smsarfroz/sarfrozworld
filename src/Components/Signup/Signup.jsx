@@ -190,7 +190,7 @@ const Signup = () => {
                     <p>You'll have a chance to create account later.</p>
                 </div>
 
-                <button type='submit' className={styles.guestButton} style={ loading1 ? blurredButton : null } disabled={loading1} onClick={handleGuestSubmit}>Continue As Guest</button>
+                <button type='submit' className={styles.guestButton} style={ loading1 ? blurredButton : null } disabled={loading1 || loading2} onClick={handleGuestSubmit}>Continue As Guest</button>
             </div>
 
             <div className={styles.verticalLine}></div>
@@ -207,7 +207,7 @@ const Signup = () => {
                         null
                     }
                     
-                    <input type="password" name="password" id="password" placeholder='Password*' onFocus={() => setPFocus(true)} maxLength={13} value={password} onChange={(e) => setPassword(e.target.value)} required/>
+                    <input type="password" name="password" id="password" placeholder='Password*' tabIndex={loading1 ? -1 : 0} onFocus={() => setPFocus(true)} maxLength={13} value={password} onChange={(e) => setPassword(e.target.value)} required/>
                     
                     {pFocus ? 
 

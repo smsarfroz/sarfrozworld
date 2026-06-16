@@ -71,7 +71,7 @@ const Search = () => {
     
     // }, [data, refetch]);
 
-    if (isPending) return "Loading..."
+    if (isPending) return <p className={styles.loading}>Loading...</p>
 
     if (error) return "An error has occurred: " + error.message
 
