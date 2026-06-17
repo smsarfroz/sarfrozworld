@@ -21,7 +21,7 @@
     padding: 1vw 1vw;
     overflow: auto;
     scrollbar-color: rgb(94, 39, 39);
-    border-bottom: 10px solid rgb(33, 33, 33);
+    /* border-bottom: 10px solid rgb(33, 33, 33); */
 
     display: flex;
     flex-direction: column; 
@@ -72,15 +72,18 @@
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-color: #888888 rgb(62, 62, 62); 
+    margin-top: 1vw;
     /* scrollbar-width: thin;  */
 }
 
 .gifImg {
     /* width: 230px; */
     /* height: 230px; */
-    width: 12.5vw;
-    height: 12.5vw;
-    margin: 0.7vw 0.7vw;
+    width: 13vw;
+    height: 13vw;
+    /* margin: 0.7vw 0.7vw; */
+    margin-bottom: 0.7vw;
+    margin-right: 0.7vw;
     cursor: pointer;
 }
 

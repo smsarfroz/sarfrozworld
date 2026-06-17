@@ -91,7 +91,7 @@ const Post = () => {
             }
         };
         sendPost();    
-    }, [text, userObj.userId, navigate, imageLink]);
+    }, [text, userObj?.userId, navigate, imageLink]);
 
     const handlePictureClick = () => {
         fileInputRef.current.click();
