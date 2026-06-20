@@ -54,30 +54,7 @@ function PostCard() {
     if (isPending) return <p>loading...</p>;
     if (error) return <p>{error}</p>
     const post = data;
-    // console.log('post', post);
     
-
-    // const handleDelete = async () => {
-    //     const api = `${VITE_BASE_URL}/post/delete`;
-    //     try {
-    //         const res = await fetch(api, {
-    //             mode: 'cors',
-    //             credentials: 'include',
-    //             method: "get",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //         })
-
-    //         if (!res.ok) {
-    //             throw new Error(`HTTP error! Status: ${res.status}`);
-    //         }
-
-    //     } catch(error) {
-    //         console.error(`There was an error while fetching: `,error);
-    //         throw error;
-    //     }
-    // };
 
     return (
         <div className={styles.postCardPage}>

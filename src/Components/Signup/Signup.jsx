@@ -55,14 +55,9 @@ const Signup = () => {
         cookies.set("jwt_authorization",  token, {
             expires: new Date(decoded.exp * 1000)
         });
-        // console.log('decoded, user', decoded, user);
         setLoggedIn(true);
         localStorage.setItem('token', (token));
     }
-
-    // function handleUserIdChange(id) {
-    //     setUserId(id);
-    // }
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -83,7 +78,6 @@ const Signup = () => {
             body: JSON.stringify(data)
         })
         .then((response) => {  
-            console.log('response', response);     
             if (!response.ok) {
                 setLoading2(false);
                 return response.json().then(errorData => {
@@ -98,9 +92,6 @@ const Signup = () => {
             return response.json();
         })
         .then((user) => {
-            // handleUserIdChange(user.id);
-            console.log(user);
-            console.log('user created successfully:');
             toast.success('user created successfully');
             setLoading2(false);
             navigate('/login');
@@ -114,11 +105,6 @@ const Signup = () => {
 
     function handleGuestSubmit() {
 
-        // let data = {};
-
-        // console.log("data", data);
-        // localStorage.setItem('username', JSON.stringify(data['username']));
-        // setUsername(data['username']);
         setLoading1(true);
         setPFocus(false);
         setUFocus(false);
@@ -147,11 +133,8 @@ const Signup = () => {
             return response.json();
         })
         .then((response) => {
-            // console.log('user logged in successfully:');
             toast.success('Guest logged in successfully');
             handleLogin(response.token);
-            // setUserId(response.user.id);
-            // console.log('loggedIn: ', loggedIn);
             setLoading1(false);
             navigate('/');
         })

@@ -19,7 +19,6 @@ const useUser = () => {
     const [loading, setLoading] = useState(false);
 
     const updateUser = async (data) => {
-        // console.log('data in updateUser', data);
         try {
             setLoading(true);
             const [res1] = await Promise.all([

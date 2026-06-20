@@ -52,13 +52,11 @@ const Post = () => {
     const handlePost = useCallback((publicURL) => {
         if (text.trim() == "" && !imageLink) return;
         const api1 = `${VITE_BASE_URL}/post`;
-        console.log('inside handlePost');
         const sendPost = async () => {
             let data = {};
             data['text'] = text;
             data['imageLink'] = (publicURL ? publicURL : imageLink);
             data['userId'] = userObj.userId;
-            console.log('data', data);
             try {
                 const res1 = await (
                     fetch(api1, {
@@ -71,7 +69,6 @@ const Post = () => {
                         body: JSON.stringify(data)
                     })
                 );
-                console.log('res1', res1);
                 if (!res1.ok) {
                     setLoading(false);
                     toast.error(getErrorMessage(res1.status));
@@ -125,7 +122,6 @@ const Post = () => {
 
         setClicked(true);
         if (!imageFile) {
-            console.log('inside no imageFile');
             await handlePost();
             setClicked(false);
             return;
@@ -134,7 +130,6 @@ const Post = () => {
         const sendImage = async () => {
             const formData = new FormData();
             formData.append('file', imageFile);
-            // console.log('formData', [...formData]);
             try {
                 const res1 = await (
                     fetch(api1, {
@@ -147,7 +142,6 @@ const Post = () => {
                 if (!res1.ok) {
                     setLoading(false);
                     return res1.json().then(errorData => {
-                        console.log('errorData', errorData);
                         console.error('Server errors:', errorData.error);
                         toast.error(errorData.error);
                         throw new Error(`HTTP error! status: ${res1.status}`);

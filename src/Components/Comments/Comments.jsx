@@ -16,7 +16,6 @@ const Comments = ({ setCommentsCount=false }) => {
     const { userObj } = useContext(SarfrozContext);
     const { postId } = useParams();
     const [content, setContent] = useState("");
-    // const [comments, setComments] = useState(null);
     const [hoveredCommentId, setHoveredCommentId] = useState(null);
     const [deletingCommentId, setDeletingCommentId] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -45,7 +44,6 @@ const Comments = ({ setCommentsCount=false }) => {
                 }
                 
                 const jsonData = await response.json();
-                // setComments(jsonData);
                 return jsonData;
                 
             } catch (error) {
@@ -58,10 +56,6 @@ const Comments = ({ setCommentsCount=false }) => {
         refetchOnMount: true, 
         refetchOnReconnect: true,
     })
-
-    // useEffect(() => {
-    //      refetch();
-    // }, [ id, refetch ]);
 
     const comments = data;
 
@@ -92,7 +86,6 @@ const Comments = ({ setCommentsCount=false }) => {
                 throw new Error(`HTTP error! Status: ${res1.status}`);
             }
             const data = await res1.json();
-            // console.log('added comment', data);
             setCommentsCount(prevCt => prevCt + 1);
             setContent("");
             setCharCount(0); 
@@ -136,12 +129,8 @@ const Comments = ({ setCommentsCount=false }) => {
                 throw new Error(`HTTP error! Status: ${res1.status}`);
             }
             const data = await res1.json();
-            // console.log('deleted comment', data);
             toast.success('Comment deleted successfully.');
 
-            // setComments(prevComments => 
-            //     prevComments.filter(comment => comment.id !== commentId)
-            // );
             setCommentsCount(prevCt => prevCt - 1);
             refetch();
             

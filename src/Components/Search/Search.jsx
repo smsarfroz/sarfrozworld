@@ -62,14 +62,6 @@ const Search = () => {
         enabled: !!userObj.userId
     })
 
-    // useEffect(() => {
-    //     refetch();
-    //     if (data) {
-    //         setUser(data[0]);
-    //         console.log('data', data[0]);
-    //     }
-    
-    // }, [data, refetch]);
 
     if (isPending) return <p className={styles.loading}>Loading...</p>
 

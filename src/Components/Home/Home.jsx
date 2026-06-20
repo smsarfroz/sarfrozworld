@@ -11,8 +11,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import getErrorMessage from '../../utils/getErrorMessage.js';
 import { toast } from 'react-toastify';
-// import handleFollow from '../../utils/handleFollow.js';
-// import handleUnFollow from '../../utils/handleUnFollow.js';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
@@ -106,16 +104,6 @@ const Home = () => {
         enabled: !!userObj?.userId
     })
 
-    /* useEffect(() => {
-        if (usersData && usersData.length > 0) {
-            usersData.map(user => {
-                if (user.id === userId) {
-                    setUser(user);
-                }
-            })
-        }
-    }, [userId, usersData]); */
-
     useEffect(() => {
         
         refetch();
@@ -125,7 +113,6 @@ const Home = () => {
 
     const catStyle = {
         color: 'rgb(103, 103, 237)',
-        // transition: "all 2s ease-in"
     }
     const clickHandler = (cur) => {
         if (cur == 0) {
@@ -209,7 +196,6 @@ const Home = () => {
     } 
 
     if (isPending || isUserLoding) {
-        // return <Loading />;
         return "Loading...";
     }  
     if (error || userError) { 

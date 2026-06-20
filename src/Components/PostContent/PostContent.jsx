@@ -21,7 +21,6 @@ function PostContent({ post, user, setDeleted, showFullContent = false, comments
     const [tempLike, setTempLike] = useState(null);
     const [liked, setLiked] = useState(null);
     const [hover, setHover] = useState(false);
-    // console.log('commentsCount', commentsCount);
 
     useEffect(() => {
         
@@ -88,7 +87,6 @@ function PostContent({ post, user, setDeleted, showFullContent = false, comments
         if (isConfirmed) {
 
             const api1 = `${VITE_BASE_URL}/post/delete`;
-            console.log('inside handleDelete a post');
             let data = {};
             data['postId'] = post.id;
             try {

@@ -1,6 +1,5 @@
 import styles from './Login.module.css';
-// import { blogContext } from '../../blogContext';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { SarfrozContext } from '../../sarfrozContext.js';
 import sarfrozworld from '../../assets/sarfrozworldlogo.png';
@@ -17,16 +16,6 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const cookies = new Cookies();
-
-    // useEffect(() => {
-    //     localStorage.setItem('loggedIn', JSON.stringify(loggedIn));
-    //     localStorage.setItem('userId', JSON.stringify(userId));
-
-    //     if (loggedIn === false) {
-    //         localStorage.removeItem('token');
-    //     } 
-
-    // }, [loggedIn, userId]);
      
     function handleLogin(token) {
         const decoded = jwtDecode(token);
@@ -34,7 +23,6 @@ const Login = () => {
         cookies.set("jwt_authorization", token, {
             expires: new Date(decoded.exp * 1000),  
         });
-        // console.log('decoded, user', decoded, user);
         setLoggedIn(true);
         localStorage.setItem('token', (token));
     }
@@ -49,10 +37,6 @@ const Login = () => {
             data[key] = value;
         });
 
-        // console.log("data", data);
-        // localStorage.setItem('username', JSON.stringify(data['username']));
-        // setUsername(data['username']);
-
         fetch(`${VITE_BASE_URL}/login`, {
             mode: 'cors',
             method: "post",
@@ -64,7 +48,6 @@ const Login = () => {
         .then((response) => {
             if (!response.ok) {
                 setLoading(false);
-                console.log('response', response);
                 return response.json().then(errorData => {
                     setError(errorData.error);
                     console.error('Server errors:', errorData.error);
@@ -76,7 +59,6 @@ const Login = () => {
         })
         .then((response) => {
             handleLogin(response.token);
-            // setUserId(response.user.id);
             setLoading(false);
             toast.success("Logged in successfully");
             navigate('/');

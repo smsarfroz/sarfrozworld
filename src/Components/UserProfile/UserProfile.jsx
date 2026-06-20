@@ -67,7 +67,6 @@ const UserProfile = () => {
 
         queryFn: async () => {
             try {
-                // console.log('Sending request with:', dataToSend);
                 
                 const response = await fetch(`${VITE_BASE_URL}/users/profile`, {
                     mode: 'cors',
@@ -79,7 +78,6 @@ const UserProfile = () => {
                     body: JSON.stringify(dataToSend)
                 });
                 
-                // console.log('Response status:', response.status);
                 
                 if (!response.ok) {
                     const errorText = await response.text();
@@ -89,7 +87,6 @@ const UserProfile = () => {
                 }
                 
                 const jsonData = await response.json();
-                // console.log('Response data:', jsonData);
                 return jsonData;
                 
             } catch (error) {
@@ -104,17 +101,13 @@ const UserProfile = () => {
         enabled: !!userIdP
     })
 
-    // console.log('data from react query', data);
     const { userData: initialUser, updateUser } = useUser();
-    // console.log('initialUser', initialUser);
     const [user, setUserData] = useState(initialUser);
     const [editValue, setEditValue] = useState(null);
-    // const postsUnsorted = initialUser['posts'];
 
     useEffect(() => {
         refetch();
         if (data) {
-            console.log('data', data);
             setEditValue(data);
         }
         
@@ -124,26 +117,9 @@ const UserProfile = () => {
 
     if (error) return "An error has occurred: " + error.message
 
-    // console.log('bool', !editValue , (data.length !== 0), data.length );
-
-    // if (!editValue) {
-    //     return <div>Loading user data...</div>;
-    // }
-    // setEditValue(data[0]);
     let bio = null, followers = null, following = null, github = null, 
     id = null, photo = null, username = null, website = null;
     let postsUnsorted = [];
-
-    // console.log('editValue', editValue, editValue?.length);
-
-    // if (editValue?.length !== undefined) {
-    //     ({ bio, followers, following, github, id, photo, username, website } = editValue);
-    //     postsUnsorted = editValue['posts'] || [];
-    // }
-
-    // const posts = [...postsUnsorted].sort((a, b) => {
-    //     return new Date(b.createdAt) - new Date(a.createdAt);
-    // });
 
     if (editValue && typeof editValue === 'object') {
         ({ bio, followers, following, github, id, photo, username, website } = editValue);

@@ -39,16 +39,13 @@ const useFetchData = (userId) => {
   useEffect(() => {
     const cookies = new Cookies();
 
-    // if (!userId) return;
     const token = cookies.get('jwt_authorization');
 
-    // console.log('in useFetchData token', token, !token);
 
     const fetchData = async () => {
       try {
         let data = {};
         data['userId'] = userId;
-        // console.log('userId', userId);
         const [res1, res2, res3] = await Promise.all([
           fetch(api1, {
             method: 'POST',
@@ -81,7 +78,6 @@ const useFetchData = (userId) => {
           }),
         ]);
 
-        // console.log('res1', res1);
 
         if (!res1.ok) {
           toast.error(getErrorMessage(res1.status));
@@ -100,7 +96,6 @@ const useFetchData = (userId) => {
         const data2 = await res2.json();
         const data3 = await res3.json();
 
-        // console.log('datas', data1, data2, data3);
         setUserData(data1 ? data1[0]: null);
         setLikesState(data2);
         setUsersData(data3);
@@ -148,7 +143,6 @@ function App() {
       if (!token) {
         navigate('/login');
       }
-      // console.log('token user', token, user);
       const decoded = token ? jwtDecode(token) : null;
       setUserObj(decoded);
       setLoggedIn(true);
@@ -204,10 +198,6 @@ function App() {
       setUserObj(null);
       cookies.remove("jwt_authorization");
       setLoggedIn(false);
-      // localStorage.removeItem('token');
-      // localStorage.removeItem('loggedIn');
-      // localStorage.removeItem('username');
-      // localStorage.removeItem('userId');
 
       navigate('/login');
     } catch (error) {
@@ -240,10 +230,6 @@ function App() {
     console.log('error: ', error);
     return <ErrorPage />;
   }
-
-  // if (user && hiddenPaths.includes(pathname)) {
-  //   return navigate('/');
-  // }
 
   return (
     <div className='sectionsContainer'>
