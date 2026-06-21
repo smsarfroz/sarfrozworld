@@ -196,14 +196,10 @@ const Home = () => {
     } 
 
     if (isPending || isUserLoding) {
-        return "Loading...";
+        return <p className={styles.loading}>Loading...</p>;
     }  
     if (error || userError) { 
         return "An error has occured: " + error.message;
-    }
-
-    if (!(Array.isArray(data) && data.length > 0)) {
-        return "No posts available";
     }
 
     const lastFiveReversed = usersData.slice(-6).reverse();
@@ -226,34 +222,43 @@ const Home = () => {
     return (
         <div className={styles.homeContainer}>
 
-            <div className={styles.homePage}>
+            {
+                (Array.isArray(data) && data.length > 0) ? 
+                (
+                    <div className={styles.homePage}>
 
-                <div className={styles.categories}>
-                    <div className={styles.textItem}>
-                        <p style={currentCat == 0 ? catStyle : null} onClick={() => clickHandler(0)} className={currentCat === 0 ? styles.active : styles.inactive}>Recent</p>
+                        <div className={styles.categories}>
+                            <div className={styles.textItem}>
+                                <p style={currentCat == 0 ? catStyle : null} onClick={() => clickHandler(0)} className={currentCat === 0 ? styles.active : styles.inactive}>Recent</p>
+                            </div>
+                            <div className={styles.textItem}>
+                                <p style={currentCat == 1 ? catStyle : null} onClick={() => clickHandler(1)} className={currentCat === 1 ? styles.active : styles.inactive}>Most Liked</p>
+                            </div>
+                        </div>
+
+                        <div className={styles.posts}>
+                            {
+                                data.map((post) => {
+                                    return (
+                                        <PostCardPreview 
+                                            key={post.id}
+                                            post={post}
+                                            user={post.user}
+                                            setDeleted={setDeleted}
+                                            commentsCount={post.comments.length}
+                                        />
+                                    )
+                                })
+                            }
+                        </div>
+
                     </div>
-                    <div className={styles.textItem}>
-                        <p style={currentCat == 1 ? catStyle : null} onClick={() => clickHandler(1)} className={currentCat === 1 ? styles.active : styles.inactive}>Most Liked</p>
-                    </div>
-                </div>
-
-                <div className={styles.posts}>
-                    {
-                        data.map((post) => {
-                            return (
-                                <PostCardPreview 
-                                    key={post.id}
-                                    post={post}
-                                    user={post.user}
-                                    setDeleted={setDeleted}
-                                    commentsCount={post.comments.length}
-                                />
-                            )
-                        })
-                    }
-                </div>
-
-            </div>
+                ) :
+                (
+                    <p className={styles.noposts}>No posts available.</p>
+                )
+            }
+            
 
             <div className={styles.latestUsers} key={location.pathname}>
 

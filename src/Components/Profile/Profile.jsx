@@ -115,7 +115,7 @@ const Profile = () => {
         
     }, [data, refetch]);
 
-    if (isPending || !data || loading || !editValue) return "Loading..."
+    if (isPending || !data || loading || !editValue) return <p className={styles.loading}>Loading...</p>
 
     if (error) return "An error has occurred: " + error.message
 

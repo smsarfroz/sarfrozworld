@@ -12,9 +12,8 @@ const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 function PostCard() {
     const { postId } = useParams();
-    const [commentsCount, setCommentsCount] = useState(0);
     const api = `${VITE_BASE_URL}/post/${postId}`;
-    const { isPending, error, data } = useQuery({
+    const { isPending, error, data, refetch } = useQuery({
         queryKey: ["postData", api],
         staleTime: 0,   
         queryFn: async () => {
@@ -35,7 +34,6 @@ function PostCard() {
                 }
                 
                 const jsonData = await response.json();
-                setCommentsCount(jsonData.comments.length);
                 return jsonData;
                 
             } catch (error) {
@@ -51,26 +49,36 @@ function PostCard() {
 
     const { setDeleted } = useContext(SarfrozContext);
 
-    if (isPending) return <p>loading...</p>;
+    if (isPending) return <p className={styles.loading}>loading...</p>;
     if (error) return <p>{error}</p>
     const post = data;
-    
+
+    const commentsCount = post?.comments?.length ?? 0;
 
     return (
-        <div className={styles.postCardPage}>
-            <div className={styles.post}>
-                <PostContent
-                    post={post}
-                    user={post.user}
-                    setDeleted={setDeleted}
-                    showFullContent={true}
-                    commentsCount={commentsCount}
-                />
-            </div>
-            <Comments 
-                setCommentsCount={setCommentsCount}
-            />
-        </div>
+        <>
+            {
+                (data?.comments?.length !== commentsCount) ? 
+                (
+                    <p className={styles.loading}>loading...</p>
+                ): (
+                    <div className={styles.postCardPage}>
+                        <div className={styles.post}>
+                            <PostContent
+                                post={post}
+                                user={post.user}
+                                setDeleted={setDeleted}
+                                showFullContent={true}
+                                commentsCount={commentsCount}
+                            />
+                        </div>
+                        <Comments 
+                            refetchPost={refetch}
+                        />
+                    </div>
+                )
+            }
+        </>
     )
 }
 

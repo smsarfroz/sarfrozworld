@@ -113,7 +113,7 @@ function PostContent({ post, user, setDeleted, showFullContent = false, comments
             setDeleted(true);
             toast.success(`Post deleted successfully.`);
             if (showFullContent) {
-                navigate('/home');
+                navigate('/');
             }
         } 
     };

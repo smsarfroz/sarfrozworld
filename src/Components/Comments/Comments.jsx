@@ -11,7 +11,7 @@ import getErrorMessage from '../../utils/getErrorMessage';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
-const Comments = ({ setCommentsCount=false }) => {
+const Comments = ({ refetchPost }) => {
     const [charCount, setCharCount] = useState(0);
     const { userObj } = useContext(SarfrozContext);
     const { postId } = useParams();
@@ -57,7 +57,7 @@ const Comments = ({ setCommentsCount=false }) => {
         refetchOnReconnect: true,
     })
 
-    const comments = data;
+    const comments = data?.comments;
 
     const postComment = async () => {
         if (!content.trim()) return;
@@ -86,7 +86,7 @@ const Comments = ({ setCommentsCount=false }) => {
                 throw new Error(`HTTP error! Status: ${res1.status}`);
             }
             const data = await res1.json();
-            setCommentsCount(prevCt => prevCt + 1);
+            refetchPost();
             setContent("");
             setCharCount(0); 
             setLoading(false);
@@ -131,7 +131,7 @@ const Comments = ({ setCommentsCount=false }) => {
             const data = await res1.json();
             toast.success('Comment deleted successfully.');
 
-            setCommentsCount(prevCt => prevCt - 1);
+            refetchPost();
             refetch();
             
         } catch (error) {
@@ -172,13 +172,14 @@ const Comments = ({ setCommentsCount=false }) => {
             </div>
             {
                 isPending ? (
-                    <p>Loading...</p>
+                    <p className={styles.loading}>Loading...</p>
                 ): error ? (
                     <p>{error}</p>
                 ): (
                     <>
                         {
-                            comments && comments.length > 0 ? (comments.map((comment) => {
+                            // <p>{comments.comments[0].content}</p>
+                            (comments && comments.length > 0 ) ? (comments.map((comment) => {
                                 return (
                                     <div className={styles.comment} key={comment.id} onMouseEnter={() => setHoveredCommentId(comment.id)} onMouseLeave={() => setHoveredCommentId(null)}>
                                         <div className={styles.leftPart}>
@@ -192,7 +193,6 @@ const Comments = ({ setCommentsCount=false }) => {
                                             </div> 
                                         </div>
                                         
-
                                         { userObj.userId === comment.user.id && hoveredCommentId === comment.id ? 
                                                             
                                             <RiDeleteBinLine className={`${styles.deleteIcon} ${deletingCommentId === comment.id ? styles.deleting : ''}`} onClick={(e) => handleDelete(comment.id, e)}/>

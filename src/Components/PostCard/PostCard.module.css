@@ -2,6 +2,13 @@
     margin-left: 65px;
 }
 
+.loading {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
 @media (max-width: 500px) {
     .postCardPage {
         padding-bottom: 153px;
