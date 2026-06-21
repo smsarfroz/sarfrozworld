@@ -202,7 +202,7 @@ const Home = () => {
         return "An error has occured: " + error.message;
     }
 
-    const lastFiveReversed = usersData.slice(-6).reverse();
+    const lastFiveReversed = usersData?.slice(-6).reverse();
     let length = 0;
 
     function handleUserClick(e, uid) {
