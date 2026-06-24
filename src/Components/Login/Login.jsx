@@ -3,7 +3,8 @@ import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { SarfrozContext } from '../../sarfrozContext.js';
 import sarfrozworld from '../../assets/sarfrozworldlogo.png';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import getErrorMessage from '../../utils/getErrorMessage.js';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'universal-cookie';
@@ -37,7 +38,7 @@ const Login = () => {
             data[key] = value;
         });
 
-        fetch(`${VITE_BASE_URL}/login`, {
+        const myPromise = fetch(`${VITE_BASE_URL}/login`, {
             mode: 'cors',
             method: "post",
             headers: {
@@ -67,6 +68,10 @@ const Login = () => {
             setLoading(false);
             console.error('There was a problem with the fetch operation:', error);
             toast.error('There was a problem with the fetch operation');
+        })
+
+        toast.promise(myPromise, {
+            loading: 'logging in...'
         })
     }
 

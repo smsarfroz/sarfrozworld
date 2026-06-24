@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './Gif.module.css';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import getErrorMessage from '../../utils/getErrorMessage';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';

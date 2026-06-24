@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { SarfrozContext } from '../../sarfrozContext.js';
 import { useQuery } from '@tanstack/react-query';   
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import getErrorMessage from '../../utils/getErrorMessage.js';
 // import handleFollow from '../../utils/handleFollow.js';
 // import handleUnFollow from '../../utils/handleUnFollow.js';

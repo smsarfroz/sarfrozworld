@@ -15,8 +15,9 @@ import { QueryClientProvider, QueryClient, Query } from "@tanstack/react-query"
 import Signup from './Components/Signup/Signup.jsx';
 import Login from './Components/Login/Login.jsx';
 import { useLocation } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/ReactToastify.css';
+import toast, { Toaster } from 'react-hot-toast';
 import Cookies from 'universal-cookie';
 import { jwtDecode } from 'jwt-decode';
 import getErrorMessage from './utils/getErrorMessage.js';
@@ -233,8 +234,12 @@ function App() {
 
   return (
     <div className='sectionsContainer'>
-      <ToastContainer position="top-center" autoClose={2000} />    
-
+      {/* <ToastContainer position="top-center" autoClose={2000} />     */}
+      <Toaster 
+        toastOptions={{
+          duration: 1800,
+        }}
+      />
       {!hiddenPaths.includes(pathname) ? 
       
         <nav className="navigationRoutes">

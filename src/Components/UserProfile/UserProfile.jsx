@@ -8,7 +8,7 @@ import { RiGithubLine } from "react-icons/ri";
 import { LuBiohazard } from 'react-icons/lu';
 import PostCardPreview from '../PostCardPreview/PostCardPreview.jsx';
 import { useQuery } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import getErrorMessage from '../../utils/getErrorMessage.js';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';

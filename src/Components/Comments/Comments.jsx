@@ -6,7 +6,7 @@ import { SarfrozContext } from '../../sarfrozContext';
 import { useQuery } from '@tanstack/react-query';
 import { RiDeleteBinLine } from "react-icons/ri";
 import TimeAgo from 'react-timeago';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import getErrorMessage from '../../utils/getErrorMessage';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';

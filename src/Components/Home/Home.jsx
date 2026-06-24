@@ -10,7 +10,7 @@ import PostCardPreview from '../PostCardPreview/PostCardPreview.jsx';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import getErrorMessage from '../../utils/getErrorMessage.js';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 

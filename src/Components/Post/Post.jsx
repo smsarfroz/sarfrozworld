@@ -9,7 +9,7 @@ import { SarfrozContext } from '../../sarfrozContext.js';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import getErrorMessage from '../../utils/getErrorMessage.js';
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 

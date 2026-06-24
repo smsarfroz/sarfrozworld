@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { SarfrozContext } from '../../sarfrozContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMemo } from 'react';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import getErrorMessage from '../../utils/getErrorMessage';
 import Cookies from 'universal-cookie';
 import { jwtDecode } from 'jwt-decode';
