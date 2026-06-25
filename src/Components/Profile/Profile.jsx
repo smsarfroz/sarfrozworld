@@ -61,7 +61,7 @@ const Profile = () => {
     const { userObj } = useContext(SarfrozContext);
     const [updateLoading, setUpdateLoading] = useState(false);
     let dataToSend = {};
-    dataToSend['userId'] = userObj.userId;
+    dataToSend['userId'] = userObj?.userId;
     const { isPending, error, data, refetch } = useQuery({
         queryKey: ["userData"],
         staleTime: 1000 * 60 * 30,
@@ -148,10 +148,11 @@ const Profile = () => {
         if (!URL.canParse(website)) {
             website = "https://" + website;
         }
+        // console.log('website', website);
         const urlGithub = new URL(github);
         const path1 = urlGithub.pathname.substring(1);
         const urlWebsite = new URL(website);
-        const contentAfterProtocol = urlWebsite.host + urlWebsite.pathname;
+        const contentAfterProtocol = urlWebsite.host + urlWebsite.pathname + urlWebsite.search;
         const updatedData = await updateUser({ userId, bio, github: path1, website: contentAfterProtocol});
         setUserData(updatedData);
         setEditValue(updatedData);

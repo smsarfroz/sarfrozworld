@@ -228,8 +228,8 @@ const UserProfile = () => {
                     <p className={styles.username}>{username}</p>
                     {data.id !== userObj.userId ?  
                         data.followers.includes(userObj.userId) ?
-                            <button style={loading1 && id1 == user.id ? loadingStyle1 : null} onClick={() => handleUnFollow(userObj.userId, data.id)} className={styles.followingButton}>Following</button> :
-                            <button style={loading2 && id2 == user.id ? loadingStyle2 : null} onClick={() => handleFollow(userObj.userId, data.id)} className={styles.followButton}>Follow</button>
+                            <button style={loading1 && id1 == user?.id ? loadingStyle1 : null} onClick={() => handleUnFollow(userObj?.userId, data.id)} className={styles.followingButton}>Following</button> :
+                            <button style={loading2 && id2 == user?.id ? loadingStyle2 : null} onClick={() => handleFollow(userObj?.userId, data.id)} className={styles.followButton}>Follow</button>
                         :
                         null
                     }

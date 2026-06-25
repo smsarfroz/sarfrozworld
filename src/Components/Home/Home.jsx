@@ -36,7 +36,7 @@ const Home = () => {
                 const response = await fetch(api1, {
                     mode: 'cors',
                     credentials: 'include',
-                    method: "post",
+                    method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
@@ -49,6 +49,11 @@ const Home = () => {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    return null; 
+                }
+
                 const jsonData = await response.json();
                 return jsonData;
                 
@@ -265,9 +270,9 @@ const Home = () => {
                 <p className={styles.latestUser}>Latest Users</p>
                 {
                     lastFiveReversed.map((user) => {
-                        if (user.id !== userObj.userId) length++;
+                        if (user?.id !== userObj?.userId) length++;
                         return (
-                            (user.id === userObj.userId || length > 5) ? null :
+                            (user?.id === userObj?.userId || length > 5) ? null :
 
                             <div className={styles.user} key={user.id}>
                                 <div className={styles.leftPart}>
@@ -276,8 +281,8 @@ const Home = () => {
                                 </div>
 
                                 {User.following.includes(user.id) ? 
-                                    <button style={loading1 && id1 == user.id ? loadingStyle1 : null} onClick={() => handleUnFollow(userObj.userId, user.id)} className={styles.followingButton}>Following</button> :
-                                    <button style={loading2 && id2 == user.id ? loadingStyle2 : null} onClick={() => handleFollow(userObj.userId, user.id)} className={styles.followButton}>Follow</button> 
+                                    <button style={loading1 && id1 == user?.id ? loadingStyle1 : null} onClick={() => handleUnFollow(userObj?.userId, user.id)} className={styles.followingButton}>Following</button> :
+                                    <button style={loading2 && id2 == user?.id ? loadingStyle2 : null} onClick={() => handleFollow(userObj?.userId, user.id)} className={styles.followButton}>Follow</button> 
                                 }
                             </div>    
                         )

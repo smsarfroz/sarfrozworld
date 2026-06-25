@@ -24,7 +24,8 @@ const useGif = () => {
 
       if (!res1.ok) {
         toast.error(getErrorMessage(res1.status));
-        throw new Error(`HTTP error! Status: ${res1.status}`);
+        return null;
+        // throw new Error(`HTTP error! Status: ${res1.status}`);
       }
 
       const data1 = await res1.json();
@@ -33,8 +34,9 @@ const useGif = () => {
 
     } catch (error) {
       console.error(`There was a problem with the fetch operation:`, error);
-      toast.error('There was a problem with fetch operation');
-      throw error;    
+      // toast.error('There was a problem with fetch operation');
+      // throw error;    
+      return null;
     }
   };
 
@@ -61,7 +63,7 @@ const Gif = ({ handleGifLinkChange }) => {
         }
       }
       fetchData();
-    }, []);
+    }, [getGifs, searchText]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -102,7 +104,7 @@ const Gif = ({ handleGifLinkChange }) => {
                     gifList != null ?
                     <div className={styles.gif}>
                       {
-                        gifList.map((gif, i) => {
+                        gifList?.map((gif, i) => {
                           return (
                             <img src={gif.images.fixed_height.url} alt="" key={i} className={styles.gifImg} onClick={() => handleGifLinkChange(gif.images.fixed_height.url)}/>
                           )
@@ -111,7 +113,7 @@ const Gif = ({ handleGifLinkChange }) => {
                     </div>  :
                     <div className={styles.gif}>
                       {
-                        trendingGifList.map((gif, i) => {
+                        trendingGifList?.map((gif, i) => {
                           return (
                             <img src={gif.images.fixed_height.url} alt="" key={i} className={styles.gifImg} onClick={() => handleGifLinkChange(gif.images.fixed_height.url)}/>
                           )

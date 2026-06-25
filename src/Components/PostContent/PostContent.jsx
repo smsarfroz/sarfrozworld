@@ -144,7 +144,7 @@ function PostContent({ post, user, setDeleted, showFullContent = false, comments
                         </span>
                         <p className={styles.createdAt}>• <TimeAgo date={post.createdAt}/></p>
                     </div>
-                    { userObj.userId === user.id && hover ? 
+                    { userObj?.userId === user?.id && hover ? 
                     
                         <RiDeleteBinLine className={styles.deleteIcon} onClick={handleDelete}/>
                         :

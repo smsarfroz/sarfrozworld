@@ -109,7 +109,7 @@ const Signup = () => {
         setPFocus(false);
         setUFocus(false);
 
-        fetch(`${VITE_BASE_URL}/login`, {
+        const myPromise = fetch(`${VITE_BASE_URL}/login`, {
             mode: 'cors',
             method: "post",
             credentials: 'include',
@@ -143,6 +143,10 @@ const Signup = () => {
             console.error('There was a problem with the fetch operation:', error);
             toast.error('There was a problem with the fetch operation');
         })
+
+        toast.promise(myPromise, {
+            loading: 'logging in'
+        });
     }
 
     function handleSignIn(e) {
